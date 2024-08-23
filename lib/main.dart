@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:sheduling_app/core/constants/colors.dart';
-import 'package:sheduling_app/ui/screens/welcome_screen.dart';
 import 'package:sheduling_app/ui/splash_screen.dart';
 
 void main() {

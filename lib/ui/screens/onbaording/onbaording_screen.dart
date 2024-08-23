@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:sheduling_app/core/constants/app_assets.dart';
 import 'package:sheduling_app/core/constants/colors.dart';
 import 'package:sheduling_app/custom_widgets/buttons/custom_button.dart';
 import 'package:sheduling_app/custom_widgets/custom_onbording_screen.dart';

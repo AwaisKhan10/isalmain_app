@@ -1,13 +1,10 @@
 // ignore_for_file: avoid_print, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:sheduling_app/core/constants/app_assets.dart';
 import 'package:sheduling_app/core/constants/colors.dart';
-import 'package:sheduling_app/core/model/onbaording.dart';
 import 'package:sheduling_app/ui/screens/onbaording/onbaording_screen.dart';
-import 'package:sheduling_app/ui/screens/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
