@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           MediaQuery.sizeOf(context).width, MediaQuery.sizeOf(context).height),
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Islamian App',
         theme: ThemeData(
           scaffoldBackgroundColor: whiteColor,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

@@ -12,3 +12,4 @@ const Color redColor3 = Color(0xffae434c);
 const Color blackColor = Color(0xff000000);
 const Color whiteColor = Color(0xffFFFFFF);
 const Color KBackgroundColor = Color(0xff1F2731);
+const Color greyColor = Colors.grey;

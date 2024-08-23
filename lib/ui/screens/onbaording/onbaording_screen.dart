@@ -81,13 +81,16 @@ class OnBoardingScreen extends StatelessWidget {
               ///
               /// CustomButton
               ///
-              CustomButton(
-                onPressed: () {
-                  model.animateToPage(context);
-                  // Get.to(() => const SignUpScreen());
-                },
-                name: 'Next',
-                textColor: whiteColor,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomButton(
+                  onPressed: () {
+                    model.animateToPage(context);
+                    // Get.to(() => const SignUpScreen());
+                  },
+                  name: 'Next',
+                  textColor: whiteColor,
+                ),
               ),
 
               ///

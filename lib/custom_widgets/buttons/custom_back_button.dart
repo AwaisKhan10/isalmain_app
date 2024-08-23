@@ -39,17 +39,18 @@ class _CustomBackButtonState extends State<CustomBackButton> {
         scale: _isPressed ? 0.95 : 1.0,
         duration: const Duration(milliseconds: 100),
         child: Container(
-          margin: const EdgeInsets.only(left: 14, top: 8),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          height: 30.h,
+          width: 30.w,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: lightprimaryColor,
+            gradient:
+                const LinearGradient(colors: [primaryColor, secondaryColor]),
             borderRadius: BorderRadius.circular(8.r),
           ),
           child: Icon(
             Icons.arrow_back_ios_new,
             size: 22.sp,
-            color: blackColor,
+            color: whiteColor,
           ),
         ),
       ),

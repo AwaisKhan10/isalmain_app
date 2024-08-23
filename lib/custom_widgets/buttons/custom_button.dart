@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, library_private_types_in_public_api, use_super_parameters
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +8,8 @@ import 'package:sheduling_app/core/constants/text_style.dart';
 class CustomButton extends StatefulWidget {
   String? name;
   VoidCallback? onPressed;
-  Color? bColor;
+  Color? color1;
+  Color? color2;
   Color? textColor;
 
   CustomButton({
@@ -16,6 +17,8 @@ class CustomButton extends StatefulWidget {
     required this.name,
     required this.onPressed,
     required this.textColor,
+    this.color1,
+    this.color2,
   }) : super(key: key);
 
   @override
@@ -54,10 +57,11 @@ class _CustomButtonState extends State<CustomButton> {
             child: Container(
               alignment: Alignment.center,
               height: 56.h,
-              width: 327.w,
               decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                      colors: [primaryColor, secondaryColor]),
+                  gradient: LinearGradient(colors: [
+                    widget.color1 ?? primaryColor,
+                    widget.color2 ?? secondaryColor
+                  ]),
                   borderRadius: BorderRadius.circular(96.r)),
               child: Text(
                 "${widget.name}",

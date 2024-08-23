@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sheduling_app/core/constants/app_assets.dart';
 import 'package:sheduling_app/core/constants/colors.dart';
 import 'package:sheduling_app/core/constants/text_style.dart';
+import 'package:sheduling_app/custom_widgets/custom_routes/navigate_from_bottom.dart';
+import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/sign_up_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -32,7 +34,12 @@ class WelcomeScreen extends StatelessWidget {
                 height: 20.h,
               ),
               _PressableButton(
-                  image: AppAssets.teacher, text: "Teacher", onPressed: () {}),
+                  image: AppAssets.teacher,
+                  text: "Teacher",
+                  onPressed: () {
+                    Navigator.push(context,
+                        NavigationFromBottomRoute(page: SignUpScreen()));
+                  }),
               SizedBox(
                 height: 20.h,
               ),

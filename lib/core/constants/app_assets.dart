@@ -16,6 +16,7 @@ class AppAssets {
   static String onBoarding3 = "$staticAssets/onbaording11.png";
   static String background_image = "$staticAssets/background_image.png";
   static String background_image1 = "$staticAssets/background_image1.png";
+  static String googleLogo = "$staticAssets/google.png";
 
   ///
   /// Icons Assets
@@ -23,4 +24,10 @@ class AppAssets {
 
   static String teacher = "$iconAssets/teacher_icon.png";
   static String student = "$iconAssets/student.png";
+
+  ///
+  /// Divider image
+  ///
+  static String dividerImageLeft = "assets/static_assets/line2.png";
+  static String dividerImageRight = "assets/static_assets/line1.png";
 }
