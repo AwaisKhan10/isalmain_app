@@ -14,9 +14,9 @@ import 'package:sheduling_app/custom_widgets/buttons/custom_button.dart';
 import 'package:sheduling_app/custom_widgets/custom_routes/navigate_from_right.dart';
 import 'package:sheduling_app/ui/screens/teacher/auth/sign_in/sign_in_screen.dart';
 import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/sign_up_view_model.dart';
-import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/teacher_information.dart';
+import 'package:sheduling_app/ui/screens/teacher/home/home_screen.dart';
 
-class SignUpScreen extends StatelessWidget {
+class TeacherInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<SignUpViewModel>(
@@ -41,37 +41,76 @@ class SignUpScreen extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                Text(
-                  "Please Fill these form fields with the following information",
-                  style: styleN16.copyWith(color: blackColor),
+                Center(
+                  child: Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(13.0.sp),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(width: 3.0),
+                            gradient: const LinearGradient(
+                                colors: [primaryColor, secondaryColor])),
+                        child: CircleAvatar(
+                          radius: 65.r,
+                          backgroundColor: whiteColor,
+                          child: CircleAvatar(
+                            backgroundColor: greyColor,
+                            radius: 60.r,
+                            child: Icon(
+                              Icons.person,
+                              color: whiteColor,
+                              size: 60.sp,
+                            ),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: 8.0, bottom: 10),
+                          child: CircleAvatar(
+                            backgroundColor: whiteColor,
+                            radius: 20.r,
+                            child: Icon(
+                              Icons.camera_alt,
+                              size: 25.sp,
+                              color: primaryColor,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(
-                  height: 50.h,
+                  height: 30.h,
                 ),
                 TextFormField(
                   decoration:
-                      authFieldDecoration.copyWith(hintText: 'Full Name'),
+                      authFieldDecoration.copyWith(hintText: 'Department'),
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
                 TextFormField(
                   decoration:
-                      authFieldDecoration.copyWith(hintText: 'Email address'),
+                      authFieldDecoration.copyWith(hintText: 'Qualification'),
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
                 TextFormField(
                   decoration:
-                      authFieldDecoration.copyWith(hintText: 'Phone Number'),
+                      authFieldDecoration.copyWith(hintText: 'Subjects Teach'),
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
                 TextFormField(
-                  decoration:
-                      authFieldDecoration.copyWith(hintText: 'Password'),
+                  decoration: authFieldDecoration.copyWith(hintText: 'Gender'),
                 ),
                 SizedBox(
                   height: 20.h,
@@ -83,7 +122,7 @@ class SignUpScreen extends StatelessWidget {
                 CustomButton(
                     name: 'Next',
                     onPressed: () {
-                      Get.to(TeacherInformation());
+                      Get.offAll(HomeScreen());
                     },
                     textColor: lightPinkColor),
 
@@ -95,10 +134,10 @@ class SignUpScreen extends StatelessWidget {
                 ///
                 /// Sign In Google User
                 ///
-                _signWithGoogleUser(),
-                SizedBox(
-                  height: 20.h,
-                ),
+                // _signWithGoogleUser(),
+                // SizedBox(
+                //   height: 20.h,
+                // ),
 
                 ///
                 /// Already have an account
@@ -203,7 +242,7 @@ _header() {
         width: 20.w,
       ),
       Text(
-        "Sign Up",
+        "Techer Information",
         style: styleB25.copyWith(color: blackColor, fontSize: 30.sp),
       ),
     ],

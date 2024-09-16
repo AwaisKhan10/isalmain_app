@@ -6,6 +6,7 @@ import 'package:sheduling_app/core/constants/app_assets.dart';
 import 'package:sheduling_app/core/constants/colors.dart';
 import 'package:sheduling_app/core/constants/text_style.dart';
 import 'package:sheduling_app/custom_widgets/custom_routes/navigate_from_bottom.dart';
+import 'package:sheduling_app/ui/screens/student/auth/sign_up/sign_up_screen.dart';
 import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/sign_up_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -44,7 +45,12 @@ class WelcomeScreen extends StatelessWidget {
                 height: 20.h,
               ),
               _PressableButton(
-                  image: AppAssets.student, text: "Student", onPressed: () {}),
+                  image: AppAssets.student,
+                  text: "Student",
+                  onPressed: () {
+                    Navigator.push(context,
+                        NavigationFromBottomRoute(page: SignUpStudentScreen()));
+                  }),
             ],
           ),
         ),
