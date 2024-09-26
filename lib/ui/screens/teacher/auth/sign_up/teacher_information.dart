@@ -15,6 +15,7 @@ import 'package:sheduling_app/custom_widgets/custom_routes/navigate_from_right.d
 import 'package:sheduling_app/ui/screens/teacher/auth/sign_in/sign_in_screen.dart';
 import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/sign_up_view_model.dart';
 import 'package:sheduling_app/ui/screens/teacher/home/home_screen.dart';
+import 'package:sheduling_app/ui/screens/teacher/root/root_screen.dart';
 
 class TeacherInformation extends StatelessWidget {
   @override
@@ -122,7 +123,7 @@ class TeacherInformation extends StatelessWidget {
                 CustomButton(
                     name: 'Next',
                     onPressed: () {
-                      Get.offAll(HomeScreen());
+                      Get.offAll(RootScreen());
                     },
                     textColor: lightPinkColor),
 

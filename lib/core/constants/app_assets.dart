@@ -30,4 +30,14 @@ class AppAssets {
   ///
   static String dividerImageLeft = "assets/static_assets/line2.png";
   static String dividerImageRight = "assets/static_assets/line1.png";
+
+  ///
+  /// Root Screen
+  ///
+  static String homeIconImage1 = "assets/static_assets/home.png";
+  static String homeIconImage2 = "assets/static_assets/home1.png";
+  static String profileIconImage1 = "assets/static_assets/profile1.png";
+  static String profileIconImage2 = "assets/static_assets/profile.png";
+  static String chat = "assets/static_assets/chat1.png";
+  static String chat2 = "assets/static_assets/chat2.png";
 }
