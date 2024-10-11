@@ -2,13 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get_navigation/src/bottomsheet/bottomsheet.dart';
+import 'package:get/get_navigation/src/routes/default_route.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/core/constants/app_assets.dart';
 import 'package:sheduling_app/core/constants/auth_field_decoration.dart';
 import 'package:sheduling_app/core/constants/colors.dart';
 import 'package:sheduling_app/core/constants/text_style.dart';
+import 'package:sheduling_app/core/enums/view_state.dart';
 import 'package:sheduling_app/custom_widgets/buttons/custom_back_button.dart';
 import 'package:sheduling_app/custom_widgets/buttons/custom_button.dart';
 import 'package:sheduling_app/custom_widgets/custom_routes/navigate_from_right.dart';
@@ -17,99 +22,151 @@ import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/sign_up_view_model
 import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/teacher_information.dart';
 
 class SignUpScreen extends StatelessWidget {
+  final _formkey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Consumer<SignUpViewModel>(
-      builder: (context, model, child) => Scaffold(
-        ///
-        /// Start Body
-        ///
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20.h,
-                ),
-                _header(),
-                SizedBox(
-                  height: 30.h,
-                ),
+        builder: (context, model, child) => ModalProgressHUD(
+              inAsyncCall: model.state == ViewState.busy,
+              child: Scaffold(
+                ///
+                /// Start Body
+                ///
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
+                    child: Form(
+                      key: _formkey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          _header(),
+                          SizedBox(
+                            height: 30.h,
+                          ),
 
-                SizedBox(
-                  height: 10.h,
-                ),
-                Text(
-                  "Please Fill these form fields with the following information",
-                  style: styleN16.copyWith(color: blackColor),
-                ),
-                SizedBox(
-                  height: 50.h,
-                ),
-                TextFormField(
-                  decoration:
-                      authFieldDecoration.copyWith(hintText: 'Full Name'),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                TextFormField(
-                  decoration:
-                      authFieldDecoration.copyWith(hintText: 'Email address'),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                TextFormField(
-                  decoration:
-                      authFieldDecoration.copyWith(hintText: 'Phone Number'),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                TextFormField(
-                  decoration:
-                      authFieldDecoration.copyWith(hintText: 'Password'),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Text(
+                            "Please Fill these form fields with the following information",
+                            style: styleN16.copyWith(color: blackColor),
+                          ),
+                          SizedBox(
+                            height: 50.h,
+                          ),
+                          // TextFormField(
+                          //   onChanged: (value) {
+                          //     model.teacherUser.fullName = value.trim();
+                          //   },
+                          //   decoration: authFieldDecoration.copyWith(
+                          //       hintText: 'Full Name'),
+                          //   validator: (value) {
+                          //     if (value!.trim().isEmpty) {
+                          //       return "Please enter your Full Name";
+                          //     } else if (!RegExp(r'^[a-z0-9_\.]{3,20}$')
+                          //         .hasMatch(value)) {
+                          //       return "Username must be 3-20 characters long, lowercase, and contain only letters, numbers, underscores (_) or periods (.)";
+                          //     } else if (value.contains("..") ||
+                          //         value.contains("__")) {
+                          //       return "Full Name cannot contain consecutive speacial characters";
+                          //     } else {
+                          //       return null;
+                          //     }
+                          //   },
+                          // ),
+                          TextFormField(
+                            validator: (value) {
+                              if (value!.trim().isEmpty) {
+                                return "Please enter you full name";
+                              } else {
+                                return null;
+                              }
+                            },
+                            onChanged: (value) {
+                              model.teacherUser.fullName = value.trim();
+                            },
+                            decoration: authFieldDecoration.copyWith(
+                                hintText: "Full Name"),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value!.trim().isEmpty) {
+                                return "please enter your email";
+                              } else if (value.isEmail) {
+                                return "please enter a valid email";
+                              }
+                            },
+                            onChanged: (value) {
+                              model.teacherUser.email = value.trim();
+                            },
+                            decoration: authFieldDecoration.copyWith(
+                                hintText: 'Email address'),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) {
+                              model.teacherUser.phoneNo = value.trim();
+                            },
+                            decoration: authFieldDecoration.copyWith(
+                                hintText: 'Phone Number'),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          TextFormField(
+                            decoration: authFieldDecoration.copyWith(
+                                hintText: 'Password'),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
 
-                ///
-                /// Custom Button
-                ///
-                CustomButton(
-                    name: 'Next',
-                    onPressed: () {
-                      Get.to(TeacherInformation());
-                    },
-                    textColor: lightPinkColor),
+                          ///
+                          /// Custom Button
+                          ///
+                          CustomButton(
+                              name: 'Next',
+                              onPressed: () {
+                                Get.to(TeacherInformation());
+                              },
+                              textColor: lightPinkColor),
 
-                ///
-                /// Divider
-                ///
-                _divider(),
+                          ///
+                          /// Divider
+                          ///
+                          _divider(),
 
-                ///
-                /// Sign In Google User
-                ///
-                _signWithGoogleUser(),
-                SizedBox(
-                  height: 20.h,
+                          ///
+                          /// Sign In Google User
+                          ///
+                          _signWithGoogleUser(),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+
+                          ///
+                          /// Already have an account
+                          ///
+                          _alreadyHaveAnAccount(context),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-
-                ///
-                /// Already have an account
-                ///
-                _alreadyHaveAnAccount(context),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+              ),
+            ));
   }
 }
 

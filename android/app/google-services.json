@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "827314040034",
+    "project_id": "university-sheduling-app",
+    "storage_bucket": "university-sheduling-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827314040034:android:1c63e34e453d71e7e442bb",
+        "android_client_info": {
+          "package_name": "com.example.sheduling_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWoH7BxeVcT2jHqiUk6v0Hm_w18N8-r8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
