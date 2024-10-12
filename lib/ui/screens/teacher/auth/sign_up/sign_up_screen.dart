@@ -1,12 +1,6 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/get_navigation/src/bottomsheet/bottomsheet.dart';
-import 'package:get/get_navigation/src/routes/default_route.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/core/constants/app_assets.dart';
@@ -23,7 +17,7 @@ import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/teacher_informatio
 
 class SignUpScreen extends StatelessWidget {
   final _formkey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+  //final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Consumer<SignUpViewModel>(
@@ -101,8 +95,6 @@ class SignUpScreen extends StatelessWidget {
                             validator: (value) {
                               if (value!.trim().isEmpty) {
                                 return "please enter your email";
-                              } else if (value.isEmail) {
-                                return "please enter a valid email";
                               }
                             },
                             onChanged: (value) {
@@ -115,6 +107,11 @@ class SignUpScreen extends StatelessWidget {
                             height: 20.h,
                           ),
                           TextFormField(
+                            validator: (value) {
+                              if (value!.trim().isEmpty) {
+                                return "please enter your Phone number";
+                              }
+                            },
                             keyboardType: TextInputType.number,
                             onChanged: (value) {
                               model.teacherUser.phoneNo = value.trim();
@@ -126,7 +123,30 @@ class SignUpScreen extends StatelessWidget {
                             height: 20.h,
                           ),
                           TextFormField(
+                            obscureText: model.isShowpassword ? true : false,
+                            onChanged: (value) {
+                              model.teacherUser.password = value.trim();
+                            },
+                            validator: (value) {
+                              if (value!.trim().isEmpty) {
+                                return "Please enter your password";
+                              } else if (value!.trim().length < 7) {
+                                return "Password must be atleast 7 characters";
+                              } else {
+                                return null;
+                              }
+                            },
                             decoration: authFieldDecoration.copyWith(
+                                suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      model.toggleShowPassword();
+                                    },
+                                    child: Icon(
+                                      model.isShowpassword
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: primaryColor,
+                                    )),
                                 hintText: 'Password'),
                           ),
                           SizedBox(
@@ -139,7 +159,9 @@ class SignUpScreen extends StatelessWidget {
                           CustomButton(
                               name: 'Next',
                               onPressed: () {
-                                Get.to(TeacherInformation());
+                                if (_formkey.currentState!.validate()) {
+                                  Get.to(TeacherInformation());
+                                }
                               },
                               textColor: lightPinkColor),
 

@@ -6,10 +6,14 @@ import 'package:provider/provider.dart';
 import 'package:sheduling_app/core/constants/colors.dart';
 import 'package:sheduling_app/core/constants/strings.dart';
 import 'package:sheduling_app/core/constants/text_style.dart';
+import 'package:sheduling_app/core/services/auth_services.dart';
+import 'package:sheduling_app/locator.dart';
 import 'package:sheduling_app/ui/screens/teacher/home/home_screen.dart';
 import 'package:sheduling_app/ui/screens/teacher/profile/profile_view_model.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final _auth = locator<AuthServices>();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -35,7 +39,11 @@ class ProfileScreen extends StatelessWidget {
                 _detailContainer(
                     title: "Terms And Conditions", onPressed: () {}),
                 _detailContainer(title: "About Us", onPressed: () {}),
-                _detailContainer(title: "Log Out", onPressed: () {}),
+                _detailContainer(
+                    title: "Log Out",
+                    onPressed: () {
+                      model.logout();
+                    }),
               ],
             ),
           ),

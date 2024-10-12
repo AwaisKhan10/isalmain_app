@@ -7,6 +7,12 @@ class TeacherUser {
   String? phoneNo;
   String? password;
 
+  //teacher information
+  String? department;
+  String? qualification;
+  String? subjects;
+  String? gender;
+
   TeacherUser(
       {this.id,
       this.email,
@@ -14,7 +20,11 @@ class TeacherUser {
       this.fcmToken,
       this.fullName,
       this.password,
-      this.phoneNo});
+      this.phoneNo,
+      this.department,
+      this.qualification,
+      this.gender,
+      this.subjects});
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
@@ -24,6 +34,11 @@ class TeacherUser {
     data['email'] = email;
     data['password'] = password;
     data['phoneNo'] = phoneNo;
+    data['department'] = department;
+    data['qualification'] = qualification;
+    data['gender'] = gender;
+    data['subjects'] = subjects;
+
     return data;
   }
 
@@ -32,8 +47,12 @@ class TeacherUser {
     fullName = json['fullName'];
     imgUrl = json['imgUrl'];
     email = json['email'];
+    password = json['password'];
     fcmToken = json['fcmToken'];
     phoneNo = json['phoneNo'];
-    password = json['password'];
+    department = json['password'];
+    qualification = json['qualification'];
+    gender = json['gender'];
+    subjects = json['subjects'];
   }
 }

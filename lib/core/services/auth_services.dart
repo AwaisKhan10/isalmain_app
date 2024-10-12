@@ -64,7 +64,7 @@ class AuthServices extends ChangeNotifier {
           email: email, password: password);
       if (credentials.user == null) {
         customAuthResult.status = false;
-        customAuthResult.errorMessage = "An Undefined error Happened";
+        customAuthResult.errorMessage = "Invalid Username and Password";
         return customAuthResult;
       }
       if (credentials.user != null) {

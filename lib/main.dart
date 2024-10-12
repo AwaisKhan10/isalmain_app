@@ -8,6 +8,7 @@ import 'package:sheduling_app/core/constants/colors.dart';
 import 'package:sheduling_app/firebase_options.dart';
 import 'package:sheduling_app/locator.dart';
 import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/sign_up_view_model.dart';
+import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/teacher_information.dart';
 import 'package:sheduling_app/ui/splash_screen.dart';
 
 void main() async {
