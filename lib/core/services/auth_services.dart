@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:sheduling_app/core/model/custom_auth_result.dart';
 import 'package:sheduling_app/core/model/teacher/teacher_user.dart';
 import 'package:sheduling_app/core/services/auth_exception.dart';
+import 'package:sheduling_app/core/services/database_services.dart';
 
 class AuthServices extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
+  final DatabaseServices databaseServices = DatabaseServices();
   CustomAuthResult customAuthResult = CustomAuthResult();
   AuthExceptionsService authExceptionsService = AuthExceptionsService();
   User? user;
@@ -46,6 +48,9 @@ class AuthServices extends ChangeNotifier {
         customAuthResult.status = true;
         customAuthResult.user = credentials.user;
         teacherUser.id = credentials.user!.uid;
+        this.teacherUser = teacherUser;
+        await databaseServices.addTeacherUser(teacherUser);
+        notifyListeners();
       }
     } catch (e) {
       customAuthResult.status = false;

@@ -160,7 +160,7 @@ class SignUpScreen extends StatelessWidget {
                               name: 'Next',
                               onPressed: () {
                                 if (_formkey.currentState!.validate()) {
-                                  Get.to(TeacherInformation());
+                                  model.signUpwithEmailandPassword();
                                 }
                               },
                               textColor: lightPinkColor),

@@ -136,7 +136,7 @@ class SignInScreen extends StatelessWidget {
                                 height: 20.h,
                               ),
                               CustomButton(
-                                  name: 'SignUp',
+                                  name: 'Sign In',
                                   onPressed: () {
                                     if (_formkey.currentState!.validate()) {
                                       model.signInwithEmailandPassword();
