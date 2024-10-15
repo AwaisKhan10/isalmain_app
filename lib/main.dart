@@ -4,15 +4,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
-import 'package:sheduling_app/core/constants/colors.dart';
+import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/firebase_options.dart';
 import 'package:sheduling_app/locator.dart';
-import 'package:sheduling_app/ui/screens/teacher/auth/sign_up/sign_up_view_model.dart';
 
-import 'package:sheduling_app/ui/splash_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/student/auth/sign_up/sign_up_view_model.dart';
+import 'package:sheduling_app/teacher/ui/screens/teacher/auth/sign_up/sign_up_view_model.dart';
+
+import 'package:sheduling_app/teacher/ui/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   // Stripe.publishableKey =
   //     'pk_test_51NETQVLRDc0a3gYh5RM29lcqFtg7Gu5V6hrRFlABsJP6vfWlR6vDMzL7mPVzDOHhYaIsAjan77Gad7Ra1zPD6UJa00hhu2m81p';
   await Firebase.initializeApp(
@@ -34,6 +37,7 @@ class MyApp extends StatelessWidget {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => SignUpViewModel()),
+          ChangeNotifierProvider(create: (context) => StudnetSignUpViewModel())
         ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
