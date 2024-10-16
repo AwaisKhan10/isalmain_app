@@ -2,14 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:sheduling_app/student/home_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/app_assets.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
-import 'package:sheduling_app/teacher/ui/custom_widgets/custom_routes/navigate_from_bottom.dart';
 
 import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_screen.dart';
-import 'package:sheduling_app/teacher/ui/screens/home/home_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -40,8 +39,7 @@ class WelcomeScreen extends StatelessWidget {
                   image: AppAssets.teacher,
                   text: "Teacher",
                   onPressed: () {
-                    Navigator.push(context,
-                        NavigationFromBottomRoute(page: TeacherSignUpScreen()));
+                    Get.to(TeacherSignUpScreen());
                   }),
               SizedBox(
                 height: 20.h,
@@ -50,11 +48,7 @@ class WelcomeScreen extends StatelessWidget {
                   image: AppAssets.student,
                   text: "Student",
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        //student
-                        NavigationFromBottomRoute(
-                            page: const StudentHomeScreen()));
+                    Get.to(const StudentHomeScreen());
                   }),
             ],
           ),

@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sheduling_app/common/welcome_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
 import 'package:sheduling_app/teacher/core/model/onbaording.dart';
@@ -12,8 +17,12 @@ class CustomOnBoarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      const SizedBox(
+        height: 50,
+      ),
+      skipButton(),
       SizedBox(
-        height: 100.h,
+        height: 50.h,
       ),
       Container(
         height: 400.h,
@@ -49,5 +58,25 @@ class CustomOnBoarding extends StatelessWidget {
             style: styleB14.copyWith(color: lightBlueColor)),
       ),
     ]);
+  }
+
+  Row skipButton() {
+    return Row(
+      children: [
+        const Spacer(),
+        TextButton(
+            onPressed: () async {
+              final pref = await SharedPreferences.getInstance();
+
+              pref.setBool("seenOnboarding", true);
+
+              Get.offAll(() => WelcomeScreen());
+            },
+            child: const Text(
+              "Skip",
+              style: TextStyle(color: primaryColor, fontSize: 18),
+            )),
+      ],
+    );
   }
 }

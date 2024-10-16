@@ -34,10 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (_auth.isLogin!) {
       Get.offAll(() => RootScreen());
     } else {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => OnBoardingScreen()),
-          (route) => false);
+      Get.offAll(() => OnBoardingScreen());
     }
     //function for one time onboarding screen sharedPreferences
   }
