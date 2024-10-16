@@ -1,10 +1,15 @@
+// ignore_for_file: unused_import
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sheduling_app/common/onbaording/onbaording_screen.dart';
 import 'package:sheduling_app/common/splash_screen.dart';
+import 'package:sheduling_app/common/welcome_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/firebase_options.dart';
 import 'package:sheduling_app/locator.dart';
@@ -12,6 +17,8 @@ import 'package:sheduling_app/locator.dart';
 import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_view_model.dart';
 
 void main() async {
+  // final pref = await SharedPreferences.getInstance();
+  // final onboading = pref.getBool("onBoarding") ?? false;
   WidgetsFlutterBinding.ensureInitialized();
 
   // Stripe.publishableKey =
@@ -26,7 +33,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool onboarding;
+  const MyApp({super.key, this.onboarding = false});
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -37,15 +45,15 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => TeacherSignUpViewModel()),
         ],
         child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Islamian App',
-          theme: ThemeData(
-            scaffoldBackgroundColor: whiteColor,
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          home: SplashScreen(),
-        ),
+            debugShowCheckedModeBanner: false,
+            title: 'Islamian App',
+            theme: ThemeData(
+              fontFamily: "Cera Pro",
+              scaffoldBackgroundColor: whiteColor,
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            home: SplashScreen()),
       ),
     );
   }

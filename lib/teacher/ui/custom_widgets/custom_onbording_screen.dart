@@ -35,7 +35,9 @@ class CustomOnBoarding extends StatelessWidget {
       ///
       Text(
         "${onboarding.title}",
-        style: styleB18.copyWith(color: primaryColor),
+        style: styleB18.copyWith(
+          color: primaryColor,
+        ),
       ),
       SizedBox(
         height: 5.h,

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sheduling_app/common/welcome_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/app_assets.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 
@@ -22,12 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     _initialSetup();
+    _checkOnboarding();
     super.initState();
   }
 
   _initialSetup() async {
     await _auth.init();
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 5));
     if (_auth.isLogin!) {
       Get.offAll(() => RootScreen());
     } else {
@@ -36,9 +39,18 @@ class _SplashScreenState extends State<SplashScreen> {
           MaterialPageRoute(builder: (context) => OnBoardingScreen()),
           (route) => false);
     }
+    //function for one time onboarding screen sharedPreferences
+  }
 
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => ));
+  _checkOnboarding() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool seenOnboarding = prefs.getBool("seenOnboarding") ?? false;
+
+    if (seenOnboarding) {
+      Get.offAll(() => WelcomeScreen());
+    } else {
+      Get.offAll(() => OnBoardingScreen());
+    }
   }
 
   @override

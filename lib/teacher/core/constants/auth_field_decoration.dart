@@ -4,7 +4,7 @@ import 'package:sheduling_app/teacher/core/constants/text_style.dart';
 
 final authFieldDecoration = InputDecoration(
   hintText: "Enter your email",
-  hintStyle: styleB14.copyWith(color: Colors.grey),
+  hintStyle: styleB14.copyWith(color: Colors.grey, fontFamily: "Cera Pro"),
   prefixIconColor: whiteColor,
   suffixIconColor: whiteColor,
   fillColor: whiteColor,

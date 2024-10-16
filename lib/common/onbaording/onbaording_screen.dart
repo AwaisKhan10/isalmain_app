@@ -1,7 +1,11 @@
 // ignore_for_file: unused_local_variable
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sheduling_app/common/welcome_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_button.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/custom_onbording_screen.dart';
@@ -11,8 +15,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class OnBoardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // double screenWidth = MediaQuery.of(context).size.width;
-    // double screenHeight = MediaQuery.of(context).size.height;
     return ChangeNotifierProvider(
       create: (context) => OnboardingViewModel(),
       child: Consumer<OnboardingViewModel>(
@@ -84,9 +86,13 @@ class OnBoardingScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: CustomButton(
-                  onPressed: () {
+                  onPressed: () async {
                     model.animateToPage(context);
-                    // Get.to(() => const SignUpScreen());
+                    final pref = await SharedPreferences.getInstance();
+
+                    pref.setBool("seenOnboarding", true);
+
+                    Get.offAll(() => WelcomeScreen());
                   },
                   name: 'Next',
                   textColor: whiteColor,

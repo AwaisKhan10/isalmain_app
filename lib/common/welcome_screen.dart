@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sheduling_app/student/home_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/app_assets.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
@@ -52,7 +53,8 @@ class WelcomeScreen extends StatelessWidget {
                     Navigator.push(
                         context,
                         //student
-                        NavigationFromBottomRoute(page: HomeScreen()));
+                        NavigationFromBottomRoute(
+                            page: const StudentHomeScreen()));
                   }),
             ],
           ),
