@@ -6,10 +6,10 @@ import 'package:sheduling_app/teacher/core/model/teacher/teacher_user.dart';
 import 'package:sheduling_app/teacher/core/services/auth_services.dart';
 import 'package:sheduling_app/teacher/core/view_model/view_model.dart';
 import 'package:sheduling_app/locator.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/auth/sign_up/teacher_information.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/root/root_screen.dart';
 
-class SignUpViewModel extends BaseViewModel {
+import 'package:sheduling_app/teacher/ui/screens/root/root_screen.dart';
+
+class TeacherSignUpViewModel extends BaseViewModel {
   //with the help of locator we once declare the instance of authetication service
   //globally and the call it every where in the app
   final _authservice = locator<AuthServices>();
@@ -40,7 +40,7 @@ class SignUpViewModel extends BaseViewModel {
     if (customAuthResult.status!) {
       _authservice.isLogin = true;
       Get.snackbar('Register', 'User Registered Succesfully');
-      Get.to(RootScreen());
+      Get.to(const RootScreen());
       notifyListeners();
     } else {
       setState(ViewState.idle);

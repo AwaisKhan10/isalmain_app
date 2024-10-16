@@ -17,10 +17,8 @@ import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_back_butt
 import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_button.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/custom_routes/navigate_from_right.dart';
 import 'package:sheduling_app/locator.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/auth/sign_in/sign_in_screen.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/auth/sign_up/sign_up_view_model.dart';
-
-import 'package:sheduling_app/teacher/ui/screens/teacher/root/root_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_view_model.dart';
 
 class TeacherInformation extends StatelessWidget {
   final DatabaseServices db = locator<DatabaseServices>();
@@ -28,7 +26,7 @@ class TeacherInformation extends StatelessWidget {
   final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Consumer<SignUpViewModel>(
+    return Consumer<TeacherSignUpViewModel>(
         builder: (context, model, child) => ModalProgressHUD(
               inAsyncCall: model.state == ViewState.busy,
               child: Scaffold(
@@ -108,6 +106,7 @@ class TeacherInformation extends StatelessWidget {
                               if (value!.trim().isEmpty) {
                                 return "please enter your Department";
                               }
+                              return null;
                             },
                             onChanged: (value) {
                               model.teacherUser.department = value.trim();
@@ -123,6 +122,7 @@ class TeacherInformation extends StatelessWidget {
                               if (value!.trim().isEmpty) {
                                 return "please enter your Qulification";
                               }
+                              return null;
                             },
                             onChanged: (value) {
                               model.teacherUser.qualification = value.trim();
@@ -138,6 +138,7 @@ class TeacherInformation extends StatelessWidget {
                               if (value!.trim().isEmpty) {
                                 return "please enter your Subject Teach";
                               }
+                              return null;
                             },
                             onChanged: (value) {
                               model.teacherUser.subjects = value.trim();
@@ -153,6 +154,7 @@ class TeacherInformation extends StatelessWidget {
                               if (value!.trim().isEmpty) {
                                 return "please enter your Gender";
                               }
+                              return null;
                             },
                             onChanged: (value) {
                               model.teacherUser.gender = value.trim();
@@ -238,7 +240,7 @@ _alreadyHaveAnAccount(BuildContext context) {
         onPressed: () {
           FocusScope.of(context).unfocus();
           Navigator.pushReplacement(
-              context, NavigationFromRightRoute(page: SignInScreen()));
+              context, NavigationFromRightRoute(page: TeacherSignInScreen()));
         },
         child: Text(
           "Sign In",
@@ -248,34 +250,6 @@ _alreadyHaveAnAccount(BuildContext context) {
         ),
       )
     ],
-  );
-}
-
-_signWithGoogleUser() {
-  return Container(
-    padding: const EdgeInsets.all(15),
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-        border: Border.all(width: 1, color: secondaryColor),
-        color: whiteColor,
-        borderRadius: BorderRadius.circular(16)),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Image.asset(
-          AppAssets.googleLogo,
-          scale: 3,
-        ),
-        SizedBox(
-          width: 20.w,
-        ),
-        Text(
-          "Sign In Using Google",
-          style: styleB16.copyWith(color: blackColor),
-        ),
-      ],
-    ),
   );
 }
 

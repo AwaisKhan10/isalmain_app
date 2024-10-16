@@ -7,7 +7,7 @@ import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart'
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/strings.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/home/home_view_model.dart';
+import 'package:sheduling_app/teacher/ui/screens/home/home_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

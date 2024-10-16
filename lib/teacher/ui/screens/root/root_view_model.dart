@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/teacher/core/view_model/view_model.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/chat_screen/chat_screen.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/profile/profile_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/chat_screen/chat_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/profile/profile_screen.dart';
 import '../home/home_screen.dart';
 
 class RootViewModel extends BaseViewModel {

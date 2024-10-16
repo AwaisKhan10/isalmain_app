@@ -8,9 +8,9 @@ import 'package:sheduling_app/teacher/core/services/auth_services.dart';
 import 'package:sheduling_app/teacher/core/view_model/view_model.dart';
 import 'package:sheduling_app/locator.dart';
 
-import 'package:sheduling_app/teacher/ui/screens/teacher/root/root_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/root/root_screen.dart';
 
-class SignInViewModel extends BaseViewModel {
+class TeacherSignInViewModel extends BaseViewModel {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TeacherUser teacherUser = TeacherUser();

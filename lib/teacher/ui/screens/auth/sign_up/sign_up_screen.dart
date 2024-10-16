@@ -11,17 +11,19 @@ import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_back_button.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_button.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/custom_routes/navigate_from_right.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/auth/sign_in/sign_in_screen.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/auth/sign_up/sign_up_view_model.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/auth/sign_up/teacher_information.dart';
+import 'package:sheduling_app/teacher/ui/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_view_model.dart';
+import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/teacher_information.dart';
 import 'package:sheduling_app/common/welcome_screen.dart';
 
-class SignUpScreen extends StatelessWidget {
+class TeacherSignUpScreen extends StatelessWidget {
   final _formkey = GlobalKey<FormState>();
+
+  TeacherSignUpScreen({super.key});
   //final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return Consumer<SignUpViewModel>(
+    return Consumer<TeacherSignUpViewModel>(
         builder: (context, model, child) => ModalProgressHUD(
               inAsyncCall: model.state == ViewState.busy,
               child: Scaffold(
@@ -54,26 +56,7 @@ class SignUpScreen extends StatelessWidget {
                           SizedBox(
                             height: 50.h,
                           ),
-                          // TextFormField(
-                          //   onChanged: (value) {
-                          //     model.teacherUser.fullName = value.trim();
-                          //   },
-                          //   decoration: authFieldDecoration.copyWith(
-                          //       hintText: 'Full Name'),
-                          //   validator: (value) {
-                          //     if (value!.trim().isEmpty) {
-                          //       return "Please enter your Full Name";
-                          //     } else if (!RegExp(r'^[a-z0-9_\.]{3,20}$')
-                          //         .hasMatch(value)) {
-                          //       return "Username must be 3-20 characters long, lowercase, and contain only letters, numbers, underscores (_) or periods (.)";
-                          //     } else if (value.contains("..") ||
-                          //         value.contains("__")) {
-                          //       return "Full Name cannot contain consecutive speacial characters";
-                          //     } else {
-                          //       return null;
-                          //     }
-                          //   },
-                          // ),
+
                           TextFormField(
                             validator: (value) {
                               if (value!.trim().isEmpty) {
@@ -97,6 +80,7 @@ class SignUpScreen extends StatelessWidget {
                               if (value!.trim().isEmpty) {
                                 return "please enter your email";
                               }
+                              return null;
                             },
                             onChanged: (value) {
                               model.teacherUser.email = value.trim();
@@ -112,6 +96,7 @@ class SignUpScreen extends StatelessWidget {
                               if (value!.trim().isEmpty) {
                                 return "please enter your Phone number";
                               }
+                              return null;
                             },
                             keyboardType: TextInputType.number,
                             onChanged: (value) {
@@ -131,7 +116,7 @@ class SignUpScreen extends StatelessWidget {
                             validator: (value) {
                               if (value!.trim().isEmpty) {
                                 return "Please enter your password";
-                              } else if (value!.trim().length < 7) {
+                              } else if (value.trim().length < 7) {
                                 return "Password must be atleast 7 characters";
                               } else {
                                 return null;
@@ -228,7 +213,7 @@ _alreadyHaveAnAccount(BuildContext context) {
         onPressed: () {
           FocusScope.of(context).unfocus();
           Navigator.pushReplacement(
-              context, NavigationFromRightRoute(page: SignInScreen()));
+              context, NavigationFromRightRoute(page: TeacherSignInScreen()));
         },
         child: Text(
           "Sign In",

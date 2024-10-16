@@ -4,14 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
+import 'package:sheduling_app/common/splash_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/firebase_options.dart';
 import 'package:sheduling_app/locator.dart';
 
-import 'package:sheduling_app/teacher/ui/screens/student/auth/sign_up/sign_up_view_model.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/auth/sign_up/sign_up_view_model.dart';
-
-import 'package:sheduling_app/teacher/ui/splash_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,8 +34,7 @@ class MyApp extends StatelessWidget {
           MediaQuery.sizeOf(context).width, MediaQuery.sizeOf(context).height),
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => SignUpViewModel()),
-          ChangeNotifierProvider(create: (context) => StudnetSignUpViewModel())
+          ChangeNotifierProvider(create: (context) => TeacherSignUpViewModel()),
         ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,

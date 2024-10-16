@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sheduling_app/teacher/core/constants/colors.dart';
+
 // import 'package:ustad/core/others/screen_utils.dart';
 
 class CustomBottomNavigator extends StatelessWidget {
@@ -13,13 +13,13 @@ class CustomBottomNavigator extends StatelessWidget {
   VoidCallback? onPressed;
 
   CustomBottomNavigator({
-    Key? key,
+    super.key,
     required this.image,
     required this.currentIndex,
     required this.indexNumber,
     required this.iconColor,
     required this.onPressed,
-  }) : super(key: key);
+  });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

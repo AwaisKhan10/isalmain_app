@@ -4,10 +4,11 @@ import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
 import 'package:sheduling_app/teacher/core/model/onbaording.dart';
 
+// ignore: must_be_immutable
 class CustomOnBoarding extends StatelessWidget {
   Onboarding onboarding;
 
-  CustomOnBoarding({required this.onboarding});
+  CustomOnBoarding({super.key, required this.onboarding});
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [

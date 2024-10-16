@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/strings.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/chat_screen/chat_view_model.dart';
+import 'package:sheduling_app/teacher/ui/screens/chat_screen/chat_view_model.dart';
 
 class ChatScreen extends StatelessWidget {
   @override

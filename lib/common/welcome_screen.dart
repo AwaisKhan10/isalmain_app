@@ -7,8 +7,8 @@ import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/custom_routes/navigate_from_bottom.dart';
 
-import 'package:sheduling_app/teacher/ui/screens/teacher/auth/sign_up/sign_up_screen.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/home/home_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/home/home_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -40,7 +40,7 @@ class WelcomeScreen extends StatelessWidget {
                   text: "Teacher",
                   onPressed: () {
                     Navigator.push(context,
-                        NavigationFromBottomRoute(page: SignUpScreen()));
+                        NavigationFromBottomRoute(page: TeacherSignUpScreen()));
                   }),
               SizedBox(
                 height: 20.h,

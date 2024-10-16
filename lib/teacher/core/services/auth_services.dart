@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sheduling_app/teacher/core/model/custom_auth_result.dart';
@@ -8,7 +7,7 @@ import 'package:sheduling_app/teacher/core/services/database_services.dart';
 
 class AuthServices extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-  final _db = FirebaseFirestore.instance;
+
   final DatabaseServices databaseServices = DatabaseServices();
   CustomAuthResult customAuthResult = CustomAuthResult();
   AuthExceptionsService authExceptionsService = AuthExceptionsService();

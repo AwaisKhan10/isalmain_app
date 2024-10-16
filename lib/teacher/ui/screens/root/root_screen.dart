@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/app_assets.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/bottom_bar/Bottom_navigator_bar.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/root/root_view_model.dart';
+import 'package:sheduling_app/teacher/ui/screens/root/root_view_model.dart';
 
 class RootScreen extends StatelessWidget {
   final int? selectedScreen;

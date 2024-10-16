@@ -6,14 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/strings.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
-import 'package:sheduling_app/teacher/core/services/auth_services.dart';
-import 'package:sheduling_app/locator.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/home/home_screen.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/profile/profile_view_model.dart';
+
+import 'package:sheduling_app/teacher/ui/screens/profile/profile_view_model.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final _auth = locator<AuthServices>();
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

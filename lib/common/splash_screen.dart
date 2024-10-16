@@ -8,7 +8,7 @@ import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/services/auth_services.dart';
 import 'package:sheduling_app/locator.dart';
 import 'package:sheduling_app/common/onbaording/onbaording_screen.dart';
-import 'package:sheduling_app/teacher/ui/screens/teacher/root/root_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/root/root_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
