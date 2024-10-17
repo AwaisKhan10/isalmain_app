@@ -11,7 +11,7 @@ import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart'
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
 import 'package:sheduling_app/teacher/core/enums/view_state.dart';
-import 'package:sheduling_app/teacher/core/model/teacher/teacher_user.dart';
+import 'package:sheduling_app/teacher/core/model/teacher_user.dart';
 import 'package:sheduling_app/teacher/core/services/database_services.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_back_button.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_button.dart';

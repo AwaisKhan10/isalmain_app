@@ -1,12 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sheduling_app/teacher/core/model/custom_auth_result.dart';
-import 'package:sheduling_app/teacher/core/model/teacher/teacher_user.dart';
+import 'package:sheduling_app/teacher/core/model/teacher_user.dart';
 import 'package:sheduling_app/teacher/core/services/auth_exception.dart';
 import 'package:sheduling_app/teacher/core/services/database_services.dart';
 
 class AuthServices extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
+  final _database = DatabaseServices();
 
   final DatabaseServices databaseServices = DatabaseServices();
   CustomAuthResult customAuthResult = CustomAuthResult();
@@ -26,6 +28,7 @@ class AuthServices extends ChangeNotifier {
     user = _auth.currentUser;
     if (user != null) {
       isLogin = true;
+      teacherUser = (await databaseServices.getTeacherUser(user!.uid));
     } else {
       isLogin = false;
     }
@@ -46,7 +49,7 @@ class AuthServices extends ChangeNotifier {
       if (credentials.user != null) {
         customAuthResult.status = true;
         customAuthResult.user = credentials.user;
-        teacherUser.id = credentials.user!.uid;
+        this.teacherUser.id = credentials.user!.uid;
         this.teacherUser = teacherUser;
         await databaseServices.addTeacherUser(teacherUser);
         notifyListeners();
@@ -72,9 +75,11 @@ class AuthServices extends ChangeNotifier {
         return customAuthResult;
       }
       if (credentials.user != null) {
+        teacherUser =
+            await databaseServices.getTeacherUser(credentials.user!.uid);
+
         customAuthResult.status = true;
         customAuthResult.user = customAuthResult.user;
-        teacherUser.id = credentials.user!.uid;
       }
     } catch (e) {
       customAuthResult.status = false;

@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           ///
           /// App Bar
           ///
-          appBar: _appBar(),
+          appBar: _appBar(model),
 
           ///
           /// Start Body
@@ -131,7 +131,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-AppBar _appBar() {
+AppBar _appBar(HomeViewModel model) {
   return AppBar(
     elevation: 0.0,
     // shadowColor: secondaryColor,
@@ -141,10 +141,10 @@ AppBar _appBar() {
     title: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Awais khan",
+        Text("${model.authServices.teacherUser.fullName}",
             style: styleB25.copyWith(color: secondaryColor, fontSize: 28.sp)),
         Text(
-          "Software Engineer",
+          "${model.authServices.teacherUser.qualification}",
           style: styleB16,
         ),
       ],

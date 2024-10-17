@@ -15,6 +15,7 @@ import 'package:sheduling_app/firebase_options.dart';
 import 'package:sheduling_app/locator.dart';
 
 import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_view_model.dart';
+import 'package:sheduling_app/teacher/ui/screens/profile/profile_view_model.dart';
 
 void main() async {
   // final pref = await SharedPreferences.getInstance();
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => TeacherSignUpViewModel()),
+          ChangeNotifierProvider(create: (context) => ProfileViewModel())
         ],
         child: GetMaterialApp(
             debugShowCheckedModeBanner: false,

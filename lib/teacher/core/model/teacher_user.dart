@@ -1,6 +1,8 @@
+import 'dart:io';
+
 class TeacherUser {
   String? id;
-  String? imgUrl;
+  File? imgUrl;
   String? fullName;
   String? fcmToken;
   String? email;

@@ -3,7 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/teacher/core/model/custom_auth_result.dart';
-import 'package:sheduling_app/teacher/core/model/teacher/teacher_user.dart';
+import 'package:sheduling_app/teacher/core/model/teacher_user.dart';
 import 'package:sheduling_app/teacher/core/services/auth_services.dart';
 import 'package:sheduling_app/teacher/core/view_model/view_model.dart';
 import 'package:sheduling_app/locator.dart';

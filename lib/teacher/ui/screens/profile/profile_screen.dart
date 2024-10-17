@@ -2,10 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/strings.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
+import 'package:sheduling_app/teacher/ui/screens/home/home_view_model.dart';
+import 'package:sheduling_app/teacher/ui/screens/profile/components/edit_profile.dart';
 
 import 'package:sheduling_app/teacher/ui/screens/profile/profile_view_model.dart';
 
@@ -19,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
           ///
           /// App Bar
           ///
-          appBar: _appBar(),
+          appBar: _appBar(model),
 
           ///
           /// Start Body
@@ -31,7 +35,10 @@ class ProfileScreen extends StatelessWidget {
                   height: 100.h,
                 ),
                 _detailContainer(
-                    title: "Edit Profile Detail", onPressed: () {}),
+                    title: "Edit Profile Detail",
+                    onPressed: () {
+                      Get.to(EditProfile());
+                    }),
                 _detailContainer(
                     title: "Terms And Conditions", onPressed: () {}),
                 _detailContainer(title: "About Us", onPressed: () {}),
@@ -49,11 +56,10 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-AppBar _appBar() {
+AppBar _appBar(ProfileViewModel model) {
   return AppBar(
     toolbarHeight: 280.h,
     backgroundColor: Colors.transparent,
-    centerTitle: true,
     title: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -74,11 +80,11 @@ AppBar _appBar() {
           height: 20.h,
         ),
         Text(
-          "Awais khan",
+          "${model.authServices.teacherUser.fullName}",
           style: styleB25,
         ),
         Text(
-          "awais.sf10@gmail.com",
+          "${model.authServices.teacherUser.email}",
           style: styleN14.copyWith(color: Colors.grey),
         ),
       ],

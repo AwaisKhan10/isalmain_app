@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sheduling_app/locator.dart';
+import 'package:sheduling_app/teacher/core/services/auth_services.dart';
+import 'package:sheduling_app/teacher/core/services/database_services.dart';
 import 'package:sheduling_app/teacher/core/view_model/view_model.dart';
 
 class HomeViewModel extends BaseViewModel {
+  final authServices = locator<AuthServices>();
+  final dataBaseServices = locator<DatabaseServices>();
+
   // Controllers for form fields
   final TextEditingController departmentController = TextEditingController();
   final TextEditingController subjectController = TextEditingController();
