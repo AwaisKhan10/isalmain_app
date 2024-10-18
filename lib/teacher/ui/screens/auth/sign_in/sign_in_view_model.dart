@@ -30,7 +30,7 @@ class TeacherSignInViewModel extends BaseViewModel {
     if (customAuthResult.status!) {
       _authServices.isLogin = true;
       Get.snackbar("Login", "User Loged In Successfully");
-      Get.offAll(() => const RootScreen());
+      Get.to(() => const RootScreen());
     } else {
       setState(ViewState.idle);
       Get.snackbar("Error", "${customAuthResult.errorMessage}");

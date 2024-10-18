@@ -26,78 +26,80 @@ class HomeScreen extends StatelessWidget {
           ///
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Departments",
-                  textAlign: TextAlign.center,
-                  style:
-                      styleB25.copyWith(color: secondaryColor, fontSize: 30.sp),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                GridView.builder(
-                    itemCount: 4,
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 20.0,
-                            crossAxisSpacing: 20.0),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            gradient: const LinearGradient(
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
-                                colors: [primaryColor, secondaryColor]),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: secondaryColor.withOpacity(0.20),
-                                  offset: const Offset(0, 4),
-                                  spreadRadius: 4,
-                                  blurRadius: 4)
-                            ]),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Center(
-                              child: Text(
-                                "Statistics",
-                                style: styleB25.copyWith(
-                                    color: whiteColor,
-                                    fontWeight: FontWeight.w500),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Departments",
+                    textAlign: TextAlign.center,
+                    style: styleB25.copyWith(
+                        color: secondaryColor, fontSize: 30.sp),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  GridView.builder(
+                      itemCount: 4,
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 20.0,
+                              crossAxisSpacing: 20.0),
+                      itemBuilder: (context, index) {
+                        return Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              gradient: const LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [primaryColor, secondaryColor]),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: secondaryColor.withOpacity(0.20),
+                                    offset: const Offset(0, 4),
+                                    spreadRadius: 4,
+                                    blurRadius: 4)
+                              ]),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Center(
+                                child: Text(
+                                  "Statistics",
+                                  style: styleB25.copyWith(
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.w500),
+                                ),
                               ),
-                            ),
-                            Text(
-                              "Subject: Calculas",
-                              textAlign: TextAlign.center,
-                              style: styleB16.copyWith(color: whiteColor),
-                            ),
-                            Text(
-                              "Semester: 4th",
-                              textAlign: TextAlign.center,
-                              style: styleB16.copyWith(color: whiteColor),
-                            ),
-                            Text(
-                              "Time: 10:30 to 11:30",
-                              textAlign: TextAlign.center,
-                              style: styleB14.copyWith(color: whiteColor),
-                            ),
-                          ],
-                        ),
-                      );
-                    })
-              ],
+                              Text(
+                                "Subject: Calculas",
+                                textAlign: TextAlign.center,
+                                style: styleB16.copyWith(color: whiteColor),
+                              ),
+                              Text(
+                                "Semester: 4th",
+                                textAlign: TextAlign.center,
+                                style: styleB16.copyWith(color: whiteColor),
+                              ),
+                              Text(
+                                "Time: 10:30 to 11:30",
+                                textAlign: TextAlign.center,
+                                style: styleB14.copyWith(color: whiteColor),
+                              ),
+                            ],
+                          ),
+                        );
+                      })
+                ],
+              ),
             ),
           ),
 
@@ -133,6 +135,7 @@ class HomeScreen extends StatelessWidget {
 
 AppBar _appBar(HomeViewModel model) {
   return AppBar(
+    automaticallyImplyLeading: false,
     elevation: 0.0,
     // shadowColor: secondaryColor,
     surfaceTintColor: Colors.transparent,

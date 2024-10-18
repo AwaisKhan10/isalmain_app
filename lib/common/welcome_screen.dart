@@ -39,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
                   image: AppAssets.teacher,
                   text: "Teacher",
                   onPressed: () {
-                    Get.to(TeacherSignUpScreen());
+                    Get.to(() => TeacherSignUpScreen());
                   }),
               SizedBox(
                 height: 20.h,
@@ -48,7 +48,7 @@ class WelcomeScreen extends StatelessWidget {
                   image: AppAssets.student,
                   text: "Student",
                   onPressed: () {
-                    Get.to(const StudentHomeScreen());
+                    Get.to(() => const StudentHomeScreen());
                   }),
             ],
           ),

@@ -146,7 +146,7 @@ class TeacherSignUpScreen extends StatelessWidget {
                               name: 'Next',
                               onPressed: () {
                                 if (_formkey.currentState!.validate()) {
-                                  Get.to(TeacherInformation());
+                                  Get.to(() => TeacherInformation());
                                 }
                               },
                               textColor: lightPinkColor),
@@ -261,7 +261,7 @@ _header() {
     children: [
       CustomBackButton(
         onPressed: () {
-          Get.to(WelcomeScreen());
+          Get.to(() => WelcomeScreen());
         },
       ),
       SizedBox(

@@ -32,7 +32,7 @@ class DatabaseServices {
     //Todo: Rename getUsers -> getUser
     debugPrint('@getAppUser: id: $id');
     try {
-      final snapshot = await _database.collection('teaher_user').doc(id).get();
+      final snapshot = await _database.collection('teacher_user').doc(id).get();
       debugPrint('Client Data: ${snapshot.data()}');
       return TeacherUser.fromJson(snapshot.data(), snapshot.id);
     } catch (e, s) {

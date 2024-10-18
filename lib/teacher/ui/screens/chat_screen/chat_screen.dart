@@ -80,6 +80,7 @@ class ChatScreen extends StatelessWidget {
 
 AppBar _appBar() {
   return AppBar(
+    automaticallyImplyLeading: false,
     backgroundColor: Colors.transparent,
     title: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

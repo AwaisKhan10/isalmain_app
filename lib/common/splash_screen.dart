@@ -20,34 +20,39 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   // final _authService = locator<AuthServices>();
   final _auth = locator<AuthServices>();
+  bool _isloading = true;
 
   @override
   void initState() {
     _initialSetup();
-    _checkOnboarding();
+
     super.initState();
   }
 
   _initialSetup() async {
-    await _auth.init();
-    await Future.delayed(const Duration(seconds: 5));
-    if (_auth.isLogin!) {
-      Get.offAll(() => RootScreen());
-    } else {
-      Get.offAll(() => OnBoardingScreen());
-    }
-    //function for one time onboarding screen sharedPreferences
-  }
-
-  _checkOnboarding() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool seenOnboarding = prefs.getBool("seenOnboarding") ?? false;
 
-    if (seenOnboarding) {
-      Get.offAll(() => WelcomeScreen());
-    } else {
-      Get.offAll(() => OnBoardingScreen());
+    if (!seenOnboarding) {
+      Get.off(() => WelcomeScreen());
+      setState(() {
+        _isloading = false;
+      });
+      return;
     }
+
+    await _auth.init();
+
+    await Future.delayed(const Duration(seconds: 2));
+    if (_auth.isLogin!) {
+      Get.off(() => RootScreen());
+    } else {
+      Get.off(() => OnBoardingScreen());
+    }
+    setState(() {
+      _isloading = false;
+    });
+    //function for one time onboarding screen sharedPreferences
   }
 
   @override
@@ -57,18 +62,22 @@ class _SplashScreenState extends State<SplashScreen> {
           color: whiteColor,
           height: double.infinity,
           child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.app_logo,
-                    scale: 2,
+            child: _isloading
+                ? CircularProgressIndicator(
+                    color: primaryColor,
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          AppAssets.app_logo,
+                          scale: 2,
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
           )),
     );
   }

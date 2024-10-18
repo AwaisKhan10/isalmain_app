@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sheduling_app/teacher/core/model/custom_auth_result.dart';
@@ -8,7 +7,6 @@ import 'package:sheduling_app/teacher/core/services/database_services.dart';
 
 class AuthServices extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-  final _database = DatabaseServices();
 
   final DatabaseServices databaseServices = DatabaseServices();
   CustomAuthResult customAuthResult = CustomAuthResult();
@@ -49,8 +47,8 @@ class AuthServices extends ChangeNotifier {
       if (credentials.user != null) {
         customAuthResult.status = true;
         customAuthResult.user = credentials.user;
-        this.teacherUser.id = credentials.user!.uid;
-        this.teacherUser = teacherUser;
+        teacherUser.id = credentials.user!.uid;
+        debugPrint('Assigned User ID: ${teacherUser.id}');
         await databaseServices.addTeacherUser(teacherUser);
         notifyListeners();
       }
@@ -75,6 +73,7 @@ class AuthServices extends ChangeNotifier {
         return customAuthResult;
       }
       if (credentials.user != null) {
+        teacherUser.id = credentials.user!.uid;
         teacherUser =
             await databaseServices.getTeacherUser(credentials.user!.uid);
 

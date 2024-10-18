@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/strings.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
-import 'package:sheduling_app/teacher/ui/screens/home/home_view_model.dart';
+
 import 'package:sheduling_app/teacher/ui/screens/profile/components/edit_profile.dart';
 
 import 'package:sheduling_app/teacher/ui/screens/profile/profile_view_model.dart';
@@ -37,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
                 _detailContainer(
                     title: "Edit Profile Detail",
                     onPressed: () {
-                      Get.to(EditProfile());
+                      Get.to(() => EditProfile());
                     }),
                 _detailContainer(
                     title: "Terms And Conditions", onPressed: () {}),
@@ -58,6 +58,7 @@ class ProfileScreen extends StatelessWidget {
 
 AppBar _appBar(ProfileViewModel model) {
   return AppBar(
+    automaticallyImplyLeading: false,
     toolbarHeight: 280.h,
     backgroundColor: Colors.transparent,
     title: Column(

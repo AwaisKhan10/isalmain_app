@@ -42,7 +42,7 @@ class TeacherSignUpViewModel extends BaseViewModel {
     if (customAuthResult.status!) {
       _authservice.isLogin = true;
       Get.snackbar('Register', 'User Registered Succesfully');
-      Get.to(const RootScreen());
+      Get.to(() => const RootScreen());
       notifyListeners();
     } else {
       setState(ViewState.idle);

@@ -50,7 +50,7 @@ class TeacherSignInScreen extends StatelessWidget {
                                 children: [
                                   CustomBackButton(
                                     onPressed: () {
-                                      Get.to(WelcomeScreen());
+                                      Get.to(() => TeacherSignUpScreen());
                                     },
                                   ),
                                   SizedBox(
@@ -216,10 +216,7 @@ class TeacherSignInScreen extends StatelessWidget {
                                   TextButton(
                                     onPressed: () {
                                       FocusScope.of(context).unfocus();
-                                      Navigator.pushReplacement(
-                                          context,
-                                          NavigationFromRightRoute(
-                                              page: TeacherSignUpScreen()));
+                                      Get.to(() => TeacherSignUpScreen());
                                     },
                                     child: Text(
                                       "Sign Up",

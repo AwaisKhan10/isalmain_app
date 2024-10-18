@@ -86,7 +86,7 @@ class OnBoardingScreen extends StatelessWidget {
 
                     pref.setBool("seenOnboarding", true);
 
-                    Get.offAll(() => WelcomeScreen());
+                    Get.to(() => WelcomeScreen());
                   },
                   name: 'Next',
                   textColor: whiteColor,
