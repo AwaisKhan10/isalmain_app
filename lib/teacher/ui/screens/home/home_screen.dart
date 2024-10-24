@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                     height: 15,
                   ),
                   GridView.builder(
-                      itemCount: 4,
+                      itemCount: model.listClassTimeShedule.length,
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -73,24 +73,24 @@ class HomeScreen extends StatelessWidget {
                             children: [
                               Center(
                                 child: Text(
-                                  "Statistics",
+                                  "Department: ${model.departmentController.text}",
                                   style: styleB25.copyWith(
                                       color: whiteColor,
                                       fontWeight: FontWeight.w500),
                                 ),
                               ),
                               Text(
-                                "Subject: Calculas",
+                                "Class Section: ${model.classSectionController.text}",
                                 textAlign: TextAlign.center,
                                 style: styleB16.copyWith(color: whiteColor),
                               ),
                               Text(
-                                "Semester: 4th",
+                                "Subject: ${model.subjectController.text}",
                                 textAlign: TextAlign.center,
                                 style: styleB16.copyWith(color: whiteColor),
                               ),
                               Text(
-                                "Time: 10:30 to 11:30",
+                                "Time: ${model.timeController.text}",
                                 textAlign: TextAlign.center,
                                 style: styleB14.copyWith(color: whiteColor),
                               ),
@@ -203,6 +203,14 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
                   decoration:
                       authFieldDecoration.copyWith(hintText: 'Departments'),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  controller: model.classSectionController,
+                  decoration:
+                      authFieldDecoration.copyWith(hintText: 'Class Section'),
+                ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: model.subjectController,
@@ -223,8 +231,9 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
                 ElevatedButton(
                   style: const ButtonStyle(
                       backgroundColor: WidgetStatePropertyAll(whiteColor)),
-                  onPressed: () {
+                  onPressed: () async {
                     // Perform any actions here, like submitting data
+                    await model.addClassTimeShedule();
                     Navigator.pop(context); // Close the bottom sheet
                   },
                   child: Text(

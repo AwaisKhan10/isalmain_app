@@ -48,7 +48,10 @@ class AuthServices extends ChangeNotifier {
         customAuthResult.status = true;
         customAuthResult.user = credentials.user;
         teacherUser.id = credentials.user!.uid;
+        this.teacherUser = teacherUser;
         debugPrint('Assigned User ID: ${teacherUser.id}');
+        debugPrint("$credentials");
+
         await databaseServices.addTeacherUser(teacherUser);
         notifyListeners();
       }
@@ -73,7 +76,7 @@ class AuthServices extends ChangeNotifier {
         return customAuthResult;
       }
       if (credentials.user != null) {
-        teacherUser.id = credentials.user!.uid;
+        // teacherUser.id = credentials.user!.uid;
         teacherUser =
             await databaseServices.getTeacherUser(credentials.user!.uid);
 
@@ -90,7 +93,7 @@ class AuthServices extends ChangeNotifier {
 
   logout({id}) async {
     await _auth.signOut();
-    this.isLogin = false;
-    this.user = null;
+    isLogin = false;
+    user = null;
   }
 }

@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     await _auth.init();
 
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 3));
     if (_auth.isLogin!) {
       Get.off(() => RootScreen());
     } else {
@@ -62,22 +62,18 @@ class _SplashScreenState extends State<SplashScreen> {
           color: whiteColor,
           height: double.infinity,
           child: Center(
-            child: _isloading
-                ? CircularProgressIndicator(
-                    color: primaryColor,
-                  )
-                : Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          AppAssets.app_logo,
-                          scale: 2,
-                        ),
-                      ],
-                    ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.app_logo,
+                    scale: 2,
                   ),
+                ],
+              ),
+            ),
           )),
     );
   }

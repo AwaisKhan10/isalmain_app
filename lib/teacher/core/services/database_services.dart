@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
+import 'package:sheduling_app/teacher/core/model/class_time_shedule.dart';
 import 'package:sheduling_app/teacher/core/model/teacher_user.dart';
 
 class DatabaseServices {
@@ -12,7 +13,10 @@ class DatabaseServices {
   }
 
   DatabaseServices._internal();
-  //adding data to dataBase
+
+  ///
+  ///
+  ///adding data to dataBase
 
   addTeacherUser(TeacherUser teacherUser) async {
     try {
@@ -49,4 +53,59 @@ class DatabaseServices {
         .update({'fcmToken': token}).then(
             (value) => debugPrint('fcm updated successfully'));
   }
+
+  ///
+  ///
+  ///class time shedule
+  ///
+  addClassTimeShedule(ClassTimeSheduleModel classtimeshdedule) async {
+    try {
+      await _database
+          .collection("class_time_shedule")
+          .doc(classtimeshdedule.id)
+          .set(classtimeshdedule.toJson())
+          .then((value) => debugPrint("Added Data Successfully"));
+    } catch (e) {
+      // print("@DataBaseServices ClassTimeSgedule ==>  ${e.toString()}");
+
+      debugPrint("@DataBaseServices ClassTimeSgedule ${e.toString()}");
+      return false;
+    }
+  }
+
+  ///
+  ///get class time shedule
+  ///
+  getClassTimeShedule() async {
+    List<ClassTimeSheduleModel> classTimeSheduleModel = [];
+    print("class time => ${classTimeSheduleModel.toString()}");
+    try {
+      final data = await _database.collection("class_time_shedule").get();
+      print("class time => ${data}");
+      // for (var element in data.docs) {
+      //   classTimeSheduleModel
+      //       .add(ClassTimeSheduleModel.fromJson(element.data()));
+      //   debugPrint("@Database Services Get =====> ${data}");
+      // }
+    } catch (e) {
+      debugPrint("@DataBaseServices ClassTimeSgedule ${e.toString()}");
+      return ClassTimeSheduleModel();
+    }
+  }
+
+  // getBasketData() async {
+  //   List<Basket> basketList = [];
+  //   try {
+  //     final basketData = await _db.collection('baskets').get();
+  //     print("BaketData length==>>>>>${basketData.docs.length}");
+  //     if (basketData.docs.length > 0) {
+  //       basketData.docs.forEach((element) {
+  //         basketList.add(Basket.fromJson(element.data(), element.id));
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print("Exception@getBasket ==> $e");
+  //   }
+  //   return basketList;
+  // }
 }
