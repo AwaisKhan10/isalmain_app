@@ -60,15 +60,19 @@ class DatabaseServices {
   ///
   addClassTimeShedule(ClassTimeSheduleModel classtimeshdedule) async {
     try {
+      String docId = classtimeshdedule.id ??
+          _database.collection("class_time_shedule").doc().id;
+      classtimeshdedule.id = docId;
+
+      debugPrint("Adding Data with ID: $docId"); // Debug print
+
       await _database
           .collection("class_time_shedule")
-          .doc(classtimeshdedule.id)
+          .doc(docId)
           .set(classtimeshdedule.toJson())
           .then((value) => debugPrint("Added Data Successfully"));
     } catch (e) {
-      // print("@DataBaseServices ClassTimeSgedule ==>  ${e.toString()}");
-
-      debugPrint("@DataBaseServices ClassTimeSgedule ${e.toString()}");
+      debugPrint("@DataBaseServices ClassTimeShedule ${e.toString()}");
       return false;
     }
   }
@@ -76,21 +80,26 @@ class DatabaseServices {
   ///
   ///get class time shedule
   ///
-  getClassTimeShedule() async {
-    List<ClassTimeSheduleModel> classTimeSheduleModel = [];
-    print("class time => ${classTimeSheduleModel.toString()}");
+  Future<List<ClassTimeSheduleModel>> getClassTimeShedule() async {
+    List<ClassTimeSheduleModel> classTimeSheduleList = [];
     try {
+      // Fetch data from the Firestore collection
       final data = await _database.collection("class_time_shedule").get();
-      print("class time => ${data}");
-      // for (var element in data.docs) {
-      //   classTimeSheduleModel
-      //       .add(ClassTimeSheduleModel.fromJson(element.data()));
-      //   debugPrint("@Database Services Get =====> ${data}");
-      // }
+
+      // Loop through each document and convert it to ClassTimeSheduleModel
+      for (var doc in data.docs) {
+        classTimeSheduleList
+            .add(ClassTimeSheduleModel.fromJson(doc.data(), doc.id));
+      }
+
+      debugPrint(
+          "Class Time Schedule List Fetched: ${classTimeSheduleList.length}");
     } catch (e) {
-      debugPrint("@DataBaseServices ClassTimeSgedule ${e.toString()}");
-      return ClassTimeSheduleModel();
+      debugPrint(
+          "@DataBaseServices ClassTimeShedule Exception: ${e.toString()}");
     }
+
+    return classTimeSheduleList; // Return the list of schedules
   }
 
   // getBasketData() async {

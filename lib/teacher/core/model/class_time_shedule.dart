@@ -26,9 +26,7 @@ class ClassTimeSheduleModel {
     };
   }
 
-  ClassTimeSheduleModel.fromJson(
-    json,
-  ) {
+  ClassTimeSheduleModel.fromJson(json, id) {
     this.id = id;
     department = json['department'];
     classSection = json['class_section'];

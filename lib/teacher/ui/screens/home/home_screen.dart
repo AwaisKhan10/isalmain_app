@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
+import 'package:sheduling_app/common/onbaording/onbaording_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/strings.dart';
@@ -24,9 +27,9 @@ class HomeScreen extends StatelessWidget {
           ///
           /// Start Body
           ///
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: SingleChildScrollView(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -202,6 +205,9 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
                   controller: model.departmentController,
                   decoration:
                       authFieldDecoration.copyWith(hintText: 'Departments'),
+                  onChanged: (val) {
+                    model.departmentController.text = val;
+                  },
                 ),
                 const SizedBox(
                   height: 20,
@@ -210,22 +216,34 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
                   controller: model.classSectionController,
                   decoration:
                       authFieldDecoration.copyWith(hintText: 'Class Section'),
+                  onChanged: (val) {
+                    model.classSectionController.text = val;
+                  },
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: model.subjectController,
                   decoration: authFieldDecoration.copyWith(hintText: 'Subject'),
+                  onChanged: (val) {
+                    model.subjectController.text = val;
+                  },
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: model.semesterController,
                   decoration:
                       authFieldDecoration.copyWith(hintText: 'Semester'),
+                  onChanged: (val) {
+                    model.semesterController.text = val;
+                  },
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: model.timeController,
                   decoration: authFieldDecoration.copyWith(hintText: 'Time'),
+                  onChanged: (val) {
+                    model.timeController.text = val;
+                  },
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -234,7 +252,7 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
                   onPressed: () async {
                     // Perform any actions here, like submitting data
                     await model.addClassTimeShedule();
-                    Navigator.pop(context); // Close the bottom sheet
+                    Get.back();
                   },
                   child: Text(
                     'Submit',
