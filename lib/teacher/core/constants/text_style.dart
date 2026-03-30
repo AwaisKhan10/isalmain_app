@@ -13,6 +13,12 @@ TextStyle styleB25 = TextStyle(
     color: blackColor,
     fontFamily: "Cera Pro");
 
+TextStyle styleB20 = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w700,
+    color: blackColor,
+    fontFamily: "Cera Pro");
+
 TextStyle styleB18 = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeight.w700,
@@ -60,6 +66,12 @@ TextStyle styleN18 = TextStyle(
     color: blackColor,
     fontFamily: "Cera Pro");
 
+TextStyle styleN14 = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w300,
+    color: blackColor,
+    fontFamily: "Cera Pro");
+
 TextStyle styleN15 = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeight.w300,
@@ -72,8 +84,8 @@ TextStyle styleN16 = TextStyle(
     color: blackColor,
     fontFamily: "Cera Pro");
 
-TextStyle styleN14 = TextStyle(
-    fontSize: 14.sp,
+TextStyle styleN12 = TextStyle(
+    fontSize: 12.sp,
     fontWeight: FontWeight.w300,
     color: blackColor,
     fontFamily: "Cera Pro");

@@ -41,7 +41,7 @@ class OnboardingViewModel extends BaseViewModel {
       pageController.animateToPage(
         index,
         curve: Curves.easeIn,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
       );
     } else {
       Navigator.pushReplacement(

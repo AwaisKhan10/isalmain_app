@@ -7,23 +7,20 @@ import 'package:sheduling_app/teacher/ui/screens/root/root_view_model.dart';
 
 class RootScreen extends StatelessWidget {
   final int? selectedScreen;
-  const RootScreen({Key? key, this.selectedScreen = 0}) : super(key: key);
+  const RootScreen({super.key, this.selectedScreen = 0});
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => RootViewModel(selectedScreen),
-      child: Consumer<RootViewModel>(
-        builder: (context, model, child) => Scaffold(
-          ///
-          /// Start Body
-          ///
-          body: model.allScreen[model.selectedScreen],
+    return Consumer<RootViewModel>(
+      builder: (context, model, child) => Scaffold(
+        ///
+        /// Start Body
+        ///
+        body: model.allScreen[model.selectedScreen],
 
-          ///
-          /// BottomBar
-          ///
-          bottomNavigationBar: bottomBar(model),
-        ),
+        ///
+        /// BottomBar
+        ///
+        bottomNavigationBar: bottomBar(model),
       ),
     );
   }

@@ -7,45 +7,38 @@ import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart'
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
 import 'package:sheduling_app/teacher/core/enums/view_state.dart';
-import 'package:sheduling_app/teacher/core/model/teacher_user.dart';
+import 'package:sheduling_app/teacher/core/model/student_user.dart';
 import 'package:sheduling_app/teacher/ui/screens/profile/profile_view_model.dart';
 
-class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+class StudentEditProfile extends StatefulWidget {
+  const StudentEditProfile({super.key});
 
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  State<StudentEditProfile> createState() => _StudentEditProfileState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _StudentEditProfileState extends State<StudentEditProfile> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController nameController;
-  late TextEditingController phoneController;
-  late TextEditingController qualificationController;
-  late TextEditingController subjectsController;
   String? selectedDepartment;
-  String? selectedGender;
+  String? selectedSection;
+  String? selectedSemester;
 
   @override
   void initState() {
     super.initState();
     final model = Provider.of<ProfileViewModel>(context, listen: false);
-    final teacher = model.authServices.teacherUser;
+    final student = model.authServices.studentUser;
 
-    nameController = TextEditingController(text: teacher.fullName);
-    phoneController = TextEditingController(text: teacher.phoneNo);
-    qualificationController = TextEditingController(text: teacher.qualification);
-    subjectsController = TextEditingController(text: teacher.subjects);
-    selectedDepartment = teacher.department;
-    selectedGender = teacher.gender;
+    nameController = TextEditingController(text: student.fullName);
+    selectedDepartment = student.department;
+    selectedSection = student.section;
+    selectedSemester = student.semester;
   }
 
   @override
   void dispose() {
     nameController.dispose();
-    phoneController.dispose();
-    qualificationController.dispose();
-    subjectsController.dispose();
     super.dispose();
   }
 
@@ -75,21 +68,13 @@ class _EditProfileState extends State<EditProfile> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        _profileHeader(model.authServices.teacherUser),
+                        _profileHeader(model.authServices.studentUser),
                         const SizedBox(height: 30),
                         
                         TextFormField(
                           controller: nameController,
                           validator: (value) => value!.isEmpty ? "Required" : null,
                           decoration: authFieldDecoration.copyWith(hintText: 'Full Name'),
-                        ),
-                        const SizedBox(height: 15),
-                        
-                        TextFormField(
-                          controller: phoneController,
-                          keyboardType: TextInputType.phone,
-                          validator: (value) => value!.isEmpty ? "Required" : null,
-                          decoration: authFieldDecoration.copyWith(hintText: 'Phone Number'),
                         ),
                         const SizedBox(height: 15),
 
@@ -104,30 +89,27 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                         const SizedBox(height: 15),
 
-                        TextFormField(
-                          controller: qualificationController,
-                          validator: (value) => value!.isEmpty ? "Required" : null,
-                          decoration: authFieldDecoration.copyWith(hintText: 'Qualification'),
-                        ),
-                        const SizedBox(height: 15),
-
-                        TextFormField(
-                          controller: subjectsController,
-                          validator: (value) => value!.isEmpty ? "Required" : null,
-                          decoration: authFieldDecoration.copyWith(hintText: 'Subjects (e.g. CS, Maths)'),
+                        DropdownButtonFormField<String>(
+                          value: selectedSection,
+                          validator: (value) => value == null ? "Required" : null,
+                          decoration: authFieldDecoration.copyWith(hintText: 'Select Section'),
+                          items: AppConstants.sections.map((sec) {
+                            return DropdownMenuItem(value: sec, child: Text(sec));
+                          }).toList(),
+                          onChanged: (val) => selectedSection = val,
                         ),
                         const SizedBox(height: 15),
 
                         DropdownButtonFormField<String>(
-                          value: selectedGender,
+                          value: selectedSemester,
                           validator: (value) => value == null ? "Required" : null,
-                          decoration: authFieldDecoration.copyWith(hintText: 'Select Gender'),
-                          items: ['Male', 'Female', 'Other'].map((g) {
-                            return DropdownMenuItem(value: g, child: Text(g));
+                          decoration: authFieldDecoration.copyWith(hintText: 'Select Semester'),
+                          items: AppConstants.semesters.map((sem) {
+                            return DropdownMenuItem(value: sem, child: Text("Semester $sem"));
                           }).toList(),
-                          onChanged: (val) => selectedGender = val,
+                          onChanged: (val) => selectedSemester = val,
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 40),
 
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -137,18 +119,16 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              final updatedTeacher = TeacherUser(
-                                id: model.authServices.teacherUser.id,
-                                email: model.authServices.teacherUser.email,
+                              final updatedStudent = StudentUser(
+                                id: model.authServices.studentUser.id,
+                                email: model.authServices.studentUser.email,
                                 fullName: nameController.text.trim(),
-                                phoneNo: phoneController.text.trim(),
                                 department: selectedDepartment,
-                                qualification: qualificationController.text.trim(),
-                                subjects: subjectsController.text.trim(),
-                                gender: selectedGender,
+                                section: selectedSection,
+                                semester: selectedSemester,
                               );
                               
-                              bool success = await model.updateTeacherProfile(updatedTeacher);
+                              bool success = await model.updateStudentProfile(updatedStudent);
                               if (success) {
                                 Get.back();
                                 Get.snackbar("Success", "Profile updated successfully");
@@ -171,7 +151,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget _profileHeader(teacher) {
+  Widget _profileHeader(student) {
     return Center(
       child: Stack(
         alignment: Alignment.bottomRight,

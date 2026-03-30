@@ -13,9 +13,16 @@ import 'package:sheduling_app/common/welcome_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/firebase_options.dart';
 import 'package:sheduling_app/locator.dart';
+import 'package:sheduling_app/student/ui/screens/root/student_root_screen.dart';
 
 import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_view_model.dart';
 import 'package:sheduling_app/teacher/ui/screens/profile/profile_view_model.dart';
+import 'package:sheduling_app/student/auth/signup/student_signup_view_model.dart';
+import 'package:sheduling_app/student/auth/login/student_login_view_model.dart';
+import 'package:sheduling_app/student/ui/screens/home/student_home_view_model.dart';
+import 'package:sheduling_app/student/ui/screens/root/student_root_view_model.dart';
+import 'package:sheduling_app/teacher/ui/screens/home/home_view_model.dart';
+import 'package:sheduling_app/teacher/ui/screens/root/root_view_model.dart';
 
 void main() async {
   // final pref = await SharedPreferences.getInstance();
@@ -44,7 +51,13 @@ class MyApp extends StatelessWidget {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => TeacherSignUpViewModel()),
-          ChangeNotifierProvider(create: (context) => ProfileViewModel())
+          ChangeNotifierProvider(create: (context) => ProfileViewModel()),
+          ChangeNotifierProvider(create: (context) => StudentSignUpViewModel()),
+          ChangeNotifierProvider(create: (context) => StudentSignInViewModel()),
+          ChangeNotifierProvider(create: (context) => StudentHomeViewModel()),
+          ChangeNotifierProvider(create: (context) => StudentRootViewModel(0)),
+          ChangeNotifierProvider(create: (context) => HomeViewModel()),
+          ChangeNotifierProvider(create: (context) => RootViewModel(0)),
         ],
         child: GetMaterialApp(
             debugShowCheckedModeBanner: false,

@@ -3,12 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:sheduling_app/student/home_screen.dart';
+import 'package:sheduling_app/student/auth/login/student_login_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/app_assets.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
-
-import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:sheduling_app/teacher/ui/screens/auth/sign_in/sign_in_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -39,7 +38,7 @@ class WelcomeScreen extends StatelessWidget {
                   image: AppAssets.teacher,
                   text: "Teacher",
                   onPressed: () {
-                    Get.to(() => TeacherSignUpScreen());
+                    Get.to(() => TeacherSignInScreen());
                   }),
               SizedBox(
                 height: 20.h,
@@ -48,7 +47,7 @@ class WelcomeScreen extends StatelessWidget {
                   image: AppAssets.student,
                   text: "Student",
                   onPressed: () {
-                    Get.to(() => const StudentHomeScreen());
+                    Get.to(() => StudentSignInScreen());
                   }),
             ],
           ),

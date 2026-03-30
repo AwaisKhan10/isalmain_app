@@ -6,7 +6,7 @@ import 'package:sheduling_app/teacher/core/constants/colors.dart';
 
 class CustomBackButton extends StatefulWidget {
   VoidCallback? onPressed;
-  CustomBackButton({this.onPressed});
+  CustomBackButton({super.key, this.onPressed});
 
   @override
   _CustomBackButtonState createState() => _CustomBackButtonState();

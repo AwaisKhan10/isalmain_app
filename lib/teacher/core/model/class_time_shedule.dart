@@ -4,16 +4,20 @@ class ClassTimeSheduleModel {
   String? department;
   String? classSection;
   String? subject;
-  String? semister;
+  String? semester;
   String? time;
+  int? createdAt;
+  String? teacherId;
 
   ClassTimeSheduleModel(
       {this.id,
       this.department,
       this.classSection,
-      this.semister,
+      this.semester,
       this.subject,
-      this.time});
+      this.time,
+      this.createdAt,
+      this.teacherId});
 
   toJson() {
     return {
@@ -21,18 +25,22 @@ class ClassTimeSheduleModel {
       "department": department,
       "class_section": classSection,
       "subject": subject,
-      "semister": semister,
+      "semester": semester,
       "time": time,
+      "teacherId": teacherId,
+      "createdAt": DateTime.now().millisecondsSinceEpoch,
     };
   }
 
-  ClassTimeSheduleModel.fromJson(json, id) {
-    this.id = id;
+  ClassTimeSheduleModel.fromJson(Map<String, dynamic>? json, String? docId) {
+    if (json == null) return;
+    id = docId;
     department = json['department'];
     classSection = json['class_section'];
     subject = json['subject'];
-    semister = json['semister'];
+    semester = json['semester'];
     time = json['time'];
-    department = json['department'];
+    createdAt = json['createdAt'];
+    teacherId = json['teacherId'];
   }
 }

@@ -4,13 +4,15 @@ import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TextResponseShimmer extends StatelessWidget {
+  const TextResponseShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: lightBlueColor,
       highlightColor: blueWhiteColor,
       child: Padding(
-        padding: EdgeInsets.only(top: 0),
+        padding: const EdgeInsets.only(top: 0),
         child: ListView.builder(
           reverse: true,
           // padding: EdgeInsets.symmetric(horizontal: 20),

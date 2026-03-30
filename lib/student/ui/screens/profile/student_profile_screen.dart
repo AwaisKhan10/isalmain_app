@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
-import 'package:sheduling_app/teacher/ui/screens/profile/components/edit_profile.dart';
 import 'package:sheduling_app/teacher/ui/screens/profile/profile_view_model.dart';
+import 'package:sheduling_app/student/ui/screens/profile/components/student_edit_profile.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class StudentProfileScreen extends StatelessWidget {
+  const StudentProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,12 @@ class ProfileScreen extends StatelessWidget {
       create: (context) => ProfileViewModel(),
       child: Consumer<ProfileViewModel>(
         builder: (context, model, child) {
-          final teacher = model.authServices.teacherUser;
+          final student = model.authServices.studentUser;
           return Scaffold(
             backgroundColor: whiteColor,
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              title: Text("Teacher Profile",
+              title: Text("Student Profile",
                   style: styleB25.copyWith(color: secondaryColor, fontSize: 22.sp)),
               elevation: 0,
               backgroundColor: whiteColor,
@@ -31,10 +31,10 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  _profileHeader(teacher),
+                  _profileHeader(student),
                   const SizedBox(height: 30),
-                  _profileInfoSection(teacher),
-                  const SizedBox(height: 20),
+                  _profileInfoSection(student),
+                  const SizedBox(height: 30),
                   _actionSection(model),
                   const SizedBox(height: 40),
                 ],
@@ -46,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _profileHeader(teacher) {
+  Widget _profileHeader(student) {
     return Column(
       children: [
         CircleAvatar(
@@ -55,14 +55,14 @@ class ProfileScreen extends StatelessWidget {
           child: Icon(Icons.person, size: 60.r, color: secondaryColor),
         ),
         const SizedBox(height: 15),
-        Text(teacher.fullName ?? "User Name", style: styleB20),
-        Text(teacher.email ?? "user@email.com",
+        Text(student.fullName ?? "Student Name", style: styleB20),
+        Text(student.email ?? "student@email.com",
             style: styleN14.copyWith(color: Colors.grey)),
       ],
     );
   }
 
-  Widget _profileInfoSection(teacher) {
+  Widget _profileInfoSection(student) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(20),
@@ -80,15 +80,11 @@ class ProfileScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _infoRow(Icons.school_outlined, "Department", teacher.department ?? "N/A"),
+          _infoRow(Icons.school_outlined, "Department", student.department ?? "N/A"),
           const Divider(),
-          _infoRow(Icons.workspace_premium_outlined, "Qualification", teacher.qualification ?? "N/A"),
+          _infoRow(Icons.class_outlined, "Section", student.section ?? "N/A"),
           const Divider(),
-          _infoRow(Icons.book_outlined, "Subjects", teacher.subjects ?? "N/A"),
-          const Divider(),
-          _infoRow(Icons.person_outline, "Gender", teacher.gender ?? "N/A"),
-          const Divider(),
-          _infoRow(Icons.phone_android_outlined, "Phone", teacher.phoneNo ?? "N/A"),
+          _infoRow(Icons.calendar_today_outlined, "Semester", "Semester ${student.semester ?? 'N/A'}"),
         ],
       ),
     );
@@ -127,8 +123,7 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          _actionTile(Icons.edit_outlined, "Edit Profile", () => Get.to(() => const EditProfile())),
-          _actionTile(Icons.description_outlined, "Terms & Conditions", () {}),
+          _actionTile(Icons.edit_outlined, "Edit Profile", () => Get.to(() => const StudentEditProfile())),
           _actionTile(Icons.info_outline, "About Us", () {}),
           _actionTile(Icons.logout_rounded, "Log Out", () => model.logout(), isDanger: true),
         ],

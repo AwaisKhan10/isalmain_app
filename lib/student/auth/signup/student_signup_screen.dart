@@ -3,27 +3,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:sheduling_app/teacher/core/constants/app_constants.dart';
 import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
 import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_back_button.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_button.dart';
-import 'package:sheduling_app/teacher/ui/screens/auth/sign_in/sign_in_screen.dart';
-import 'package:sheduling_app/teacher/core/constants/app_constants.dart';
-import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_view_model.dart';
-import 'package:sheduling_app/common/welcome_screen.dart';
+import 'package:sheduling_app/student/auth/signup/student_signup_view_model.dart';
 
-class TeacherSignUpScreen extends StatelessWidget {
+class StudentSignUpScreen extends StatelessWidget {
   final _formkey = GlobalKey<FormState>();
 
-  TeacherSignUpScreen({super.key});
+  StudentSignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => TeacherSignUpViewModel(),
-      child: Consumer<TeacherSignUpViewModel>(
+      create: (context) => StudentSignUpViewModel(),
+      child: Consumer<StudentSignUpViewModel>(
         builder: (context, model, child) => ModalProgressHUD(
           inAsyncCall: model.state == ViewState.busy,
           child: Scaffold(
@@ -39,17 +37,17 @@ class TeacherSignUpScreen extends StatelessWidget {
                       _header(),
                       SizedBox(height: 30.h),
                       Text(
-                        "Please fill the form fields with the following information",
+                        "Student Registration",
                         style: styleN16.copyWith(color: blackColor),
                       ),
-                      SizedBox(height: 50.h),
+                      SizedBox(height: 30.h),
                       
                       TextFormField(
                         validator: (value) {
                           if (value!.trim().isEmpty) return "Please enter your full name";
                           return null;
                         },
-                        onChanged: (value) => model.teacherUser.fullName = value.trim(),
+                        onChanged: (value) => model.studentUser.fullName = value.trim(),
                         decoration: authFieldDecoration.copyWith(hintText: "Full Name"),
                       ),
                       SizedBox(height: 20.h),
@@ -60,62 +58,47 @@ class TeacherSignUpScreen extends StatelessWidget {
                           if (value!.trim().isEmpty) return "Please enter your email";
                           return null;
                         },
-                        onChanged: (value) => model.teacherUser.email = value.trim(),
+                        onChanged: (value) => model.studentUser.email = value.trim(),
                         decoration: authFieldDecoration.copyWith(hintText: 'Email address'),
                       ),
                       SizedBox(height: 20.h),
-
-                      TextFormField(
-                        validator: (value) {
-                          if (value!.trim().isEmpty) return "Please enter your Phone number";
-                          return null;
-                        },
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) => model.teacherUser.phoneNo = value.trim(),
-                        decoration: authFieldDecoration.copyWith(hintText: 'Phone Number'),
-                      ),
-                      SizedBox(height: 20.h),
-
+                      
                       DropdownButtonFormField<String>(
-                        validator: (value) => value == null ? "Required" : null,
                         decoration: authFieldDecoration.copyWith(hintText: 'Select Department'),
                         items: AppConstants.departments.map((dept) {
                           return DropdownMenuItem(value: dept, child: Text(dept));
                         }).toList(),
-                        onChanged: (val) => model.teacherUser.department = val,
-                      ),
-                      SizedBox(height: 20.h),
-
-                      TextFormField(
-                        validator: (value) => value!.isEmpty ? "Required" : null,
-                        onChanged: (value) => model.teacherUser.qualification = value.trim(),
-                        decoration: authFieldDecoration.copyWith(hintText: 'Qualification (e.g. Masters)'),
-                      ),
-                      SizedBox(height: 20.h),
-
-                      TextFormField(
-                        validator: (value) => value!.isEmpty ? "Required" : null,
-                        onChanged: (value) => model.teacherUser.subjects = value.trim(),
-                        decoration: authFieldDecoration.copyWith(hintText: 'Subjects (e.g. Maths, CS)'),
-                      ),
-                      SizedBox(height: 20.h),
-
-                      DropdownButtonFormField<String>(
+                        onChanged: (val) => model.studentUser.department = val,
                         validator: (value) => value == null ? "Required" : null,
-                        decoration: authFieldDecoration.copyWith(hintText: 'Select Gender'),
-                        items: ['Male', 'Female', 'Other'].map((g) {
-                          return DropdownMenuItem(value: g, child: Text(g));
-                        }).toList(),
-                        onChanged: (val) => model.teacherUser.gender = val,
                       ),
                       SizedBox(height: 20.h),
-
+                      
+                      DropdownButtonFormField<String>(
+                        decoration: authFieldDecoration.copyWith(hintText: 'Select Section'),
+                        items: AppConstants.sections.map((sec) {
+                          return DropdownMenuItem(value: sec, child: Text(sec));
+                        }).toList(),
+                        onChanged: (val) => model.studentUser.section = val,
+                        validator: (value) => value == null ? "Required" : null,
+                      ),
+                      SizedBox(height: 20.h),
+                      
+                      DropdownButtonFormField<String>(
+                        decoration: authFieldDecoration.copyWith(hintText: 'Select Semester'),
+                        items: AppConstants.semesters.map((sem) {
+                          return DropdownMenuItem(value: sem, child: Text("Semester $sem"));
+                        }).toList(),
+                        onChanged: (val) => model.studentUser.semester = val,
+                        validator: (value) => value == null ? "Required" : null,
+                      ),
+                      SizedBox(height: 20.h),
+                      
                       TextFormField(
                         obscureText: model.isShowpassword,
-                        onChanged: (value) => model.teacherUser.password = value.trim(),
+                        onChanged: (value) => model.studentUser.password = value.trim(),
                         validator: (value) {
                           if (value!.trim().isEmpty) return "Please enter your password";
-                          if (value.trim().length < 7) return "Min 7 characters required";
+                          if (value.trim().length < 6) return "Min 6 characters required";
                           return null;
                         },
                         decoration: authFieldDecoration.copyWith(
@@ -135,20 +118,20 @@ class TeacherSignUpScreen extends StatelessWidget {
                         name: 'Register',
                         onPressed: () {
                           if (_formkey.currentState!.validate()) {
-                            model.signUpwithEmailandPassword();
+                            model.signUpStudent();
                           }
                         },
                         textColor: lightPinkColor,
                       ),
                       SizedBox(height: 20.h),
-                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("Already have an account?",
-                              style: styleB14.copyWith(fontWeight: FontWeight.w400)),
+                              style: styleB14.copyWith(
+                                  fontWeight: FontWeight.w400)),
                           TextButton(
-                            onPressed: () => Get.to(() => TeacherSignInScreen()),
+                            onPressed: () => Get.back(),
                             child: Text("Sign In",
                                 style: styleB16.copyWith(color: secondaryColor)),
                           )
@@ -171,11 +154,11 @@ class TeacherSignUpScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CustomBackButton(onPressed: () => Get.offAll(() => WelcomeScreen())),
+        CustomBackButton(onPressed: () => Get.back()),
         SizedBox(width: 20.w),
         Text(
-          "Teacher Sign Up",
-          style: styleB25.copyWith(color: blackColor, fontSize: 30.sp),
+          "Student Sign Up",
+          style: styleB25.copyWith(color: blackColor, fontSize: 26.sp),
         ),
       ],
     );

@@ -1,265 +1,221 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_core/get_core.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:sheduling_app/common/onbaording/onbaording_screen.dart';
+import 'package:sheduling_app/teacher/core/constants/app_constants.dart';
 import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
-import 'package:sheduling_app/teacher/core/constants/strings.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
+import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/teacher/ui/screens/home/home_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => HomeViewModel(),
-      child: Consumer<HomeViewModel>(
-        builder: (context, model, child) => Scaffold(
-          ///
-          /// App Bar
-          ///
-          appBar: _appBar(model),
-
-          ///
-          /// Start Body
-          ///
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Departments",
-                    textAlign: TextAlign.center,
-                    style: styleB25.copyWith(
-                        color: secondaryColor, fontSize: 30.sp),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  GridView.builder(
-                      itemCount: model.listClassTimeShedule.length,
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 20.0,
-                              crossAxisSpacing: 20.0),
-                      itemBuilder: (context, index) {
-                        return Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              gradient: const LinearGradient(
-                                  begin: Alignment.bottomCenter,
-                                  end: Alignment.topCenter,
-                                  colors: [primaryColor, secondaryColor]),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: secondaryColor.withOpacity(0.20),
-                                    offset: const Offset(0, 4),
-                                    spreadRadius: 4,
-                                    blurRadius: 4)
-                              ]),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Center(
-                                child: Text(
-                                  "Department: ${model.departmentController.text}",
-                                  style: styleB25.copyWith(
-                                      color: whiteColor,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                              Text(
-                                "Class Section: ${model.classSectionController.text}",
-                                textAlign: TextAlign.center,
-                                style: styleB16.copyWith(color: whiteColor),
-                              ),
-                              Text(
-                                "Subject: ${model.subjectController.text}",
-                                textAlign: TextAlign.center,
-                                style: styleB16.copyWith(color: whiteColor),
-                              ),
-                              Text(
-                                "Time: ${model.timeController.text}",
-                                textAlign: TextAlign.center,
-                                style: styleB14.copyWith(color: whiteColor),
-                              ),
-                            ],
-                          ),
-                        );
-                      })
-                ],
-              ),
-            ),
-          ),
-
-          ///
-          /// Floating Action Button
-          ///
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: secondaryColor,
-            // focusColor: blackColor,
-            // hoverColor: blackColor,
-            // splashColor: blackColor,
-            // foregroundColor: blackColor,
-            onPressed: () {
-              _showBottomSheet(context, model);
-              // Navigate to Sign In Screen
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => SignInScreen(),
-              //   ),
-              // );
-            },
-            child: const Icon(
-              Icons.person_add,
-              color: whiteColor,
-            ),
+    return Consumer<HomeViewModel>(
+      builder: (context, model, child) => Scaffold(
+        backgroundColor: whiteColor,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: secondaryColor,
+          onPressed: () {
+            model.clearEditMode();
+            _showBottomSheet(context, model);
+          },
+          child: const Icon(
+            Icons.add,
+            color: whiteColor,
           ),
         ),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            'My Class Schedules',
+            style: styleB25.copyWith(color: secondaryColor, fontSize: 22.sp),
+          ),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: whiteColor,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.refresh, color: secondaryColor),
+              onPressed: () => model.getClassTimeShedule(),
+            ),
+          ],
+        ),
+        body: model.state == ViewState.busy
+            ? const Center(child: CircularProgressIndicator())
+            : model.listClassTimeShedule.isEmpty
+                ? const Center(child: Text("No schedules added by you yet"))
+                : ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: model.listClassTimeShedule.length,
+                    itemBuilder: (context, index) {
+                      final schedule = model.listClassTimeShedule[index];
+                      return Card(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      schedule.subject ?? "N/A",
+                                      style: styleB18,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.edit, color: Colors.blue, size: 20),
+                                        onPressed: () {
+                                          model.setupEditMode(schedule);
+                                          _showBottomSheet(context, model);
+                                        },
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.delete, color: Colors.red, size: 20),
+                                        onPressed: () => _showDeleteDialog(context, model, schedule.id!),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Text("Department: ${schedule.department}"),
+                              Text("Section: ${schedule.classSection}"),
+                              Text("Semester: ${schedule.semester}"),
+                              Text("Time: ${schedule.time}"),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+      ),
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context, HomeViewModel model, String id) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Delete Schedule"),
+        content: const Text("Are you sure you want to delete this schedule?"),
+        actions: [
+          TextButton(onPressed: () => Get.back(), child: const Text("CANCEL")),
+          TextButton(
+            onPressed: () async {
+              Get.back();
+              await model.deleteSchedule(id);
+              Get.snackbar("Success", "Schedule deleted successfully");
+            },
+            child: const Text("DELETE", style: TextStyle(color: Colors.red)),
+          ),
+        ],
       ),
     );
   }
 }
 
-AppBar _appBar(HomeViewModel model) {
-  return AppBar(
-    automaticallyImplyLeading: false,
-    elevation: 0.0,
-    // shadowColor: secondaryColor,
-    surfaceTintColor: Colors.transparent,
-    backgroundColor: Colors.transparent,
-    toolbarHeight: 80.h,
-    title: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("${model.authServices.teacherUser.fullName}",
-            style: styleB25.copyWith(color: secondaryColor, fontSize: 28.sp)),
-        Text(
-          "${model.authServices.teacherUser.qualification}",
-          style: styleB16,
-        ),
-      ],
-    ),
-    actions: [
-      Padding(
-        padding: const EdgeInsets.only(right: 15.0),
-        child: CircleAvatar(
-          radius: 30.r,
-          backgroundImage: const AssetImage("$staticAssets/fiver-profile.jpeg"),
-        ),
-      ),
-      // CircleAvatar(
-      //   radius: 25.r,
-      //   backgroundColor: secondaryColor,
-      //   child: IconButton(
-      //     icon: Icon(
-      //       Icons.notifications,
-      //       size: 35.sp,
-      //       color: whiteColor,
-      //     ),
-      //     onPressed: () {},
-      //   ),
-      // ),
-    ],
-  );
-}
-
-// Function to show the bottom sheet
 void _showBottomSheet(BuildContext context, HomeViewModel model) {
+  final formKey = GlobalKey<FormState>();
+
   showModalBottomSheet(
-    isScrollControlled:
-        true, // Allows the bottom sheet to be full-screen and scrollable
+    isScrollControlled: true,
     backgroundColor: secondaryColor,
     context: context,
     builder: (context) {
       return Padding(
-        padding: MediaQuery.of(context).viewInsets, // Adjust for keyboard
+        padding: MediaQuery.of(context).viewInsets,
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 10),
-                Text(
-                  'CLASS TIME SHEDULE',
-                  style: styleB25.copyWith(color: whiteColor, fontSize: 20),
-                ),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: model.departmentController,
-                  decoration:
-                      authFieldDecoration.copyWith(hintText: 'Departments'),
-                  onChanged: (val) {
-                    model.departmentController.text = val;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextField(
-                  controller: model.classSectionController,
-                  decoration:
-                      authFieldDecoration.copyWith(hintText: 'Class Section'),
-                  onChanged: (val) {
-                    model.classSectionController.text = val;
-                  },
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: model.subjectController,
-                  decoration: authFieldDecoration.copyWith(hintText: 'Subject'),
-                  onChanged: (val) {
-                    model.subjectController.text = val;
-                  },
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: model.semesterController,
-                  decoration:
-                      authFieldDecoration.copyWith(hintText: 'Semester'),
-                  onChanged: (val) {
-                    model.semesterController.text = val;
-                  },
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: model.timeController,
-                  decoration: authFieldDecoration.copyWith(hintText: 'Time'),
-                  onChanged: (val) {
-                    model.timeController.text = val;
-                  },
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  style: const ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(whiteColor)),
-                  onPressed: () async {
-                    // Perform any actions here, like submitting data
-                    await model.addClassTimeShedule();
-                    Get.back();
-                  },
-                  child: Text(
-                    'Submit',
-                    style: styleB16.copyWith(color: secondaryColor),
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 10),
+                  Text(
+                    model.editingScheduleId == null ? 'ADD CLASS SCHEDULE' : 'EDIT CLASS SCHEDULE',
+                    style: styleB25.copyWith(color: whiteColor, fontSize: 20.sp),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 25),
+                  
+                  DropdownButtonFormField<String>(
+                    value: model.departmentController.text.isEmpty ? null : model.departmentController.text,
+                    validator: (value) => value == null ? "Required" : null,
+                    decoration: authFieldDecoration.copyWith(hintText: 'Select Department'),
+                    items: AppConstants.departments.map((dept) {
+                      return DropdownMenuItem(value: dept, child: Text(dept));
+                    }).toList(),
+                    onChanged: (val) => model.departmentController.text = val!,
+                  ),
+                  const SizedBox(height: 20),
+                  
+                  DropdownButtonFormField<String>(
+                    value: model.classSectionController.text.isEmpty ? null : model.classSectionController.text,
+                    validator: (value) => value == null ? "Required" : null,
+                    decoration: authFieldDecoration.copyWith(hintText: 'Select Section'),
+                    items: AppConstants.sections.map((sec) {
+                      return DropdownMenuItem(value: sec, child: Text(sec));
+                    }).toList(),
+                    onChanged: (val) => model.classSectionController.text = val!,
+                  ),
+                  const SizedBox(height: 20),
+                  
+                  TextFormField(
+                    controller: model.subjectController,
+                    validator: (value) => value!.isEmpty ? "Required" : null,
+                    decoration: authFieldDecoration.copyWith(hintText: 'Subject Name'),
+                  ),
+                  const SizedBox(height: 20),
+                  
+                  DropdownButtonFormField<String>(
+                    value: model.semesterController.text.isEmpty ? null : model.semesterController.text,
+                    validator: (value) => value == null ? "Required" : null,
+                    decoration: authFieldDecoration.copyWith(hintText: 'Select Semester'),
+                    items: AppConstants.semesters.map((sem) {
+                      return DropdownMenuItem(value: sem, child: Text("Semester $sem"));
+                    }).toList(),
+                    onChanged: (val) => model.semesterController.text = val!,
+                  ),
+                  const SizedBox(height: 14),
+                  
+                  TextFormField(
+                    controller: model.timeController,
+                    validator: (value) => value!.isEmpty ? "Required" : null,
+                    decoration: authFieldDecoration.copyWith(hintText: 'Class Time (e.g. 10:00 AM)'),
+                  ),
+                  const SizedBox(height: 30),
+                  
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: whiteColor,
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                    onPressed: () async {
+                      if (formKey.currentState!.validate()) {
+                        await model.addClassTimeShedule();
+                        Get.back();
+                        Get.snackbar("Success", model.editingScheduleId == null ? "Schedule added successfully" : "Schedule updated successfully");
+                      }
+                    },
+                    child: Text(
+                      model.editingScheduleId == null ? 'SUBMIT SCHEDULE' : 'UPDATE SCHEDULE',
+                      style: styleB16.copyWith(color: secondaryColor),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
           ),
         ),

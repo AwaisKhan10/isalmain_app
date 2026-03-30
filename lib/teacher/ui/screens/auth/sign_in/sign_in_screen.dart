@@ -11,11 +11,8 @@ import 'package:sheduling_app/teacher/core/constants/text_style.dart';
 import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_back_button.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_button.dart';
-import 'package:sheduling_app/teacher/ui/custom_widgets/custom_routes/navigate_from_right.dart';
 import 'package:sheduling_app/teacher/ui/screens/auth/sign_in/sign_in_view_model.dart';
 import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_screen.dart';
-
-import 'package:sheduling_app/common/welcome_screen.dart';
 
 class TeacherSignInScreen extends StatelessWidget {
   final _formkey = GlobalKey<FormState>();
@@ -73,20 +70,7 @@ class TeacherSignInScreen extends StatelessWidget {
                               SizedBox(
                                 height: 50.h,
                               ),
-                              TextFormField(
-                                onChanged: (value) {
-                                  model.teacherUser.fullName = value.trim();
-                                },
-                                validator: (value) {
-                                  if (value!.trim().isEmpty) {
-                                    return "please enter your name";
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                decoration: authFieldDecoration.copyWith(
-                                    hintText: 'Full Name'),
-                              ),
+
                               SizedBox(
                                 height: 20.h,
                               ),

@@ -23,6 +23,8 @@ class HomeViewModel extends BaseViewModel {
   final TextEditingController semesterController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
+  String? editingScheduleId;
+
   @override
   void dispose() {
     // Dispose controllers when not in use
@@ -34,25 +36,69 @@ class HomeViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  // Add class time schedule
+  // Pre-fill controllers for editing
+  void setupEditMode(ClassTimeSheduleModel schedule) {
+    editingScheduleId = schedule.id;
+    departmentController.text = schedule.department ?? "";
+    classSectionController.text = schedule.classSection ?? "";
+    subjectController.text = schedule.subject ?? "";
+    semesterController.text = schedule.semester ?? "";
+    timeController.text = schedule.time ?? "";
+    notifyListeners();
+  }
+
+  void clearEditMode() {
+    editingScheduleId = null;
+    departmentController.clear();
+    classSectionController.clear();
+    subjectController.clear();
+    semesterController.clear();
+    timeController.clear();
+    notifyListeners();
+  }
+
+  // Add or Update class time schedule
   addClassTimeShedule() async {
     setState(ViewState.busy);
     final classTimeSheduleModel = ClassTimeSheduleModel(
+      id: editingScheduleId,
       department: departmentController.text.trim(),
       classSection: classSectionController.text.trim(),
       subject: subjectController.text.trim(),
-      semister: semesterController.text.trim(),
+      semester: semesterController.text.trim(),
       time: timeController.text.trim(),
+      teacherId: authServices.teacherUser.id,
     );
+    
     await dataBaseServices.addClassTimeShedule(classTimeSheduleModel);
+    
+    // Clear controllers after success
+    clearEditMode();
+    
+    // Refresh the list
+    await getClassTimeShedule();
+    
     setState(ViewState.idle);
   }
 
-  // Get class time schedule
+  // Get class time schedule (filtered for CURRENT teacher)
   getClassTimeShedule() async {
     setState(ViewState.busy);
-    listClassTimeShedule = await dataBaseServices.getClassTimeShedule();
-    debugPrint("ClassTimeShedule list fetched: ${listClassTimeShedule.length}");
+    listClassTimeShedule = await dataBaseServices.getClassTimeShedule(
+      teacherId: authServices.teacherUser.id,
+    );
+    debugPrint("ClassTimeShedule list fetched: ${listClassTimeShedule.length} for teacherId: ${authServices.teacherUser.id}");
     setState(ViewState.idle);
+  }
+
+  // Delete schedule
+  deleteSchedule(String id) async {
+    setState(ViewState.busy);
+    bool success = await dataBaseServices.deleteClassTimeShedule(id);
+    if (success) {
+      await getClassTimeShedule();
+    }
+    setState(ViewState.idle);
+    return success;
   }
 }
