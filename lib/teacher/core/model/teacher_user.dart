@@ -44,8 +44,8 @@ class TeacherUser {
     return data;
   }
 
-  TeacherUser.fromJson(json, id) {
-    id = id;
+  TeacherUser.fromJson(json, docId) {
+    id = docId;
     fullName = json['fullName'];
     imgUrl = json['imgUrl'];
     email = json['email'];

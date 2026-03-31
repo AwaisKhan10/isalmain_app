@@ -10,6 +10,7 @@ import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/services/auth_services.dart';
 import 'package:sheduling_app/locator.dart';
 import 'package:sheduling_app/common/onbaording/onbaording_screen.dart';
+import 'package:sheduling_app/student/ui/screens/root/student_root_screen.dart';
 import 'package:sheduling_app/teacher/ui/screens/root/root_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -33,26 +34,29 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool seenOnboarding = prefs.getBool("seenOnboarding") ?? false;
 
-    if (!seenOnboarding) {
-      Get.off(() => WelcomeScreen());
-      setState(() {
-        _isloading = false;
-      });
-      return;
-    }
-
+    // Always initialize auth to check if user is already logged in
     await _auth.init();
 
     await Future.delayed(const Duration(seconds: 3));
-    if (_auth.isLogin!) {
-      Get.off(() => RootScreen());
+
+    if (_auth.isLogin ?? false) {
+      if (_auth.isTeacher) {
+        Get.off(() => RootScreen());
+      } else {
+        Get.off(() => StudentRootScreen());
+      }
     } else {
-      Get.off(() => OnBoardingScreen());
+      if (!seenOnboarding) {
+        // Corrected flow: if onboarding not seen, show it
+        Get.off(() => OnBoardingScreen());
+      } else {
+        Get.off(() => WelcomeScreen());
+      }
     }
+
     setState(() {
       _isloading = false;
     });
-    //function for one time onboarding screen sharedPreferences
   }
 
   @override

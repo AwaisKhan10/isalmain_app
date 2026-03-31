@@ -46,8 +46,23 @@ class StudentHomeScreen extends StatelessWidget {
                     itemCount: model.filteredClasses.length,
                     itemBuilder: (context, index) {
                       final item = model.filteredClasses[index];
-                      return Card(
+                      return Container(
                         margin: const EdgeInsets.only(bottom: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          gradient: const LinearGradient(
+                            colors: [primaryColor, secondaryColor],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(15),
                           child: Column(
@@ -55,13 +70,28 @@ class StudentHomeScreen extends StatelessWidget {
                             children: [
                               Text(
                                 item.subject ?? "No Subject",
-                                style: styleB18,
+                                style: styleB20.copyWith(color: whiteColor),
                               ),
                               const SizedBox(height: 5),
-                              Text("Time: ${item.time}"),
-                              Text("Semester: ${item.semester}"),
-                              Text("Dept: ${item.department}"),
-                              Text("Section: ${item.classSection}"),
+                              Text(
+                                "Time: ${item.time}",
+                                style: styleN16.copyWith(color: whiteColor),
+                              ),
+                              4.verticalSpace,
+                              Text(
+                                "Semester: ${item.semester}",
+                                style: styleN16.copyWith(color: whiteColor),
+                              ),
+                              4.verticalSpace,
+                              Text(
+                                "Dept: ${item.department}",
+                                style: styleN16.copyWith(color: whiteColor),
+                              ),
+                              4.verticalSpace,
+                              Text(
+                                "Section: ${item.classSection}",
+                                style: styleN16.copyWith(color: whiteColor),
+                              ),
                             ],
                           ),
                         ),
