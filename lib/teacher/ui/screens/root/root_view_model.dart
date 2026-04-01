@@ -15,9 +15,9 @@ class RootViewModel extends BaseViewModel {
   // int selectIndex = 0;
 
   List<Widget> allScreen = [
-    HomeScreen(),
+    const HomeScreen(),
     ChatScreen(),
-    ProfileScreen(),
+    const ProfileScreen(),
   ];
 
   updatedScreen(int index) {

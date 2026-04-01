@@ -8,6 +8,7 @@ class ClassTimeSheduleModel {
   String? time;
   int? createdAt;
   String? teacherId;
+  String? teacherName;
 
   ClassTimeSheduleModel(
       {this.id,
@@ -17,7 +18,8 @@ class ClassTimeSheduleModel {
       this.subject,
       this.time,
       this.createdAt,
-      this.teacherId});
+      this.teacherId,
+      this.teacherName});
 
   toJson() {
     return {
@@ -28,6 +30,7 @@ class ClassTimeSheduleModel {
       "semester": semester,
       "time": time,
       "teacherId": teacherId,
+      "teacherName": teacherName,
       "createdAt": DateTime.now().millisecondsSinceEpoch,
     };
   }
@@ -42,5 +45,6 @@ class ClassTimeSheduleModel {
     time = json['time'];
     createdAt = json['createdAt'];
     teacherId = json['teacherId'];
+    teacherName = json['teacherName'];
   }
 }

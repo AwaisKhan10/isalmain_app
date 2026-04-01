@@ -5,6 +5,8 @@ import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
 import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/student/ui/screens/home/student_home_view_model.dart';
+import 'package:sheduling_app/student/ui/screens/chat/conversation_screen.dart';
+import 'package:sheduling_app/teacher/core/constants/strings.dart'; // For staticAssets
 
 class StudentHomeScreen extends StatelessWidget {
   const StudentHomeScreen({super.key});
@@ -68,29 +70,73 @@ class StudentHomeScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                item.subject ?? "No Subject",
-                                style: styleB20.copyWith(color: whiteColor),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      item.subject ?? "No Subject",
+                                      style:
+                                          styleB20.copyWith(color: whiteColor),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.chat_bubble_outline,
+                                        color: whiteColor),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ConversationScreen(
+                                            userName: item.teacherName ??
+                                                "Teacher Name",
+                                            userImage:
+                                                "$staticAssets/fiver-profile.jpeg",
+                                            receiverId: item.teacherId ?? "",
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 5),
                               Text(
+                                "Teacher: ${item.teacherName ?? "Not Assigned"}",
+                                style: styleB16.copyWith(color: whiteColor),
+                              ),
+                              SizedBox(height: 10.h),
+                              Text(
                                 "Time: ${item.time}",
-                                style: styleN16.copyWith(color: whiteColor),
+                                style: styleN14.copyWith(
+                                    color: whiteColor.withOpacity(0.9)),
                               ),
                               4.verticalSpace,
-                              Text(
-                                "Semester: ${item.semester}",
-                                style: styleN16.copyWith(color: whiteColor),
-                              ),
-                              4.verticalSpace,
-                              Text(
-                                "Dept: ${item.department}",
-                                style: styleN16.copyWith(color: whiteColor),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Semester: ${item.semester}",
+                                      style: styleN14.copyWith(
+                                          color: whiteColor.withOpacity(0.9)),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      "Dept: ${item.department}",
+                                      style: styleN14.copyWith(
+                                          color: whiteColor.withOpacity(0.9)),
+                                    ),
+                                  ),
+                                ],
                               ),
                               4.verticalSpace,
                               Text(
                                 "Section: ${item.classSection}",
-                                style: styleN16.copyWith(color: whiteColor),
+                                style: styleN14.copyWith(
+                                    color: whiteColor.withOpacity(0.9)),
                               ),
                             ],
                           ),

@@ -68,6 +68,7 @@ class HomeViewModel extends BaseViewModel {
       semester: semesterController.text.trim(),
       time: timeController.text.trim(),
       teacherId: authServices.teacherUser.id,
+      teacherName: authServices.teacherUser.fullName,
     );
     
     await dataBaseServices.addClassTimeShedule(classTimeSheduleModel);

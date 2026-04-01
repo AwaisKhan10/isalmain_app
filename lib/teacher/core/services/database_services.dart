@@ -5,6 +5,9 @@ import 'package:sheduling_app/teacher/core/model/class_time_shedule.dart';
 import 'package:sheduling_app/teacher/core/model/student_user.dart';
 import 'package:sheduling_app/teacher/core/model/teacher_user.dart';
 
+import 'package:sheduling_app/teacher/core/model/message.dart';
+import 'package:sheduling_app/teacher/core/model/conversation.dart';
+
 class DatabaseServices {
   final FirebaseFirestore _database = FirebaseFirestore.instance;
   static final DatabaseServices _singleton = DatabaseServices._internal();
@@ -14,6 +17,89 @@ class DatabaseServices {
   }
 
   DatabaseServices._internal();
+
+  ///
+  /// Chat Services
+  ///
+  
+  Future<void> sendMessage(MessageModel message, {String? senderName, String? receiverName}) async {
+    try {
+      String docId = _database.collection("messages").doc().id;
+      message.id = docId;
+      
+      final batch = _database.batch();
+      
+      // 1. Add message
+      batch.set(_database.collection("messages").doc(docId), message.toJson());
+      
+      // 2. Update conversation summary
+      if (message.chatId != null) {
+        final convRef = _database.collection("conversations").doc(message.chatId);
+        
+        // Sorting IDs for consistent order in chatId
+        List<String> participants = [message.senderId!, message.receiverId!];
+        participants.sort();
+        
+        // Build update object
+        Map<String, dynamic> convData = {
+          "id": message.chatId,
+          "lastMessage": message.content,
+          "lastTime": message.time,
+          "participants": participants,
+        };
+        
+        // Store names for fast lookup in chat list
+        if (senderName != null && receiverName != null) {
+          if (participants[0] == message.senderId) {
+            convData["id1Name"] = senderName;
+            convData["id2Name"] = receiverName;
+          } else {
+            convData["id1Name"] = receiverName;
+            convData["id2Name"] = senderName;
+          }
+        }
+        
+        batch.set(convRef, convData, SetOptions(merge: true));
+      }
+      
+      await batch.commit();
+    } catch (e) {
+      debugPrint("Exception @DatabaseService/sendMessage: $e");
+    }
+  }
+
+  Stream<List<MessageModel>> getMessages(String chatId) {
+    return _database
+        .collection("messages")
+        .where("chatId", isEqualTo: chatId)
+        .orderBy("time", descending: false)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => MessageModel.fromJson(doc.data(), doc.id))
+            .toList());
+  }
+
+  Stream<List<ConversationModel>> getConversations(String userId) {
+    return _database
+        .collection("conversations")
+        .where("participants", arrayContains: userId)
+        .orderBy("lastTime", descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => ConversationModel.fromJson(doc.data(), doc.id))
+            .toList());
+  }
+
+  ///
+  /// Utility to generate unique Chat ID
+  ///
+  static String getChatId(String id1, String id2) {
+    if (id1.hashCode <= id2.hashCode) {
+      return "${id1}_$id2";
+    } else {
+      return "${id2}_$id1";
+    }
+  }
 
   ///
   ///

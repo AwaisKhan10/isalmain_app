@@ -10,12 +10,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sheduling_app/common/onbaording/onbaording_screen.dart';
 import 'package:sheduling_app/common/splash_screen.dart';
 import 'package:sheduling_app/common/welcome_screen.dart';
+import 'package:sheduling_app/student/ui/screens/chat/student_chat_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/firebase_options.dart';
 import 'package:sheduling_app/locator.dart';
 import 'package:sheduling_app/student/ui/screens/root/student_root_screen.dart';
 
 import 'package:sheduling_app/teacher/ui/screens/auth/sign_up/sign_up_view_model.dart';
+import 'package:sheduling_app/teacher/ui/screens/chat_screen/chat_screen.dart';
 import 'package:sheduling_app/teacher/ui/screens/profile/profile_view_model.dart';
 import 'package:sheduling_app/student/auth/signup/student_signup_view_model.dart';
 import 'package:sheduling_app/student/auth/login/student_login_view_model.dart';
