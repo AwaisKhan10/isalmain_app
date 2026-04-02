@@ -18,11 +18,11 @@ class StudentProfileScreen extends StatelessWidget {
         builder: (context, model, child) {
           final student = model.authServices.studentUser;
           return Scaffold(
-            backgroundColor: whiteColor,
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: Text("Student Profile",
-                  style: styleB25.copyWith(color: secondaryColor, fontSize: 22.sp)),
+                  style: styleB25.copyWith(
+                      color: secondaryColor, fontSize: 22.sp)),
               elevation: 0,
               backgroundColor: whiteColor,
               centerTitle: true,
@@ -80,11 +80,13 @@ class StudentProfileScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _infoRow(Icons.school_outlined, "Department", student.department ?? "N/A"),
+          _infoRow(
+              Icons.school_outlined, "Department", student.department ?? "N/A"),
           const Divider(),
           _infoRow(Icons.class_outlined, "Section", student.section ?? "N/A"),
           const Divider(),
-          _infoRow(Icons.calendar_today_outlined, "Semester", "Semester ${student.semester ?? 'N/A'}"),
+          _infoRow(Icons.calendar_today_outlined, "Semester",
+              "Semester ${student.semester ?? 'N/A'}"),
         ],
       ),
     );
@@ -123,20 +125,25 @@ class StudentProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          _actionTile(Icons.edit_outlined, "Edit Profile", () => Get.to(() => const StudentEditProfile())),
+          _actionTile(Icons.edit_outlined, "Edit Profile",
+              () => Get.to(() => const StudentEditProfile())),
           _actionTile(Icons.info_outline, "About Us", () {}),
-          _actionTile(Icons.logout_rounded, "Log Out", () => model.logout(), isDanger: true),
+          _actionTile(Icons.logout_rounded, "Log Out", () => model.logout(),
+              isDanger: true),
         ],
       ),
     );
   }
 
-  Widget _actionTile(IconData icon, String title, VoidCallback onTap, {bool isDanger = false}) {
+  Widget _actionTile(IconData icon, String title, VoidCallback onTap,
+      {bool isDanger = false}) {
     return ListTile(
       onTap: onTap,
       leading: Icon(icon, color: isDanger ? Colors.red : blackColor, size: 22),
-      title: Text(title, style: styleB14.copyWith(color: isDanger ? Colors.red : blackColor)),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
+      title: Text(title,
+          style: styleB14.copyWith(color: isDanger ? Colors.red : blackColor)),
+      trailing:
+          const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
       contentPadding: EdgeInsets.zero,
     );
   }

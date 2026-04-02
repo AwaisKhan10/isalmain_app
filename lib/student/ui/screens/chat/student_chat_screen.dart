@@ -9,15 +9,14 @@ import 'package:sheduling_app/teacher/core/services/database_services.dart';
 import 'package:sheduling_app/teacher/core/model/conversation.dart';
 import 'package:sheduling_app/locator.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class StudentChatScreen extends StatelessWidget {
   const StudentChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final authServices = locator<AuthServices>();
     final databaseServices = locator<DatabaseServices>();
-    final currentUserId = authServices.studentUser.id ?? "";
 
     return Scaffold(
       appBar: AppBar(
@@ -26,28 +25,37 @@ class StudentChatScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: StreamBuilder<List<ConversationModel>>(
-          stream: databaseServices.getConversations(currentUserId),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.chat_outlined, size: 60.sp, color: Colors.grey),
-                    SizedBox(height: 10.h),
-                    const Text("No conversations yet."),
-                  ],
-                ),
-              );
-            }
+      body: Consumer<AuthServices>(
+        builder: (context, auth, child) {
+          final currentUserId = auth.currentUserId;
 
-            final conversations = snapshot.data!;
+          if (!auth.isInitialized || currentUserId.isEmpty) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            return ListView.builder(
+          return StreamBuilder<List<ConversationModel>>(
+            stream: databaseServices.getConversations(currentUserId),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.chat_outlined,
+                          size: 60.sp, color: Colors.grey),
+                      SizedBox(height: 10.h),
+                      const Text("No conversations yet."),
+                    ],
+                  ),
+                );
+              }
+
+              final conversations = snapshot.data!;
+
+              return ListView.builder(
                 padding: const EdgeInsets.only(
                   left: 20.0,
                   right: 20.0,
@@ -63,7 +71,7 @@ class StudentChatScreen extends StatelessWidget {
                           DateTime.fromMillisecondsSinceEpoch(
                               conversation.lastTime!))
                       : "";
-                  final userImage = "$staticAssets/fiver-profile.jpeg";
+                  final userImage = "$iconAssets/teacher_icon.png";
 
                   return InkWell(
                     onTap: () {
@@ -80,57 +88,84 @@ class StudentChatScreen extends StatelessWidget {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 26.r,
-                                backgroundImage: AssetImage(userImage),
-                              ),
-                              SizedBox(
-                                width: 15.w,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    otherName,
-                                    style: styleB18,
-                                  ),
-                                  SizedBox(
-                                    width: 180.w,
+                      child: Container(
+                        padding: EdgeInsets.all(10.r),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.r),
+                            border: Border.all(color: primaryColor)),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 26.r,
+                                  backgroundColor: lightredColor,
+                                  backgroundImage: AssetImage(userImage),
+                                ),
+                                SizedBox(
+                                  width: 15.w,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      otherName,
+                                      style: styleB18,
+                                    ),
+                                    SizedBox(
+                                      width: 180.w,
+                                      child: Text(
+                                        lastMessage,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: styleN14.copyWith(
+                                            color: secondaryColor
+                                                .withOpacity(0.65)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  time,
+                                  style: styleN12.copyWith(color: greyColor),
+                                ),
+                                if (conversation.getUnreadCount(currentUserId) >
+                                    0)
+                                  Container(
+                                    margin: EdgeInsets.only(top: 5.h),
+                                    padding: EdgeInsets.all(6.r),
+                                    decoration: const BoxDecoration(
+                                      color: secondaryColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    alignment: Alignment.center,
                                     child: Text(
-                                      lastMessage,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: styleN14.copyWith(
-                                          color:
-                                              secondaryColor.withOpacity(0.65)),
+                                      "${conversation.getUnreadCount(currentUserId)}",
+                                      style: styleN12.copyWith(
+                                          color: Colors.white, fontSize: 10.sp),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                time,
-                                style: styleN12.copyWith(color: greyColor),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
-                });
-          }),
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -7,6 +7,7 @@ class StudentUser {
   String? section;
   String? semester;
   String? password;
+  bool? isOnline;
 
   StudentUser({
     this.id,
@@ -17,6 +18,7 @@ class StudentUser {
     this.section,
     this.semester,
     this.password,
+    this.isOnline,
   });
 
   Map<String, dynamic> toJson() {
@@ -29,6 +31,7 @@ class StudentUser {
       'section': section,
       'semester': semester,
       'password': password,
+      'isOnline': isOnline,
     };
   }
 
@@ -42,5 +45,6 @@ class StudentUser {
     section = json['section'];
     semester = json['semester'];
     password = json['password'];
+    isOnline = json['isOnline'];
   }
 }

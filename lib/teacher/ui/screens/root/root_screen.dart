@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sheduling_app/teacher/core/constants/app_assets.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/ui/custom_widgets/bottom_bar/Bottom_navigator_bar.dart';
@@ -28,17 +29,18 @@ class RootScreen extends StatelessWidget {
 
 bottomBar(RootViewModel model) {
   return BottomAppBar(
-    color: whiteColor,
+    color: secondaryColor.withOpacity(0.4),
     shadowColor: blackColor,
     elevation: 6.0,
-    // height: 68.h,
+    height: 80.h,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         CustomBottomNavigator(
           currentIndex: model.selectedScreen,
           indexNumber: 0,
-          iconColor: model.selectedScreen == 0 ? secondaryColor : blackColor,
+          label: "Home",
+          iconColor: model.selectedScreen == 0 ? primaryColor : blackColor,
           image: model.selectedScreen == 0
               ? AppAssets.homeIconImage1
               : AppAssets.homeIconImage2,
@@ -48,8 +50,9 @@ bottomBar(RootViewModel model) {
         ),
         CustomBottomNavigator(
           currentIndex: model.selectedScreen,
-          iconColor: model.selectedScreen == 1 ? secondaryColor : blackColor,
           indexNumber: 1,
+          label: "Chat",
+          iconColor: model.selectedScreen == 1 ? primaryColor : blackColor,
           image: model.selectedScreen == 1 ? AppAssets.chat : AppAssets.chat,
           onPressed: () {
             model.updatedScreen(1);
@@ -57,8 +60,9 @@ bottomBar(RootViewModel model) {
         ),
         CustomBottomNavigator(
           currentIndex: model.selectedScreen,
-          iconColor: model.selectedScreen == 2 ? secondaryColor : blackColor,
           indexNumber: 2,
+          label: "Profile",
+          iconColor: model.selectedScreen == 2 ? primaryColor : blackColor,
           image: model.selectedScreen == 2
               ? AppAssets.profileIconImage1
               : AppAssets.profileIconImage2,

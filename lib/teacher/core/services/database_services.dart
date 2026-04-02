@@ -58,6 +58,11 @@ class DatabaseServices {
             convData["id2Name"] = senderName;
           }
         }
+
+        // 3. Increment unread count for receiver using nested map structure
+        convData["unreadCountMap"] = {
+          message.receiverId!: FieldValue.increment(1)
+        };
         
         batch.set(convRef, convData, SetOptions(merge: true));
       }
@@ -72,33 +77,81 @@ class DatabaseServices {
     return _database
         .collection("messages")
         .where("chatId", isEqualTo: chatId)
-        .orderBy("time", descending: false)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => MessageModel.fromJson(doc.data(), doc.id))
-            .toList());
+        .map((snapshot) {
+      final messages = snapshot.docs
+          .map((doc) => MessageModel.fromJson(doc.data(), doc.id))
+          .toList();
+      // Manual sorting to avoid composite index requirements (Fixes disappearing data)
+      messages.sort((a, b) => (b.time ?? 0).compareTo(a.time ?? 0));
+      return messages;
+    });
   }
 
   Stream<List<ConversationModel>> getConversations(String userId) {
     return _database
         .collection("conversations")
         .where("participants", arrayContains: userId)
-        .orderBy("lastTime", descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => ConversationModel.fromJson(doc.data(), doc.id))
-            .toList());
+        .map((snapshot) {
+      final conversations = snapshot.docs
+          .map((doc) => ConversationModel.fromJson(doc.data(), doc.id))
+          .toList();
+      // Manual sorting to avoid composite index requirements (Fixes disappearing data)
+      conversations.sort((a, b) => (b.lastTime ?? 0).compareTo(a.lastTime ?? 0));
+      return conversations;
+    });
+  }
+
+  ///
+  /// Mark conversation as read for a specific user
+  ///
+  Future<void> markAsRead(String chatId, String userId) async {
+    try {
+      await _database.collection("conversations").doc(chatId).update({
+        "unreadCountMap.$userId": 0,
+      });
+    } catch (e) {
+      debugPrint("Exception @DatabaseService/markAsRead: $e");
+    }
   }
 
   ///
   /// Utility to generate unique Chat ID
   ///
   static String getChatId(String id1, String id2) {
-    if (id1.hashCode <= id2.hashCode) {
+    if (id1.compareTo(id2) <= 0) {
       return "${id1}_$id2";
     } else {
       return "${id2}_$id1";
     }
+  }
+
+  ///
+  /// Update user status (Online/Offline)
+  ///
+  Future<void> updateUserStatus(String userId, bool isTeacher, bool isOnline) async {
+    try {
+      final collection = isTeacher ? "teachers" : "students";
+      await _database.collection(collection).doc(userId).update({
+        "isOnline": isOnline,
+      });
+    } catch (e) {
+      debugPrint("Exception @DatabaseService/updateUserStatus: $e");
+    }
+  }
+
+  ///
+  /// Get user status stream
+  ///
+  Stream<bool> getUserStatusStream(String userId, bool isTeacher) {
+    final collection = isTeacher ? "teachers" : "students";
+    return _database.collection(collection).doc(userId).snapshots().map((snapshot) {
+      if (snapshot.exists && snapshot.data() != null) {
+        return snapshot.data()!['isOnline'] ?? false;
+      }
+      return false;
+    });
   }
 
   ///

@@ -9,6 +9,7 @@ import 'package:sheduling_app/teacher/core/services/auth_services.dart';
 import 'package:sheduling_app/teacher/core/model/message.dart';
 import 'package:sheduling_app/locator.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ConversationScreen extends StatefulWidget {
   final String userName;
@@ -37,16 +38,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   void initState() {
     super.initState();
-    currentUserId = _authServices.isTeacher 
-        ? _authServices.teacherUser.id ?? "" 
-        : _authServices.studentUser.id ?? "";
-    chatId = DatabaseServices.getChatId(currentUserId, widget.receiverId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: secondaryColor,
@@ -68,9 +64,19 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   widget.userName,
                   style: styleB18.copyWith(color: Colors.white),
                 ),
-                Text(
-                  "Online",
-                  style: styleN12.copyWith(color: Colors.white70),
+                StreamBuilder<bool>(
+                  stream: _databaseServices.getUserStatusStream(
+                      widget.receiverId,
+                      !_authServices.isTeacher), // Listen to the OTHER role
+                  builder: (context, snapshot) {
+                    final isOnline = snapshot.data ?? false;
+                    return Text(
+                      isOnline ? "Online" : "Offline",
+                      style: styleN12.copyWith(
+                          color:
+                              isOnline ? Colors.greenAccent : Colors.white70),
+                    );
+                  },
                 ),
               ],
             ),
@@ -80,35 +86,54 @@ class _ConversationScreenState extends State<ConversationScreen> {
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder<List<MessageModel>>(
-              stream: _databaseServices.getMessages(chatId),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+            child: Consumer<AuthServices>(
+              builder: (context, auth, child) {
+                if (!auth.isInitialized || auth.currentUserId.isEmpty) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(
-                    child: Text(
-                      "No messages yet. Say hi!",
-                      style: styleN14.copyWith(color: Colors.grey),
-                    ),
-                  );
-                }
 
-                final messages = snapshot.data!;
-                return ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    final message = messages[index];
-                    final isMe = message.senderId == currentUserId;
-                    final time = DateFormat('hh:mm a').format(
-                        DateTime.fromMillisecondsSinceEpoch(message.time ?? 0));
-                    
-                    return MessageBubble(
-                      text: message.content ?? "",
-                      isMe: isMe,
-                      time: time,
+                final currentUserId = auth.currentUserId;
+                final chatId = DatabaseServices.getChatId(
+                    currentUserId, widget.receiverId);
+
+                return StreamBuilder<List<MessageModel>>(
+                  stream: _databaseServices.getMessages(chatId),
+                  builder: (context, snapshot) {
+                    // Mark as read once messages are successfully loaded
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      _databaseServices.markAsRead(chatId, currentUserId);
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "No messages yet. Say hi!",
+                          style: styleN14.copyWith(color: Colors.grey),
+                        ),
+                      );
+                    }
+
+                    final messages = snapshot.data!;
+                    return ListView.builder(
+                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                      reverse:
+                          true, // index 0 is at the bottom (Standard for chat)
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        final message = messages[index];
+                        final isMe = message.senderId == currentUserId;
+                        final time = DateFormat('hh:mm a').format(
+                            DateTime.fromMillisecondsSinceEpoch(
+                                message.time ?? 0));
+
+                        return MessageBubble(
+                          text: message.content ?? "",
+                          isMe: isMe,
+                          time: time,
+                        );
+                      },
                     );
                   },
                 );
@@ -177,19 +202,20 @@ class _ConversationScreenState extends State<ConversationScreen> {
     if (_messageController.text.trim().isNotEmpty) {
       final content = _messageController.text.trim();
       _messageController.clear();
-      
-      final senderName = _authServices.isTeacher 
-          ? _authServices.teacherUser.fullName 
-          : _authServices.studentUser.fullName;
+
+      final senderName = _authServices.isTeacher
+          ? (_authServices.teacherUser.fullName ?? "Teacher")
+          : (_authServices.studentUser.fullName ?? "Student");
 
       final message = MessageModel(
-        senderId: currentUserId,
+        senderId: _authServices.currentUserId,
         receiverId: widget.receiverId,
         content: content,
-        chatId: chatId,
+        chatId: DatabaseServices.getChatId(
+            _authServices.currentUserId, widget.receiverId),
         time: DateTime.now().millisecondsSinceEpoch,
       );
-      
+
       await _databaseServices.sendMessage(
         message,
         senderName: senderName,

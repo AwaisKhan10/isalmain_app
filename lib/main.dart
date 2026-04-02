@@ -25,6 +25,7 @@ import 'package:sheduling_app/student/ui/screens/home/student_home_view_model.da
 import 'package:sheduling_app/student/ui/screens/root/student_root_view_model.dart';
 import 'package:sheduling_app/teacher/ui/screens/home/home_view_model.dart';
 import 'package:sheduling_app/teacher/ui/screens/root/root_view_model.dart';
+import 'package:sheduling_app/teacher/core/services/auth_services.dart';
 
 void main() async {
   // final pref = await SharedPreferences.getInstance();
@@ -60,12 +61,16 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => StudentRootViewModel(0)),
           ChangeNotifierProvider(create: (context) => HomeViewModel()),
           ChangeNotifierProvider(create: (context) => RootViewModel(0)),
+          ChangeNotifierProvider.value(value: locator<AuthServices>()),
         ],
         child: GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Islamian App',
             theme: ThemeData(
               fontFamily: "Cera Pro",
+              appBarTheme: const AppBarTheme(
+                elevation: 0,
+              ),
               scaffoldBackgroundColor: whiteColor,
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,

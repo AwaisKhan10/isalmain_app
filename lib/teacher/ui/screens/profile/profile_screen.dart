@@ -18,11 +18,11 @@ class ProfileScreen extends StatelessWidget {
         builder: (context, model, child) {
           final teacher = model.authServices.teacherUser;
           return Scaffold(
-            backgroundColor: whiteColor,
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: Text("Teacher Profile",
-                  style: styleB25.copyWith(color: secondaryColor, fontSize: 22.sp)),
+                  style: styleB25.copyWith(
+                      color: secondaryColor, fontSize: 22.sp)),
               elevation: 0,
               backgroundColor: whiteColor,
               centerTitle: true,
@@ -80,15 +80,18 @@ class ProfileScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _infoRow(Icons.school_outlined, "Department", teacher.department ?? "N/A"),
+          _infoRow(
+              Icons.school_outlined, "Department", teacher.department ?? "N/A"),
           const Divider(),
-          _infoRow(Icons.workspace_premium_outlined, "Qualification", teacher.qualification ?? "N/A"),
+          _infoRow(Icons.workspace_premium_outlined, "Qualification",
+              teacher.qualification ?? "N/A"),
           const Divider(),
           _infoRow(Icons.book_outlined, "Subjects", teacher.subjects ?? "N/A"),
           const Divider(),
           _infoRow(Icons.person_outline, "Gender", teacher.gender ?? "N/A"),
           const Divider(),
-          _infoRow(Icons.phone_android_outlined, "Phone", teacher.phoneNo ?? "N/A"),
+          _infoRow(
+              Icons.phone_android_outlined, "Phone", teacher.phoneNo ?? "N/A"),
         ],
       ),
     );
@@ -127,21 +130,26 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          _actionTile(Icons.edit_outlined, "Edit Profile", () => Get.to(() => const EditProfile())),
+          _actionTile(Icons.edit_outlined, "Edit Profile",
+              () => Get.to(() => const EditProfile())),
           _actionTile(Icons.description_outlined, "Terms & Conditions", () {}),
           _actionTile(Icons.info_outline, "About Us", () {}),
-          _actionTile(Icons.logout_rounded, "Log Out", () => model.logout(), isDanger: true),
+          _actionTile(Icons.logout_rounded, "Log Out", () => model.logout(),
+              isDanger: true),
         ],
       ),
     );
   }
 
-  Widget _actionTile(IconData icon, String title, VoidCallback onTap, {bool isDanger = false}) {
+  Widget _actionTile(IconData icon, String title, VoidCallback onTap,
+      {bool isDanger = false}) {
     return ListTile(
       onTap: onTap,
       leading: Icon(icon, color: isDanger ? Colors.red : blackColor, size: 22),
-      title: Text(title, style: styleB14.copyWith(color: isDanger ? Colors.red : blackColor)),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
+      title: Text(title,
+          style: styleB14.copyWith(color: isDanger ? Colors.red : blackColor)),
+      trailing:
+          const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
       contentPadding: EdgeInsets.zero,
     );
   }

@@ -6,7 +6,7 @@ import 'package:sheduling_app/teacher/core/model/teacher_user.dart';
 import 'package:sheduling_app/teacher/core/services/auth_exception.dart';
 import 'package:sheduling_app/teacher/core/services/database_services.dart';
 
-class AuthServices extends ChangeNotifier {
+class AuthServices extends ChangeNotifier with WidgetsBindingObserver {
   final _auth = FirebaseAuth.instance;
 
   final DatabaseServices databaseServices = DatabaseServices();
@@ -15,11 +15,35 @@ class AuthServices extends ChangeNotifier {
   User? user;
   bool? isLogin;
   bool isTeacher = true;
+  bool isInitialized = false; // Add this
   TeacherUser teacherUser = TeacherUser();
   StudentUser studentUser = StudentUser();
 
+  String get currentUserId => 
+    isTeacher ? (teacherUser.id ?? "") : (studentUser.id ?? "");
+
   AuthServices() {
     init();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (currentUserId.isNotEmpty) {
+        databaseServices.updateUserStatus(currentUserId, isTeacher, true);
+      }
+    } else if (state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
+      if (currentUserId.isNotEmpty) {
+        databaseServices.updateUserStatus(currentUserId, isTeacher, false);
+      }
+    }
   }
 
   ///
@@ -40,9 +64,14 @@ class AuthServices extends ChangeNotifier {
           isTeacher = false;
         }
       }
+      // Update online status in init
+      if (currentUserId.isNotEmpty) {
+        databaseServices.updateUserStatus(currentUserId, isTeacher, true);
+      }
     } else {
       isLogin = false;
     }
+    isInitialized = true;
     notifyListeners();
   }
 
@@ -138,6 +167,13 @@ class AuthServices extends ChangeNotifier {
 
         customAuthResult.status = true;
         customAuthResult.user = credentials.user;
+        isInitialized = true;
+
+        // Update online status after login
+        if (currentUserId.isNotEmpty) {
+          await databaseServices.updateUserStatus(currentUserId, isTeacher, true);
+        }
+        
         notifyListeners();
       }
     } catch (e) {
@@ -149,6 +185,9 @@ class AuthServices extends ChangeNotifier {
   }
 
   logout({id}) async {
+    if (currentUserId.isNotEmpty) {
+      await databaseServices.updateUserStatus(currentUserId, isTeacher, false);
+    }
     await _auth.signOut();
     isLogin = false;
     user = null;

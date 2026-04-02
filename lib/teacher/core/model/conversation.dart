@@ -9,6 +9,7 @@ class ConversationModel {
   String? id1Image;
   String? id2Name;
   String? id2Image;
+  Map<String, int>? unreadCountMap;
 
   ConversationModel({
     this.id,
@@ -19,6 +20,7 @@ class ConversationModel {
     this.id1Image,
     this.id2Name,
     this.id2Image,
+    this.unreadCountMap,
   });
 
   Map<String, dynamic> toJson() {
@@ -31,6 +33,7 @@ class ConversationModel {
       "id1Image": id1Image,
       "id2Name": id2Name,
       "id2Image": id2Image,
+      "unreadCountMap": unreadCountMap,
     };
   }
 
@@ -44,6 +47,12 @@ class ConversationModel {
     id1Image = json['id1Image'];
     id2Name = json['id2Name'];
     id2Image = json['id2Image'];
+    unreadCountMap = Map<String, int>.from(json['unreadCountMap'] ?? {});
+  }
+
+  // Get unread count for a specific user
+  int getUnreadCount(String userId) {
+    return unreadCountMap?[userId] ?? 0;
   }
 
   // Get other person's name based on current user's ID

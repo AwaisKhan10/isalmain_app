@@ -14,6 +14,7 @@ class TeacherUser {
   String? qualification;
   String? subjects;
   String? gender;
+  bool? isOnline;
 
   TeacherUser(
       {this.id,
@@ -26,6 +27,7 @@ class TeacherUser {
       this.department,
       this.qualification,
       this.gender,
+      this.isOnline,
       this.subjects});
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -39,6 +41,7 @@ class TeacherUser {
     data['department'] = department;
     data['qualification'] = qualification;
     data['gender'] = gender;
+    data['isOnline'] = isOnline;
     data['subjects'] = subjects;
 
     return data;
@@ -55,6 +58,7 @@ class TeacherUser {
     department = json['department'];
     qualification = json['qualification'];
     gender = json['gender'];
+    isOnline = json['isOnline'];
     subjects = json['subjects'];
   }
 }
