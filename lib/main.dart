@@ -8,6 +8,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sheduling_app/common/onbaording/onbaording_screen.dart';
+import 'package:sheduling_app/common/app_gate.dart';
 import 'package:sheduling_app/common/splash_screen.dart';
 import 'package:sheduling_app/common/welcome_screen.dart';
 import 'package:sheduling_app/student/ui/screens/chat/student_chat_screen.dart';
@@ -75,7 +76,7 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: SplashScreen()),
+            home: const AppGate()),
       ),
     );
   }

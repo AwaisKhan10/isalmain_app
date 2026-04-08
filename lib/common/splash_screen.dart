@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Always initialize auth to check if user is already logged in
     await _auth.init();
 
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 5));
 
     if (_auth.isLogin ?? false) {
       if (_auth.isTeacher) {

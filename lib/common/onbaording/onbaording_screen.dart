@@ -81,12 +81,18 @@ class OnBoardingScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: CustomButton(
                   onPressed: () async {
-                    model.animateToPage(context);
+                    final isLastPage =
+                        model.currentPage >= model.onboardings.length - 1;
+
+                    if (!isLastPage) {
+                      model.animateToPage(context);
+                      return;
+                    }
+
                     final pref = await SharedPreferences.getInstance();
+                    await pref.setBool("seenOnboarding", true);
 
-                    pref.setBool("seenOnboarding", true);
-
-                    Get.to(() => WelcomeScreen());
+                    model.animateToPage(context);
                   },
                   name: 'Next',
                   textColor: whiteColor,

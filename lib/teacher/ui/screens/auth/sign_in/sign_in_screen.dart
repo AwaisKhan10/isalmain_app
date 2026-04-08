@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:sheduling_app/common/welcome_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/app_assets.dart';
 import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
@@ -47,7 +48,7 @@ class TeacherSignInScreen extends StatelessWidget {
                                 children: [
                                   CustomBackButton(
                                     onPressed: () {
-                                      Get.to(() => TeacherSignUpScreen());
+                                      Get.to(() => WelcomeScreen());
                                     },
                                   ),
                                   SizedBox(
