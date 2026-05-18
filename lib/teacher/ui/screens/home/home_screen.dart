@@ -6,7 +6,8 @@ import 'package:sheduling_app/teacher/core/constants/app_constants.dart';
 import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
-import 'package:sheduling_app/teacher/core/enums/view_state.dart';
+import 'package:sheduling_app/common/app_snackbar.dart';
+import 'package:sheduling_app/teacher/ui/custom_widgets/buttons/custom_button.dart';
 import 'package:sheduling_app/teacher/ui/screens/home/home_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -44,11 +45,14 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: model.state == ViewState.busy
-            ? const Center(child: CircularProgressIndicator())
-            : model.listClassTimeShedule.isEmpty
-                ? const Center(child: Text("No schedules added by you yet"))
-                : ListView.builder(
+        body: Stack(
+          children: [
+            if (model.isListLoading && model.listClassTimeShedule.isEmpty)
+              const Center(child: CircularProgressIndicator())
+            else if (model.listClassTimeShedule.isEmpty)
+              const Center(child: Text("No schedules added by you yet"))
+            else
+              ListView.builder(
                     padding: const EdgeInsets.all(16),
                     itemCount: model.listClassTimeShedule.length,
                     itemBuilder: (context, index) {
@@ -132,6 +136,15 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                   ),
+            if (model.isListLoading && model.listClassTimeShedule.isNotEmpty)
+              const Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: LinearProgressIndicator(minHeight: 3),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -147,8 +160,12 @@ class HomeScreen extends StatelessWidget {
           TextButton(
             onPressed: () async {
               Get.back();
-              await model.deleteSchedule(id);
-              Get.snackbar("Success", "Schedule deleted successfully");
+              final success = await model.deleteSchedule(id);
+              if (success) {
+                AppSnackbar.success('Schedule deleted successfully');
+              } else {
+                AppSnackbar.error('Could not delete schedule');
+              }
             },
             child: const Text("DELETE", style: TextStyle(color: Colors.red)),
           ),
@@ -165,8 +182,9 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
     isScrollControlled: true,
     backgroundColor: secondaryColor,
     context: context,
-    builder: (context) {
-      return Padding(
+    builder: (sheetContext) {
+      return Consumer<HomeViewModel>(
+        builder: (context, sheetModel, _) => Padding(
         padding: MediaQuery.of(context).viewInsets,
         child: SingleChildScrollView(
           child: Padding(
@@ -178,7 +196,7 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    model.editingScheduleId == null
+                    sheetModel.editingScheduleId == null
                         ? 'ADD CLASS SCHEDULE'
                         : 'EDIT CLASS SCHEDULE',
                     style:
@@ -186,22 +204,25 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
                   ),
                   const SizedBox(height: 25),
                   DropdownButtonFormField<String>(
-                    value: model.departmentController.text.isEmpty
+                    icon: dropdownFieldIcon,
+                    value: sheetModel.departmentController.text.isEmpty
                         ? null
-                        : model.departmentController.text,
+                        : sheetModel.departmentController.text,
                     validator: (value) => value == null ? "Required" : null,
                     decoration: authFieldDecoration.copyWith(
                         hintText: 'Select Department'),
                     items: AppConstants.departments.map((dept) {
                       return DropdownMenuItem(value: dept, child: Text(dept));
                     }).toList(),
-                    onChanged: (val) => model.departmentController.text = val!,
+                    onChanged: (val) =>
+                        sheetModel.departmentController.text = val!,
                   ),
                   const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
-                    value: model.classSectionController.text.isEmpty
+                    icon: dropdownFieldIcon,
+                    value: sheetModel.classSectionController.text.isEmpty
                         ? null
-                        : model.classSectionController.text,
+                        : sheetModel.classSectionController.text,
                     validator: (value) => value == null ? "Required" : null,
                     decoration: authFieldDecoration.copyWith(
                         hintText: 'Select Section'),
@@ -209,20 +230,21 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
                       return DropdownMenuItem(value: sec, child: Text(sec));
                     }).toList(),
                     onChanged: (val) =>
-                        model.classSectionController.text = val!,
+                        sheetModel.classSectionController.text = val!,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
-                    controller: model.subjectController,
+                    controller: sheetModel.subjectController,
                     validator: (value) => value!.isEmpty ? "Required" : null,
                     decoration:
                         authFieldDecoration.copyWith(hintText: 'Subject Name'),
                   ),
                   const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
-                    value: model.semesterController.text.isEmpty
+                    icon: dropdownFieldIcon,
+                    value: sheetModel.semesterController.text.isEmpty
                         ? null
-                        : model.semesterController.text,
+                        : sheetModel.semesterController.text,
                     validator: (value) => value == null ? "Required" : null,
                     decoration: authFieldDecoration.copyWith(
                         hintText: 'Select Semester'),
@@ -230,40 +252,41 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
                       return DropdownMenuItem(
                           value: sem, child: Text("Semester $sem"));
                     }).toList(),
-                    onChanged: (val) => model.semesterController.text = val!,
+                    onChanged: (val) =>
+                        sheetModel.semesterController.text = val!,
                   ),
                   const SizedBox(height: 14),
                   TextFormField(
-                    controller: model.timeController,
+                    controller: sheetModel.timeController,
                     validator: (value) => value!.isEmpty ? "Required" : null,
                     decoration: authFieldDecoration.copyWith(
                         hintText: 'Class Time (e.g. 10:00 AM)'),
                   ),
-                  const SizedBox(height: 30),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: whiteColor,
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
+                  const SizedBox(height: 10),
+                  CustomButton(
+                    name: sheetModel.editingScheduleId == null
+                        ? 'Submit Schedule'
+                        : 'Update Schedule',
+                    isLoading: sheetModel.isSaving,
+                    textColor: secondaryColor,
+                    color1: whiteColor,
+                    color2: whiteColor,
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        await model.addClassTimeShedule();
-                        Get.back();
-                        Get.snackbar(
-                            "Success",
-                            model.editingScheduleId == null
-                                ? "Schedule added successfully"
-                                : "Schedule updated successfully");
+                        final wasEditing = sheetModel.editingScheduleId != null;
+                        final success = await sheetModel.addClassTimeShedule();
+                        if (success) {
+                          Get.back();
+                          AppSnackbar.success(
+                            wasEditing
+                                ? 'Schedule updated successfully'
+                                : 'Schedule added successfully',
+                          );
+                        } else {
+                          AppSnackbar.error('Could not save schedule');
+                        }
                       }
                     },
-                    child: Text(
-                      model.editingScheduleId == null
-                          ? 'SUBMIT SCHEDULE'
-                          : 'UPDATE SCHEDULE',
-                      style: styleB16.copyWith(color: secondaryColor),
-                    ),
                   ),
                   const SizedBox(height: 10),
                 ],
@@ -271,7 +294,8 @@ void _showBottomSheet(BuildContext context, HomeViewModel model) {
             ),
           ),
         ),
-      );
+      ),
+    );
     },
   );
 }

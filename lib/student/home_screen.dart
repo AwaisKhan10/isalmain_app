@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
-import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/student/ui/screens/home/student_home_view_model.dart';
 import 'package:sheduling_app/student/ui/screens/chat/conversation_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/strings.dart'; // For staticAssets
@@ -29,21 +28,24 @@ class StudentHomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: model.state == ViewState.busy
-            ? const Center(child: CircularProgressIndicator())
-            : model.filteredClasses.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.class_outlined,
-                            size: 60.sp, color: Colors.grey),
-                        SizedBox(height: 10.h),
-                        const Text("No classes found for your section."),
-                      ],
-                    ),
-                  )
-                : ListView.builder(
+        body: Stack(
+          children: [
+            if (model.isListLoading && model.filteredClasses.isEmpty)
+              const Center(child: CircularProgressIndicator())
+            else if (model.filteredClasses.isEmpty)
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.class_outlined,
+                        size: 60.sp, color: Colors.grey),
+                    SizedBox(height: 10.h),
+                    const Text("No classes found for your section."),
+                  ],
+                ),
+              )
+            else
+              ListView.builder(
                     padding: const EdgeInsets.all(15),
                     itemCount: model.filteredClasses.length,
                     itemBuilder: (context, index) {
@@ -144,6 +146,15 @@ class StudentHomeScreen extends StatelessWidget {
                       );
                     },
                   ),
+            if (model.isListLoading && model.filteredClasses.isNotEmpty)
+              const Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: LinearProgressIndicator(minHeight: 3),
+              ),
+          ],
+        ),
       ),
     );
   }

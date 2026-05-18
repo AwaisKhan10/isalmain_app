@@ -17,7 +17,8 @@ class AuthExceptionsService {
             "Your password is very weak. Please try a strong password.";
         break;
       case "wrong-password":
-        errorMessage = "Your password is wrong.";
+      case "invalid-credential":
+        errorMessage = "Incorrect email or password. Please try again.";
         break;
       case "user-not-found":
         errorMessage = "User with this email doesn't exist.";

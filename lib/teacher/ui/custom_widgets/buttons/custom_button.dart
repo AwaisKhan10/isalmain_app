@@ -11,6 +11,7 @@ class CustomButton extends StatefulWidget {
   Color? color1;
   Color? color2;
   Color? textColor;
+  bool isLoading;
 
   CustomButton({
     Key? key,
@@ -19,6 +20,7 @@ class CustomButton extends StatefulWidget {
     required this.textColor,
     this.color1,
     this.color2,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
@@ -28,44 +30,68 @@ class CustomButton extends StatefulWidget {
 class _CustomButtonState extends State<CustomButton> {
   bool _isPressed = false;
 
+  void _handleTap() {
+    if (widget.isLoading) return;
+    widget.onPressed?.call();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isDisabled = widget.isLoading;
+
     return GestureDetector(
-      onTapDown: (_) {
-        setState(() {
-          _isPressed = true;
-        });
-      },
-      onTapUp: (_) {
-        setState(() {
-          _isPressed = false;
-        });
-        widget.onPressed?.call();
-      },
-      onTapCancel: () {
-        setState(() {
-          _isPressed = false;
-        });
-      },
+      onTapDown: isDisabled
+          ? null
+          : (_) {
+              setState(() => _isPressed = true);
+            },
+      onTapUp: isDisabled
+          ? null
+          : (_) {
+              setState(() => _isPressed = false);
+              _handleTap();
+            },
+      onTapCancel: isDisabled
+          ? null
+          : () {
+              setState(() => _isPressed = false);
+            },
       child: AnimatedScale(
-        scale: _isPressed ? 0.95 : 1.0,
+        scale: _isPressed && !isDisabled ? 0.95 : 1.0,
         duration: const Duration(milliseconds: 100),
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0, bottom: 20),
           child: Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
-              alignment: Alignment.center,
-              height: 56.h,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    widget.color1 ?? primaryColor,
-                    widget.color2 ?? secondaryColor
-                  ]),
-                  borderRadius: BorderRadius.circular(96.r)),
-              child: Text(
-                "${widget.name}",
-                style: styleB16.copyWith(color: widget.textColor),
+            child: Opacity(
+              opacity: isDisabled ? 0.85 : 1,
+              child: Container(
+                alignment: Alignment.center,
+                height: 56.h,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      widget.color1 ?? primaryColor,
+                      widget.color2 ?? secondaryColor,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(96.r),
+                ),
+                child: widget.isLoading
+                    ? SizedBox(
+                        height: 24.h,
+                        width: 24.h,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            widget.textColor ?? whiteColor,
+                          ),
+                        ),
+                      )
+                    : Text(
+                        widget.name ?? '',
+                        style: styleB16.copyWith(color: widget.textColor),
+                      ),
               ),
             ),
           ),

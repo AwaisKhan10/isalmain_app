@@ -1,56 +1,56 @@
-import 'dart:io';
-
 class TeacherUser {
   String? id;
-  File? imgUrl;
+  String? profileImageUrl;
   String? fullName;
   String? fcmToken;
   String? email;
   String? phoneNo;
   String? password;
-
-  //teacher information
   String? department;
   String? qualification;
   String? subjects;
   String? gender;
   bool? isOnline;
 
-  TeacherUser(
-      {this.id,
-      this.email,
-      this.imgUrl,
-      this.fcmToken,
-      this.fullName,
-      this.password,
-      this.phoneNo,
-      this.department,
-      this.qualification,
-      this.gender,
-      this.isOnline,
-      this.subjects});
+  TeacherUser({
+    this.id,
+    this.email,
+    this.profileImageUrl,
+    this.fcmToken,
+    this.fullName,
+    this.password,
+    this.phoneNo,
+    this.department,
+    this.qualification,
+    this.gender,
+    this.isOnline,
+    this.subjects,
+  });
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['imgUrl'] = imgUrl;
-    data['fullName'] = fullName;
-    data['fcmToken'] = fcmToken;
-    data['email'] = email;
-    data['password'] = password;
-    data['phoneNo'] = phoneNo;
-    data['department'] = department;
-    data['qualification'] = qualification;
-    data['gender'] = gender;
-    data['isOnline'] = isOnline;
-    data['subjects'] = subjects;
-
+    if (id != null) data['id'] = id;
+    if (profileImageUrl != null) {
+      data['profileImageUrl'] = profileImageUrl;
+      data['imgUrl'] = profileImageUrl;
+    }
+    if (fullName != null) data['fullName'] = fullName;
+    if (fcmToken != null) data['fcmToken'] = fcmToken;
+    if (email != null) data['email'] = email;
+    if (password != null) data['password'] = password;
+    if (phoneNo != null) data['phoneNo'] = phoneNo;
+    if (department != null) data['department'] = department;
+    if (qualification != null) data['qualification'] = qualification;
+    if (gender != null) data['gender'] = gender;
+    if (isOnline != null) data['isOnline'] = isOnline;
+    if (subjects != null) data['subjects'] = subjects;
     return data;
   }
 
   TeacherUser.fromJson(json, docId) {
     id = docId;
     fullName = json['fullName'];
-    imgUrl = json['imgUrl'];
+    profileImageUrl = json['profileImageUrl'] ?? json['imgUrl'];
     email = json['email'];
     password = json['password'];
     fcmToken = json['fcmToken'];

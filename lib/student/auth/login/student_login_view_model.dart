@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sheduling_app/common/app_snackbar.dart';
 import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/teacher/core/model/custom_auth_result.dart';
 import 'package:sheduling_app/teacher/core/model/student_user.dart';
@@ -20,13 +21,12 @@ class StudentSignInViewModel extends BaseViewModel {
   }
 
   void signInWithEmailAndPassword() async {
-    setState(ViewState.busy);
-    
     if (studentUser.email == null || studentUser.password == null) {
-      Get.snackbar("Error", "Please enter email and password");
-      setState(ViewState.idle);
+      AppSnackbar.error('Please enter email and password');
       return;
     }
+
+    setState(ViewState.busy);
 
     customAuthResult = await _authServices.loginWithEmailandPassword(
       email: studentUser.email,
@@ -36,14 +36,14 @@ class StudentSignInViewModel extends BaseViewModel {
     if (customAuthResult.status!) {
       if (!_authServices.isTeacher) {
         _authServices.isLogin = true;
-        Get.snackbar("Login", "Student Logged In Successfully");
+        AppSnackbar.success('Welcome back!');
         Get.offAll(() => const StudentRootScreen());
       } else {
-        Get.snackbar("Error", "This account is registered as a Teacher");
+        AppSnackbar.error('This account is registered as a Teacher');
         setState(ViewState.idle);
       }
     } else {
-      Get.snackbar("Error", "${customAuthResult.errorMessage}");
+      AppSnackbar.error(customAuthResult.errorMessage ?? 'Login failed');
       setState(ViewState.idle);
     }
   }

@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '827314040034',
     projectId: 'university-sheduling-app',
     authDomain: 'university-sheduling-app.firebaseapp.com',
-    storageBucket: 'university-sheduling-app.appspot.com',
+    storageBucket: 'university-sheduling-app.firebasestorage.app',
     measurementId: 'G-J2FZB9LQ21',
   );
 
@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
     appId: '1:827314040034:android:1c63e34e453d71e7e442bb',
     messagingSenderId: '827314040034',
     projectId: 'university-sheduling-app',
-    storageBucket: 'university-sheduling-app.appspot.com',
+    storageBucket: 'university-sheduling-app.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -69,7 +69,7 @@ class DefaultFirebaseOptions {
     appId: '1:827314040034:ios:1f07f8df7be97378e442bb',
     messagingSenderId: '827314040034',
     projectId: 'university-sheduling-app',
-    storageBucket: 'university-sheduling-app.appspot.com',
+    storageBucket: 'university-sheduling-app.firebasestorage.app',
     iosBundleId: 'com.example.shedulingApp',
   );
 }

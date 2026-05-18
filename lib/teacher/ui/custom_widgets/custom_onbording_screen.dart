@@ -22,20 +22,20 @@ class CustomOnBoarding extends StatelessWidget {
       SizedBox(
         height: 50.h,
       ),
-      Container(
-        height: 400.h,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("${onboarding.image}"), fit: BoxFit.cover)),
-      ),
-      // Expanded(
-      //     child: Image.asset(
-      //   "${onboarding.image}",
-      //   height: 400,
-      // )),
-      // SizedBox(
-      //   height: 30.h,
+      // Container(
+      //   height: 400.h,
+      //   decoration: BoxDecoration(
+      //       image: DecorationImage(
+      //           image: AssetImage("${onboarding.image}"), fit: BoxFit.cover)),
       // ),
+      Expanded(
+          child: Image.asset(
+        "${onboarding.image}",
+        height: 400,
+      )),
+      SizedBox(
+        height: 30.h,
+      ),
 
       ///
       /// Header

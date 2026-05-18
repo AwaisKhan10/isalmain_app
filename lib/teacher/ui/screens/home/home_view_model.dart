@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sheduling_app/locator.dart';
-import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/teacher/core/model/class_time_shedule.dart';
 import 'package:sheduling_app/teacher/core/services/auth_services.dart';
 import 'package:sheduling_app/teacher/core/services/database_services.dart';
@@ -8,15 +7,16 @@ import 'package:sheduling_app/teacher/core/view_model/view_model.dart';
 
 class HomeViewModel extends BaseViewModel {
   HomeViewModel() {
-    getClassTimeShedule(); // This method will be called when HomeViewModel is initialized
+    getClassTimeShedule();
   }
 
   final authServices = locator<AuthServices>();
   final dataBaseServices = locator<DatabaseServices>();
 
   List<ClassTimeSheduleModel> listClassTimeShedule = [];
+  bool isListLoading = false;
+  bool isSaving = false;
 
-  // Controllers for form fields
   final TextEditingController departmentController = TextEditingController();
   final TextEditingController classSectionController = TextEditingController();
   final TextEditingController subjectController = TextEditingController();
@@ -27,7 +27,6 @@ class HomeViewModel extends BaseViewModel {
 
   @override
   void dispose() {
-    // Dispose controllers when not in use
     departmentController.dispose();
     classSectionController.dispose();
     subjectController.dispose();
@@ -36,7 +35,6 @@ class HomeViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  // Pre-fill controllers for editing
   void setupEditMode(ClassTimeSheduleModel schedule) {
     editingScheduleId = schedule.id;
     departmentController.text = schedule.department ?? "";
@@ -57,9 +55,10 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // Add or Update class time schedule
-  addClassTimeShedule() async {
-    setState(ViewState.busy);
+  Future<bool> addClassTimeShedule() async {
+    isSaving = true;
+    notifyListeners();
+
     final classTimeSheduleModel = ClassTimeSheduleModel(
       id: editingScheduleId,
       department: departmentController.text.trim(),
@@ -70,36 +69,47 @@ class HomeViewModel extends BaseViewModel {
       teacherId: authServices.teacherUser.id,
       teacherName: authServices.teacherUser.fullName,
     );
-    
-    await dataBaseServices.addClassTimeShedule(classTimeSheduleModel);
-    
-    // Clear controllers after success
-    clearEditMode();
-    
-    // Refresh the list
-    await getClassTimeShedule();
-    
-    setState(ViewState.idle);
+
+    try {
+      await dataBaseServices.addClassTimeShedule(classTimeSheduleModel);
+      clearEditMode();
+      await getClassTimeShedule();
+      return true;
+    } catch (_) {
+      return false;
+    } finally {
+      isSaving = false;
+      notifyListeners();
+    }
   }
 
-  // Get class time schedule (filtered for CURRENT teacher)
-  getClassTimeShedule() async {
-    setState(ViewState.busy);
+  Future<void> getClassTimeShedule() async {
+    isListLoading = true;
+    notifyListeners();
+
     listClassTimeShedule = await dataBaseServices.getClassTimeShedule(
       teacherId: authServices.teacherUser.id,
     );
-    debugPrint("ClassTimeShedule list fetched: ${listClassTimeShedule.length} for teacherId: ${authServices.teacherUser.id}");
-    setState(ViewState.idle);
+    debugPrint(
+      "ClassTimeShedule list fetched: ${listClassTimeShedule.length} for teacherId: ${authServices.teacherUser.id}",
+    );
+
+    isListLoading = false;
+    notifyListeners();
   }
 
-  // Delete schedule
-  deleteSchedule(String id) async {
-    setState(ViewState.busy);
-    bool success = await dataBaseServices.deleteClassTimeShedule(id);
+  Future<bool> deleteSchedule(String id) async {
+    isListLoading = true;
+    notifyListeners();
+
+    final success = await dataBaseServices.deleteClassTimeShedule(id);
     if (success) {
       await getClassTimeShedule();
+      return true;
     }
-    setState(ViewState.idle);
-    return success;
+
+    isListLoading = false;
+    notifyListeners();
+    return false;
   }
 }

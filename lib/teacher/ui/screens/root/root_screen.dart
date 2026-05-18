@@ -29,9 +29,11 @@ class RootScreen extends StatelessWidget {
 
 bottomBar(RootViewModel model) {
   return BottomAppBar(
-    color: secondaryColor.withOpacity(0.4),
+    color: whiteColor,
     shadowColor: blackColor,
-    elevation: 6.0,
+    
+    surfaceTintColor: whiteColor,
+    elevation: 8.0,
     height: 80.h,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,

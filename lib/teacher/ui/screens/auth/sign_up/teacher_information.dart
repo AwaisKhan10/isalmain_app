@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/app_assets.dart';
 import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart';
@@ -27,9 +26,7 @@ class TeacherInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<TeacherSignUpViewModel>(
-        builder: (context, model, child) => ModalProgressHUD(
-              inAsyncCall: model.state == ViewState.busy,
-              child: Scaffold(
+        builder: (context, model, child) => Scaffold(
                 ///
                 /// Start Body
                 ///
@@ -171,6 +168,7 @@ class TeacherInformation extends StatelessWidget {
                           ///
                           CustomButton(
                               name: 'Next',
+                              isLoading: model.state == ViewState.busy,
                               onPressed: () {
                                 if (_formkey.currentState!.validate()) {
                                   model.signUpwithEmailandPassword();
@@ -201,7 +199,7 @@ class TeacherInformation extends StatelessWidget {
                   ),
                 ),
               ),
-            ));
+            );
   }
 }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/common/welcome_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/app_assets.dart';
@@ -24,9 +23,7 @@ class TeacherSignInScreen extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (context) => TeacherSignInViewModel(),
         child: Consumer<TeacherSignInViewModel>(
-            builder: (context, model, child) => ModalProgressHUD(
-                  inAsyncCall: model.state == ViewState.busy,
-                  child: Scaffold(
+            builder: (context, model, child) => Scaffold(
                     ///
                     /// Start Body
                     ///
@@ -127,6 +124,7 @@ class TeacherSignInScreen extends StatelessWidget {
                               ),
                               CustomButton(
                                   name: 'Sign In',
+                                  isLoading: model.state == ViewState.busy,
                                   onPressed: () {
                                     if (_formkey.currentState!.validate()) {
                                       model.signInwithEmailandPassword();
@@ -141,17 +139,21 @@ class TeacherSignInScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    Image.asset(
-                                      AppAssets.dividerImageLeft,
-                                      color: primaryColor,
-                                      scale: 2.9,
+                                    Expanded(
+                                      child: Image.asset(
+                                        AppAssets.dividerImageLeft,
+                                        color: primaryColor,
+                                        scale: 2.9,
+                                      ),
                                     ),
                                     Text(
                                       "OR",
                                       style: styleB14.copyWith(fontSize: 12),
                                     ),
-                                    Image.asset(AppAssets.dividerImageRight,
-                                        color: primaryColor, scale: 2.9),
+                                    Expanded(
+                                      child: Image.asset(AppAssets.dividerImageRight,
+                                          color: primaryColor, scale: 2.9),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -218,6 +220,6 @@ class TeacherSignInScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                )));
+                ));
   }
 }

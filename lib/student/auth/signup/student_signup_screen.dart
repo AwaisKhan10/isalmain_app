@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/app_constants.dart';
 import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart';
@@ -22,9 +21,7 @@ class StudentSignUpScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => StudentSignUpViewModel(),
       child: Consumer<StudentSignUpViewModel>(
-        builder: (context, model, child) => ModalProgressHUD(
-          inAsyncCall: model.state == ViewState.busy,
-          child: Scaffold(
+        builder: (context, model, child) => Scaffold(
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
@@ -64,6 +61,7 @@ class StudentSignUpScreen extends StatelessWidget {
                       SizedBox(height: 20.h),
                       
                       DropdownButtonFormField<String>(
+                        icon: dropdownFieldIcon,
                         decoration: authFieldDecoration.copyWith(hintText: 'Select Department'),
                         items: AppConstants.departments.map((dept) {
                           return DropdownMenuItem(value: dept, child: Text(dept));
@@ -74,6 +72,7 @@ class StudentSignUpScreen extends StatelessWidget {
                       SizedBox(height: 20.h),
                       
                       DropdownButtonFormField<String>(
+                        icon: dropdownFieldIcon,
                         decoration: authFieldDecoration.copyWith(hintText: 'Select Section'),
                         items: AppConstants.sections.map((sec) {
                           return DropdownMenuItem(value: sec, child: Text(sec));
@@ -84,6 +83,7 @@ class StudentSignUpScreen extends StatelessWidget {
                       SizedBox(height: 20.h),
                       
                       DropdownButtonFormField<String>(
+                        icon: dropdownFieldIcon,
                         decoration: authFieldDecoration.copyWith(hintText: 'Select Semester'),
                         items: AppConstants.semesters.map((sem) {
                           return DropdownMenuItem(value: sem, child: Text("Semester $sem"));
@@ -116,6 +116,7 @@ class StudentSignUpScreen extends StatelessWidget {
                       
                       CustomButton(
                         name: 'Register',
+                        isLoading: model.state == ViewState.busy,
                         onPressed: () {
                           if (_formkey.currentState!.validate()) {
                             model.signUpStudent();
@@ -144,7 +145,6 @@ class StudentSignUpScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
       ),
     );
   }

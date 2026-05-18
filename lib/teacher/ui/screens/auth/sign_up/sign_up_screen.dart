@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/auth_field_decoration.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
@@ -24,9 +23,7 @@ class TeacherSignUpScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => TeacherSignUpViewModel(),
       child: Consumer<TeacherSignUpViewModel>(
-        builder: (context, model, child) => ModalProgressHUD(
-          inAsyncCall: model.state == ViewState.busy,
-          child: Scaffold(
+        builder: (context, model, child) => Scaffold(
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
@@ -77,6 +74,7 @@ class TeacherSignUpScreen extends StatelessWidget {
                       SizedBox(height: 20.h),
 
                       DropdownButtonFormField<String>(
+                        icon: dropdownFieldIcon,
                         validator: (value) => value == null ? "Required" : null,
                         decoration: authFieldDecoration.copyWith(hintText: 'Select Department'),
                         items: AppConstants.departments.map((dept) {
@@ -101,6 +99,7 @@ class TeacherSignUpScreen extends StatelessWidget {
                       SizedBox(height: 20.h),
 
                       DropdownButtonFormField<String>(
+                        icon: dropdownFieldIcon,
                         validator: (value) => value == null ? "Required" : null,
                         decoration: authFieldDecoration.copyWith(hintText: 'Select Gender'),
                         items: ['Male', 'Female', 'Other'].map((g) {
@@ -133,6 +132,7 @@ class TeacherSignUpScreen extends StatelessWidget {
                       
                       CustomButton(
                         name: 'Register',
+                        isLoading: model.state == ViewState.busy,
                         onPressed: () {
                           if (_formkey.currentState!.validate()) {
                             model.signUpwithEmailandPassword();
@@ -161,7 +161,6 @@ class TeacherSignUpScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
       ),
     );
   }

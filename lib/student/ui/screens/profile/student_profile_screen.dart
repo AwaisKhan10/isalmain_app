@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
+import 'package:sheduling_app/common/widgets/profile_avatar.dart';
 import 'package:sheduling_app/teacher/ui/screens/profile/profile_view_model.dart';
 import 'package:sheduling_app/student/ui/screens/profile/components/student_edit_profile.dart';
 
@@ -49,10 +50,9 @@ class StudentProfileScreen extends StatelessWidget {
   Widget _profileHeader(student) {
     return Column(
       children: [
-        CircleAvatar(
+        ProfileAvatar(
           radius: 60.r,
-          backgroundColor: secondaryColor.withOpacity(0.1),
-          child: Icon(Icons.person, size: 60.r, color: secondaryColor),
+          imageUrl: student.profileImageUrl,
         ),
         const SizedBox(height: 15),
         Text(student.fullName ?? "Student Name", style: styleB20),

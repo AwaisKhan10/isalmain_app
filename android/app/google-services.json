@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "827314040034",
     "project_id": "university-sheduling-app",
-    "storage_bucket": "university-sheduling-app.appspot.com"
+    "storage_bucket": "university-sheduling-app.firebasestorage.app"
   },
   "client": [
     {

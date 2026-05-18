@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/student/auth/login/student_login_view_model.dart';
 import 'package:sheduling_app/student/auth/signup/student_signup_screen.dart';
@@ -24,9 +23,7 @@ class StudentSignInScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => StudentSignInViewModel(),
       child: Consumer<StudentSignInViewModel>(
-        builder: (context, model, child) => ModalProgressHUD(
-          inAsyncCall: model.state == ViewState.busy,
-          child: Scaffold(
+        builder: (context, model, child) => Scaffold(
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
@@ -77,6 +74,7 @@ class StudentSignInScreen extends StatelessWidget {
                       
                       CustomButton(
                         name: 'Sign In',
+                        isLoading: model.state == ViewState.busy,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             model.signInWithEmailAndPassword();
@@ -99,7 +97,6 @@ class StudentSignInScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
       ),
     );
   }
@@ -123,9 +120,9 @@ class StudentSignInScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Image.asset(AppAssets.dividerImageLeft, color: primaryColor, scale: 2.9),
+        Expanded(child: Image.asset(AppAssets.dividerImageLeft, color: primaryColor, scale: 2.9)),
         Text("OR", style: styleB14.copyWith(fontSize: 12)),
-        Image.asset(AppAssets.dividerImageRight, color: primaryColor, scale: 2.9),
+        Expanded(child: Image.asset(AppAssets.dividerImageRight, color: primaryColor, scale: 2.9)),
       ],
     );
   }

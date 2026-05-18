@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
 
+const dropdownFieldIcon = Icon(Icons.keyboard_arrow_down, color: blackColor);
+
 final authFieldDecoration = InputDecoration(
   hintText: "Enter your email",
   hintStyle: styleB14.copyWith(color: Colors.grey, fontFamily: "Cera Pro"),

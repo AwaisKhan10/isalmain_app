@@ -1,84 +1,72 @@
-// ignore_for_file: avoid_print, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sheduling_app/common/onbaording/onbaording_screen.dart';
 import 'package:sheduling_app/common/welcome_screen.dart';
+import 'package:sheduling_app/locator.dart';
+import 'package:sheduling_app/student/ui/screens/root/student_root_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/app_assets.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
-
 import 'package:sheduling_app/teacher/core/services/auth_services.dart';
-import 'package:sheduling_app/locator.dart';
-import 'package:sheduling_app/common/onbaording/onbaording_screen.dart';
-import 'package:sheduling_app/student/ui/screens/root/student_root_screen.dart';
 import 'package:sheduling_app/teacher/ui/screens/root/root_screen.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // final _authService = locator<AuthServices>();
   final _auth = locator<AuthServices>();
-  bool _isloading = true;
 
   @override
   void initState() {
-    _initialSetup();
-
     super.initState();
+    _initialSetup();
   }
 
-  _initialSetup() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool seenOnboarding = prefs.getBool("seenOnboarding") ?? false;
+  Future<void> _initialSetup() async {
+    final prefs = await SharedPreferences.getInstance();
+    final seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
 
-    // Always initialize auth to check if user is already logged in
-    await _auth.init();
+    await Future.wait<void>([
+      _auth.init(),
+      Future<void>.delayed(const Duration(seconds: 2)),
+    ]);
 
-    await Future.delayed(const Duration(seconds: 5));
+    if (!mounted) return;
 
     if (_auth.isLogin ?? false) {
       if (_auth.isTeacher) {
-        Get.off(() => RootScreen());
+        Get.off(() => const RootScreen());
       } else {
-        Get.off(() => StudentRootScreen());
+        Get.off(() => const StudentRootScreen());
       }
-    } else {
-      if (!seenOnboarding) {
-        // Corrected flow: if onboarding not seen, show it
-        Get.off(() => OnBoardingScreen());
-      } else {
-        Get.off(() => WelcomeScreen());
-      }
+      return;
     }
 
-    setState(() {
-      _isloading = false;
-    });
+    if (!seenOnboarding) {
+      Get.off(() => const OnBoardingScreen());
+    } else {
+      Get.off(() => WelcomeScreen());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          color: whiteColor,
-          height: double.infinity,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppAssets.app_logo,
-                    scale: 2,
-                  ),
-                ],
-              ),
-            ),
-          )),
+      backgroundColor: whiteColor,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Image.asset(
+            AppAssets.app_logo,
+            width: 200,
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
     );
   }
 }

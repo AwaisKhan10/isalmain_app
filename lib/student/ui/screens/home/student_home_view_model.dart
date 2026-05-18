@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sheduling_app/common/app_snackbar.dart';
 import 'package:sheduling_app/locator.dart';
-import 'package:sheduling_app/teacher/core/enums/view_state.dart';
 import 'package:sheduling_app/teacher/core/model/class_time_shedule.dart';
 import 'package:sheduling_app/teacher/core/services/auth_services.dart';
 import 'package:sheduling_app/teacher/core/services/database_services.dart';
@@ -11,17 +11,18 @@ class StudentHomeViewModel extends BaseViewModel {
   final _databaseServices = locator<DatabaseServices>();
 
   List<ClassTimeSheduleModel> filteredClasses = [];
+  bool isListLoading = false;
 
   StudentHomeViewModel() {
     fetchFilteredClasses();
   }
 
   Future<void> fetchFilteredClasses() async {
-    setState(ViewState.busy);
-    
-    // Get the current student's department and section
+    isListLoading = true;
+    notifyListeners();
+
     final student = _authServices.studentUser;
-    
+
     if (student.department != null &&
         student.section != null &&
         student.semester != null) {
@@ -31,9 +32,13 @@ class StudentHomeViewModel extends BaseViewModel {
         semester: student.semester,
       );
     } else {
+      AppSnackbar.error(
+        'Complete your profile (department, section, semester) to see classes',
+      );
       debugPrint("Student department, section or semester is null");
     }
-    
-    setState(ViewState.idle);
+
+    isListLoading = false;
+    notifyListeners();
   }
 }
