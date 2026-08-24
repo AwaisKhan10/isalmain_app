@@ -12,7 +12,16 @@
           "package_name": "com.example.sheduling_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "827314040034-609n05ihmnf6fefmdcmm3559bkun5scg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sheduling_app",
+            "certificate_hash": "af243271d16601590914e8b7eb3e1871f8e27eac"
+          }
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCWoH7BxeVcT2jHqiUk6v0Hm_w18N8-r8E"
@@ -20,7 +29,15 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "827314040034-g8ni2uq0951l0h9bd2hatlidro1bmrtq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shedulingApp"
+              }
+            }
+          ]
         }
       }
     }
