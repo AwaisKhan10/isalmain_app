@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:sheduling_app/teacher/core/model/class_time_shedule.dart';
+import 'package:sheduling_app/teacher/core/utils/schedule_utils.dart';
 import 'package:sheduling_app/teacher/core/model/student_user.dart';
 import 'package:sheduling_app/teacher/core/model/teacher_user.dart';
 
@@ -172,13 +173,16 @@ class DatabaseServices {
     }
   }
 
-  Future<TeacherUser> getTeacherUser(id) async {
-    //Todo: Rename getUsers -> getUser
-    debugPrint('@getAppUser: id: $id');
+  Future<TeacherUser> getTeacherUser(String id) async {
+    debugPrint('@getTeacherUser: id: $id');
     try {
       final snapshot = await _database.collection('teacher_user').doc(id).get();
-      debugPrint('Teacher Data: ${snapshot.data()}');
-      return TeacherUser.fromJson(snapshot.data(), snapshot.id);
+      final data = snapshot.data();
+      debugPrint('Teacher Data: $data');
+      if (!snapshot.exists || data == null) {
+        return TeacherUser();
+      }
+      return TeacherUser.fromJson(data, snapshot.id);
     } catch (e, s) {
       debugPrint('Exception @DatabaseService/getTeacherUser');
       debugPrint(s.toString());
@@ -200,12 +204,16 @@ class DatabaseServices {
     }
   }
 
-  Future<StudentUser> getStudentUser(id) async {
+  Future<StudentUser> getStudentUser(String id) async {
     debugPrint('@getStudentUser: id: $id');
     try {
       final snapshot = await _database.collection('student_user').doc(id).get();
-      debugPrint('Student Data: ${snapshot.data()}');
-      return StudentUser.fromJson(snapshot.data(), snapshot.id);
+      final data = snapshot.data();
+      debugPrint('Student Data: $data');
+      if (!snapshot.exists || data == null) {
+        return StudentUser();
+      }
+      return StudentUser.fromJson(data, snapshot.id);
     } catch (e, s) {
       debugPrint('Exception @DatabaseService/getStudentUser');
       debugPrint(s.toString());
@@ -255,20 +263,24 @@ class DatabaseServices {
   ///
   ///class time shedule
   ///
-  addClassTimeShedule(ClassTimeSheduleModel classtimeshdedule) async {
+  Future<bool> addClassTimeShedule(ClassTimeSheduleModel classtimeshdedule) async {
     try {
       String docId = classtimeshdedule.id ??
           _database.collection("class_time_shedule").doc().id;
       classtimeshdedule.id = docId;
-      classtimeshdedule.createdAt = DateTime.now().millisecondsSinceEpoch;
+      if (classtimeshdedule.createdAt == null) {
+        classtimeshdedule.createdAt = DateTime.now().millisecondsSinceEpoch;
+      }
 
-      debugPrint("Adding Data with ID: $docId"); // Debug print
+      debugPrint("Adding Data with ID: $docId");
 
       await _database
           .collection("class_time_shedule")
           .doc(docId)
-          .set(classtimeshdedule.toJson())
-          .then((value) => debugPrint("Added Data Successfully"));
+          .set(classtimeshdedule.toJson());
+
+      debugPrint("Added Data Successfully");
+      return true;
     } catch (e) {
       debugPrint("@DataBaseServices ClassTimeShedule ${e.toString()}");
       return false;
@@ -309,8 +321,7 @@ class DatabaseServices {
             doc.data() as Map<String, dynamic>, doc.id));
       }
 
-      // Sort by createdAt descending (latest first)
-      classTimeSheduleList.sort((a, b) => (b.createdAt ?? 0).compareTo(a.createdAt ?? 0));
+      ScheduleUtils.sortSchedules(classTimeSheduleList);
 
       debugPrint(
           "Class Time Schedule List Fetched: ${classTimeSheduleList.length}");

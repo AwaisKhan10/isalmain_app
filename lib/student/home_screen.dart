@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sheduling_app/teacher/core/constants/colors.dart';
 import 'package:sheduling_app/teacher/core/constants/text_style.dart';
+import 'package:sheduling_app/teacher/core/utils/schedule_utils.dart';
 import 'package:sheduling_app/student/ui/screens/home/student_home_view_model.dart';
 import 'package:sheduling_app/student/ui/screens/chat/conversation_screen.dart';
 import 'package:sheduling_app/teacher/core/constants/strings.dart'; // For staticAssets
@@ -30,27 +31,50 @@ class StudentHomeScreen extends StatelessWidget {
         ),
         body: Stack(
           children: [
-            if (model.isListLoading && model.filteredClasses.isEmpty)
-              const Center(child: CircularProgressIndicator())
-            else if (model.filteredClasses.isEmpty)
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.class_outlined,
-                        size: 60.sp, color: Colors.grey),
-                    SizedBox(height: 10.h),
-                    const Text("No classes found for your section."),
-                  ],
-                ),
-              )
-            else
-              ListView.builder(
-                    padding: const EdgeInsets.all(15),
-                    itemCount: model.filteredClasses.length,
-                    itemBuilder: (context, index) {
-                      final item = model.filteredClasses[index];
-                      return Container(
+            RefreshIndicator(
+              color: secondaryColor,
+              onRefresh: () => model.fetchFilteredClasses(showLoader: false),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  if (model.isListLoading && model.filteredClasses.isEmpty) {
+                    return ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: [
+                        SizedBox(
+                          height: constraints.maxHeight,
+                          child:
+                              const Center(child: CircularProgressIndicator()),
+                        ),
+                      ],
+                    );
+                  }
+                  if (model.filteredClasses.isEmpty) {
+                    return ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: [
+                        SizedBox(
+                          height: constraints.maxHeight,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.class_outlined,
+                                  size: 60.sp, color: Colors.grey),
+                              SizedBox(height: 10.h),
+                              const Text(
+                                  "No classes found for your section."),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                  return ListView.builder(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          padding: const EdgeInsets.all(15),
+                          itemCount: model.filteredClasses.length,
+                          itemBuilder: (context, index) {
+                            final item = model.filteredClasses[index];
+                            return Container(
                         margin: const EdgeInsets.only(bottom: 15),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12.r),
@@ -111,7 +135,19 @@ class StudentHomeScreen extends StatelessWidget {
                               ),
                               SizedBox(height: 10.h),
                               Text(
-                                "Time: ${item.time}",
+                                "Day: ${item.day ?? 'N/A'}",
+                                style: styleN14.copyWith(
+                                    color: whiteColor.withOpacity(0.9)),
+                              ),
+                              4.verticalSpace,
+                              Text(
+                                "Date: ${ScheduleUtils.formatClassDate(item.classDate)}",
+                                style: styleN14.copyWith(
+                                    color: whiteColor.withOpacity(0.9)),
+                              ),
+                              4.verticalSpace,
+                              Text(
+                                "Time: ${ScheduleUtils.formatTimeDisplay(item.time)}",
                                 style: styleN14.copyWith(
                                     color: whiteColor.withOpacity(0.9)),
                               ),
@@ -136,6 +172,12 @@ class StudentHomeScreen extends StatelessWidget {
                               ),
                               4.verticalSpace,
                               Text(
+                                "Field: ${item.field ?? 'N/A'}",
+                                style: styleN14.copyWith(
+                                    color: whiteColor.withOpacity(0.9)),
+                              ),
+                              4.verticalSpace,
+                              Text(
                                 "Section: ${item.classSection}",
                                 style: styleN14.copyWith(
                                     color: whiteColor.withOpacity(0.9)),
@@ -143,9 +185,12 @@ class StudentHomeScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                      );
-                    },
-                  ),
+                            );
+                          },
+                        );
+                },
+              ),
+            ),
             if (model.isListLoading && model.filteredClasses.isNotEmpty)
               const Positioned(
                 top: 0,

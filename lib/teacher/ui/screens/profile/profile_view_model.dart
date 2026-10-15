@@ -19,6 +19,11 @@ class ProfileViewModel extends BaseViewModel {
 
   bool isSavingProfile = false;
 
+  Future<void> refreshProfile() async {
+    await authServices.reloadCurrentUser();
+    notifyListeners();
+  }
+
   Future<void> logout() async {
     setState(ViewState.busy);
     await authServices.logout();

@@ -40,22 +40,19 @@ class _CustomButtonState extends State<CustomButton> {
     final isDisabled = widget.isLoading;
 
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTapDown: isDisabled
           ? null
-          : (_) {
-              setState(() => _isPressed = true);
-            },
-      onTapUp: isDisabled
+          : (_) => setState(() => _isPressed = true),
+      onTap: isDisabled
           ? null
-          : (_) {
+          : () {
               setState(() => _isPressed = false);
               _handleTap();
             },
       onTapCancel: isDisabled
           ? null
-          : () {
-              setState(() => _isPressed = false);
-            },
+          : () => setState(() => _isPressed = false),
       child: AnimatedScale(
         scale: _isPressed && !isDisabled ? 0.95 : 1.0,
         duration: const Duration(milliseconds: 100),

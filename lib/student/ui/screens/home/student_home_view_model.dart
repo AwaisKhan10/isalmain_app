@@ -17,23 +17,30 @@ class StudentHomeViewModel extends BaseViewModel {
     fetchFilteredClasses();
   }
 
-  Future<void> fetchFilteredClasses() async {
-    isListLoading = true;
-    notifyListeners();
+  Future<void> fetchFilteredClasses({bool showLoader = true}) async {
+    if (showLoader) {
+      isListLoading = true;
+      notifyListeners();
+    }
 
+    await _authServices.reloadCurrentUser();
     final student = _authServices.studentUser;
 
     if (student.department != null &&
+        student.field != null &&
         student.section != null &&
         student.semester != null) {
-      filteredClasses = await _databaseServices.getClassTimeShedule(
+      final classes = await _databaseServices.getClassTimeShedule(
         department: student.department,
         section: student.section,
         semester: student.semester,
       );
+      filteredClasses = classes
+          .where((c) => c.field == null || c.field == student.field)
+          .toList();
     } else {
       AppSnackbar.error(
-        'Complete your profile (department, section, semester) to see classes',
+        'Complete your profile (department, field, section, semester) to see classes',
       );
       debugPrint("Student department, section or semester is null");
     }

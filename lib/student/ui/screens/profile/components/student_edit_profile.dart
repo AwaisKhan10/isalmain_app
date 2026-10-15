@@ -26,6 +26,7 @@ class _StudentEditProfileState extends State<StudentEditProfile> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController nameController;
   String? selectedDepartment;
+  String? selectedField;
   String? selectedSection;
   String? selectedSemester;
   File? _pickedImage;
@@ -38,6 +39,7 @@ class _StudentEditProfileState extends State<StudentEditProfile> {
 
     nameController = TextEditingController(text: student.fullName);
     selectedDepartment = student.department;
+    selectedField = student.field;
     selectedSection = student.section;
     selectedSemester = student.semester;
   }
@@ -110,8 +112,27 @@ class _StudentEditProfileState extends State<StudentEditProfile> {
                       items: AppConstants.departments.map((dept) {
                         return DropdownMenuItem(value: dept, child: Text(dept));
                       }).toList(),
-                      onChanged: (val) => setState(() => selectedDepartment = val),
+                      onChanged: (val) => setState(() {
+                        selectedDepartment = val;
+                        selectedField = null;
+                      }),
                     ),
+                    if (selectedDepartment != null) ...[
+                      const SizedBox(height: 15),
+                      DropdownButtonFormField<String>(
+                        icon: dropdownFieldIcon,
+                        value: selectedField,
+                        validator: (value) => value == null ? "Required" : null,
+                        decoration: authFieldDecoration.copyWith(
+                          hintText: 'Select Field (e.g. Software, AI)',
+                        ),
+                        items: AppConstants.fieldsForDepartment(selectedDepartment)
+                            .map((field) {
+                          return DropdownMenuItem(value: field, child: Text(field));
+                        }).toList(),
+                        onChanged: (val) => setState(() => selectedField = val),
+                      ),
+                    ],
                     const SizedBox(height: 15),
                     DropdownButtonFormField<String>(
                       icon: dropdownFieldIcon,
@@ -148,6 +169,7 @@ class _StudentEditProfileState extends State<StudentEditProfile> {
                             profileImageUrl: student.profileImageUrl,
                             fullName: nameController.text.trim(),
                             department: selectedDepartment,
+                            field: selectedField,
                             section: selectedSection,
                             semester: selectedSemester,
                             fcmToken: student.fcmToken,

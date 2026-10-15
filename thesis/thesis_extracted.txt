@@ -1,0 +1,1847 @@
+================================================================================
+THESIS EXTRACTION
+Source: /Users/awaiskhan/Desktop/isalmain_app/thesis/Awais_Khan_Thesis_Islamian_App.docx
+================================================================================
+
+################################################################################
+PARAGRAPHS (with style names)
+################################################################################
+
+[1] STYLE=Normal
+ISLAMIAN APP: A CROSS-PLATFORM FLUTTER-FIREBASE APPLICATION FOR CLASS SCHEDULING AND TEACHER-STUDENT COMMUNICATION
+
+[2] STYLE=Normal
+SUBMITTED BY:
+
+[3] STYLE=Normal
+AWAIS KHAN    ROLL NO: 201209
+
+[4] STYLE=Normal
+SUPERVISED BY:
+
+[5] STYLE=Normal
+SIR FAISAL SAEED
+
+[6] STYLE=Normal
+DEPARTMENT OF COMPUTER SCIENCE
+
+[7] STYLE=Normal
+ISLAMIA COLLEGE PESHAWAR
+
+[8] STYLE=Normal
+SESSION: 2020-2024
+
+[9] STYLE=Normal
+
+
+[10] STYLE=Normal
+ISLAMIAN APP: A CROSS-PLATFORM FLUTTER-FIREBASE APPLICATION FOR CLASS SCHEDULING AND TEACHER-STUDENT COMMUNICATION
+
+[11] STYLE=Normal
+AWAIS KHAN
+
+[12] STYLE=Normal
+Project Thesis Submitted to Department of Computer Science in Partial Fulfilment of the
+Requirement for the Degree of BS-Software Engineering.
+
+[13] STYLE=Normal
+Supervisor
+
+[14] STYLE=Normal
+Sir Faisal Saeed
+
+[15] STYLE=Normal
+DEPARTMENT OF COMPUTER SCIENCE ISLAMIA COLLEGE PESHAWAR SESSION: 2020-2024
+
+[16] STYLE=Normal
+
+
+[17] STYLE=Normal
+Certificate of Approval
+
+[18] STYLE=Normal
+This is to certify that the work contained in this thesis entitled "ISLAMIAN APP: A CROSS-PLATFORM FLUTTER-FIREBASE APPLICATION FOR CLASS SCHEDULING AND TEACHER-STUDENT COMMUNICATION" was carried out by Awais Khan under my supervision and that, in my opinion, it is fully adequate, in scope and quality, for the degree of B.Sc. Software Engineering from Islamia College Peshawar, Peshawar.
+
+[19] STYLE=Normal
+
+
+[20] STYLE=Normal
+Approved By:
+
+[21] STYLE=Normal
+Signature: ________________________
+
+[22] STYLE=Normal
+Supervisor: Sir Faisal Saeed
+
+[23] STYLE=Normal
+Department of Computer Science
+
+[24] STYLE=Normal
+Islamia College Peshawar, Peshawar
+
+[25] STYLE=Normal
+Examiner: __________________________
+
+[26] STYLE=Normal
+Chairman: ________________________
+
+[27] STYLE=Normal
+Dr. Atif Khan Coordinator
+
+[28] STYLE=Normal
+Department of Computer Science
+
+[29] STYLE=Normal
+Islamia College Peshawar, Peshawar
+
+[30] STYLE=Normal
+
+
+[31] STYLE=Normal
+Dedicated to My Dear Parents
+
+[32] STYLE=Normal
+And
+
+[33] STYLE=Normal
+Respected Teachers
+
+[34] STYLE=Normal
+To my dearest parents, respected teachers, and cherished siblings, your unwavering support has been my constant source of strength and inspiration. This thesis is a heartfelt tribute to each of you, in gratitude for your endless encouragement, guidance, and love. Your influence has shaped my journey, and I am deeply thankful for the role you have played in my academic pursuit.
+
+[35] STYLE=Normal
+
+
+[36] STYLE=Normal
+ACKNOWLEDGEMENT
+
+[37] STYLE=Normal
+First and foremost, I express my deepest gratitude to Allah Almighty, the Creator of the universe and all mankind, for His boundless blessings and for granting me the strength and wisdom to accomplish this project. Infinite blessings upon Prophet Muhammad (PBUH), the last Prophet of Allah, whose spiritual guidance and example continue to illuminate our path.
+
+[38] STYLE=Normal
+I would like to extend my heartfelt thanks to my esteemed supervisor, Sir Faisal Saeed, for his invaluable guidance, unwavering support, and patience throughout this journey. His belief in my abilities has been a constant source of motivation.
+
+[39] STYLE=Normal
+Special thanks to all the teachers who imparted their knowledge during my coursework, sharing their wisdom and helping to shape my understanding of software engineering principles.
+
+[40] STYLE=Normal
+Lastly, my deepest appreciation goes to my beloved parents, whose endless love, support, and encouragement made this accomplishment possible. Their sacrifices and dedication will forever inspire me, and I am forever indebted to them for everything they have done.
+
+[41] STYLE=Normal
+
+
+[42] STYLE=Normal
+ABSTRACT
+
+[43] STYLE=Normal
+The "ISLAMIAN APP" is a cross-platform mobile application developed using Flutter and Firebase to address coordination challenges between teachers and students in academic institutions. Traditional methods of sharing class timetables—notice boards, WhatsApp groups, and paper schedules—are often fragmented, outdated, and lack direct communication channels between instructors and learners.
+
+[44] STYLE=Normal
+This project delivers a dual-role system: teachers can create, update, and delete class schedules filtered by department, section, and semester; students can view personalized timetables based on their academic profile and initiate real-time chat with respective teachers. The application employs Firebase Authentication for secure login, Cloud Firestore for real-time data synchronization, and the MVVM architectural pattern with Provider and GetIt for maintainable code structure.
+
+[45] STYLE=Normal
+Key features include role-based navigation, onboarding flow, profile management, online/offline status indicators, unread message counts, and deterministic chat identifiers for consistent conversation threading. The thesis documents requirement engineering, system modelling, implementation details, and comprehensive testing of authentication, scheduling, and messaging modules.
+
+[46] STYLE=Normal
+Limitations such as absence of push notifications, admin dashboard, and classroom location mapping are acknowledged. Future work may include FCM integration, administrative controls, and enhanced security policies. Through structured development and manual testing, Islamian App demonstrates a practical, scalable solution for academic scheduling and communication.
+
+[47] STYLE=Normal
+
+
+[48] STYLE=Normal
+Table of Contents
+
+[49] STYLE=Normal
+Dedicated to My Dear Parents ................................................................. iv
+
+[50] STYLE=Normal
+ACKNOWLEDGEMENT ................................................................................ v
+
+[51] STYLE=Normal
+ABSTRACT ........................................................................................ vi
+
+[52] STYLE=Normal
+List of Tables ................................................................................... xii
+
+[53] STYLE=Normal
+List of Figures .................................................................................. xiii
+
+[54] STYLE=Normal
+List of Abbreviations ............................................................................ xiv
+
+[55] STYLE=Normal
+CHAPTER NO. 01 — INTRODUCTION ................................................................. 1
+
+[56] STYLE=Normal
+CHAPTER NO. 02 — PROJECT PLANNING ......................................................... 9
+
+[57] STYLE=Normal
+CHAPTER NO. 03 — REQUIREMENT ENGINEERING .............................................. 29
+
+[58] STYLE=Normal
+CHAPTER NO. 04 — SYSTEM MODELLING AND DESIGN ........................................ 37
+
+[59] STYLE=Normal
+CHAPTER NO. 05 — IMPLEMENTATION AND UNIT TESTING .................................... 50
+
+[60] STYLE=Normal
+CHAPTER NO. 06 — TESTING .......................................................................... 58
+
+[61] STYLE=Normal
+CHAPTER NO. 07 — CONCLUSION AND FUTURE RECOMMENDATION ........................... 64
+
+[62] STYLE=Normal
+REFERENCES ...................................................................................... 66
+
+[63] STYLE=Normal
+APPENDIX A — SOURCE CODE STRUCTURE .................................................... 68
+
+[64] STYLE=Normal
+APPENDIX B — FIRESTORE DOCUMENT SAMPLES ............................................... 70
+
+[65] STYLE=Normal
+APPENDIX C — GLOSSARY ........................................................................... 72
+
+[66] STYLE=Normal
+APPENDIX D — PROJECT TIMELINE ............................................................... 74
+
+[67] STYLE=Normal
+
+
+[68] STYLE=Normal
+List of Figures
+
+[69] STYLE=Normal
+Figure 1: System Architecture Diagram
+
+[70] STYLE=Normal
+Figure 2: Use-Case Diagram
+
+[71] STYLE=Normal
+Figure 3: Data Flow Diagram (Level 0)
+
+[72] STYLE=Normal
+Figure 4: Entity Relationship Diagram
+
+[73] STYLE=Normal
+Figure 5: Activity Diagram — Teacher Schedule Management
+
+[74] STYLE=Normal
+Figure 6: Deployment Diagram
+
+[75] STYLE=Normal
+Figure 7: Class Diagram
+
+[76] STYLE=Normal
+
+
+[77] STYLE=Normal
+List of Tables
+
+[78] STYLE=Normal
+Table 2.1: Application Technology Stack
+
+[79] STYLE=Normal
+Table 2.2: Stakeholder Power-Interest Matrix
+
+[80] STYLE=Normal
+Table 3.1: Functional Requirements Summary
+
+[81] STYLE=Normal
+Table 6.1: Test Cases and Results
+
+[82] STYLE=Normal
+
+
+[83] STYLE=Normal
+List of Abbreviations
+
+[84] STYLE=Normal
+API	Application Programming Interface
+
+[85] STYLE=Normal
+BR	Business Requirements
+
+[86] STYLE=Normal
+DFD	Data Flow Diagram
+
+[87] STYLE=Normal
+ERD	Entity Relationship Diagram
+
+[88] STYLE=Normal
+FCM	Firebase Cloud Messaging
+
+[89] STYLE=Normal
+FR	Functional Requirements
+
+[90] STYLE=Normal
+GUI	Graphical User Interface
+
+[91] STYLE=Normal
+IDE	Integrated Development Environment
+
+[92] STYLE=Normal
+MVVM	Model-View-ViewModel
+
+[93] STYLE=Normal
+NFR	Non-Functional Requirements
+
+[94] STYLE=Normal
+SRS	Software Requirements Specification
+
+[95] STYLE=Normal
+UI	User Interface
+
+[96] STYLE=Normal
+UR	User Requirements
+
+[97] STYLE=Normal
+
+
+[98] STYLE=Heading 1
+CHAPTER NO. 01
+
+[99] STYLE=Heading 1
+INTRODUCTION
+
+[100] STYLE=Heading 2
+1.1 Overview
+
+[101] STYLE=Normal
+The "ISLAMIAN APP" (package name: sheduling_app) is a mobile solution designed for educational institutions where teachers and students require a centralized platform for class timetable management and direct communication. Built with Flutter for cross-platform deployment and Firebase for backend services, the application supports two distinct user roles with tailored interfaces: teachers manage schedules while students consume filtered academic timetables and message instructors.
+
+[102] STYLE=Normal
+The system integrates Firebase Authentication for email/password registration and login, Cloud Firestore for persistent and real-time data storage, and Provider-based state management following the MVVM pattern. An AppGate component at startup determines routing based on authentication state, onboarding completion, and detected user role (teacher or student).
+
+[103] STYLE=Heading 2
+1.2 Motivation of the Project
+
+[104] STYLE=Normal
+Academic scheduling in many colleges still relies on informal channels. Teachers announce changes verbally or through unstructured messaging groups; students miss updates or contact the wrong faculty member. This fragmentation increases confusion, especially at semester transitions when sections and timetables change.
+
+[105] STYLE=Normal
+Mobile penetration among students and faculty makes a dedicated application a practical intervention. By combining schedule publication with in-app messaging, Islamian App reduces dependency on external platforms and keeps academic communication contextual—linked to specific courses and instructors.
+
+[106] STYLE=Heading 2
+1.3 Problem Statement and Description
+
+[107] STYLE=Normal
+There is no unified digital system in the target institutional context that simultaneously allows teachers to publish structured class schedules (department, section, semester, subject, time) and enables students to view only relevant entries while communicating with assigned teachers in real time.
+
+[108] STYLE=Normal
+Existing alternatives—paper timetables, PDF notices, and generic chat applications—lack role-based filtering, centralized updates, read receipts, and online presence indicators. Students cannot reliably determine which schedule applies to their section; teachers cannot efficiently broadcast changes to the correct audience.
+
+[109] STYLE=Heading 2
+1.4 Proposed Solution
+
+[110] STYLE=Normal
+Islamian App proposes a dual-role Flutter application with the following core capabilities:
+
+[111] STYLE=List Bullet
+Secure registration and login for teachers and students with automatic role detection.
+
+[112] STYLE=List Bullet
+Teacher module: CRUD operations on class schedules linked to teacher identity.
+
+[113] STYLE=List Bullet
+Student module: read-only filtered timetable based on department, section, and semester.
+
+[114] STYLE=List Bullet
+Real-time chat with conversation summaries, unread counts, and online status.
+
+[115] STYLE=List Bullet
+Profile viewing and editing for both roles.
+
+[116] STYLE=List Bullet
+Onboarding screens and welcome flow for first-time users.
+
+[117] STYLE=Heading 2
+1.5 Objectives
+
+[118] STYLE=Normal
+1. Develop a cross-platform mobile application using Flutter for Android and iOS.
+
+[119] STYLE=Normal
+2. Implement secure authentication using Firebase Auth with Firestore user profiles.
+
+[120] STYLE=Normal
+3. Enable teachers to create, update, and delete class time schedules.
+
+[121] STYLE=Normal
+4. Enable students to view schedules filtered by academic attributes.
+
+[122] STYLE=Normal
+5. Provide real-time messaging between teachers and students via Firestore streams.
+
+[123] STYLE=Normal
+6. Design an intuitive UI with responsive layouts using flutter_screenutil.
+
+[124] STYLE=Normal
+7. Apply MVVM architecture with Provider and GetIt dependency injection.
+
+[125] STYLE=Normal
+8. Document and test critical workflows including login, scheduling, and chat.
+
+[126] STYLE=Heading 2
+1.6 Scope of Project
+
+[127] STYLE=Normal
+The project scope includes:
+
+[128] STYLE=List Bullet
+Mobile client for teacher and student roles.
+
+[129] STYLE=List Bullet
+Firebase backend (Auth + Firestore).
+
+[130] STYLE=List Bullet
+Class schedule management and filtered student views.
+
+[131] STYLE=List Bullet
+One-to-one chat with conversation list.
+
+[132] STYLE=List Bullet
+Profile management and session persistence.
+
+[133] STYLE=Normal
+Out of scope: web admin portal, payment integration, attendance tracking, video conferencing, and automated timetable generation from room availability.
+
+[134] STYLE=Heading 2
+1.7 Limitations of Project
+
+[135] STYLE=List Bullet
+No push notifications (FCM prepared in data model but not fully integrated).
+
+[136] STYLE=List Bullet
+No admin moderation or institutional bulk import of schedules.
+
+[137] STYLE=List Bullet
+Password fields stored in Firestore documents—a security practice requiring remediation.
+
+[138] STYLE=List Bullet
+Online status collection naming inconsistency between user profile and status update paths.
+
+[139] STYLE=List Bullet
+Manual testing only; limited automated unit test coverage.
+
+[140] STYLE=List Bullet
+Internet connectivity required; no comprehensive offline mode.
+
+[141] STYLE=List Bullet
+Single-institution assumption; no multi-campus tenancy.
+
+[142] STYLE=Heading 2
+1.8 Project Team and Responsibilities
+
+[143] STYLE=Normal
+This project was developed by Awais Khan (Roll No. 201209) as an individual final-year implementation. Responsibilities encompassed requirements analysis, UI/UX design, Flutter frontend development, Firebase backend configuration, integration testing, and thesis documentation under the supervision of Sir Faisal Saeed.
+
+[144] STYLE=Heading 2
+1.9 Report Structure
+
+[145] STYLE=Normal
+Chapter 1 introduces the problem and solution. Chapter 2 covers project planning, technologies, stakeholders, and feasibility. Chapter 3 presents requirements engineering. Chapter 4 describes system modelling and design diagrams. Chapter 5 explains implementation. Chapter 6 documents testing. Chapter 7 concludes with recommendations.
+
+[146] STYLE=Heading 2
+1.10 Summary
+
+[147] STYLE=Normal
+ISLAMIAN APP addresses academic scheduling and communication gaps through a Firebase-backed Flutter application with clear teacher and student workflows. This thesis records the complete development lifecycle from motivation to testing, providing a reference for future enhancements.
+
+[148] STYLE=Normal
+The following chapters document planning, requirements, design diagrams, implementation modules, test evidence, and conclusions. Readers examining the accompanying source repository will find alignment between described artefacts and implemented Dart files under lib/. 
+
+[149] STYLE=Normal
+
+
+[150] STYLE=Heading 1
+CHAPTER NO. 02
+
+[151] STYLE=Heading 1
+PROJECT PLANNING
+
+[152] STYLE=Heading 2
+2.1 System Information
+
+[153] STYLE=Normal
+Project Overview:
+
+[154] STYLE=List Bullet
+Name: ISLAMIAN APP (Islamian App)
+
+[155] STYLE=List Bullet
+Purpose: Class scheduling and teacher-student communication.
+
+[156] STYLE=List Bullet
+Platform: Flutter (Dart) — Android, iOS, with multi-platform project structure.
+
+[157] STYLE=List Bullet
+Backend: Firebase Authentication, Cloud Firestore.
+
+[158] STYLE=Heading 3
+2.1.1 Application Features
+
+[159] STYLE=Normal
+User Authentication: Email/password signup and login for teachers and students.
+
+[160] STYLE=Normal
+Role Detection: Post-login lookup in teacher_user and student_user collections.
+
+[161] STYLE=Normal
+Onboarding: First-launch screens stored via SharedPreferences (seenOnboarding).
+
+[162] STYLE=Normal
+Teacher Schedules: Add, edit, delete class_time_shedule entries with department/section/semester.
+
+[163] STYLE=Normal
+Student Timetable: Filtered schedule list based on student profile attributes.
+
+[164] STYLE=Normal
+Real-time Chat: messages and conversations collections with StreamBuilder UI.
+
+[165] STYLE=Normal
+Online Status: Lifecycle-based isOnline updates via AuthServices observer.
+
+[166] STYLE=Normal
+Profiles: View and edit teacher/student information.
+
+[167] STYLE=Heading 3
+2.1.2 Application Technologies
+
+[168] STYLE=Normal
+Table 2.1 summarizes the technology stack.
+
+[169] STYLE=Normal
+
+
+[170] STYLE=Heading 3
+2.1.3 Development Model
+
+[171] STYLE=Normal
+An Agile-inspired iterative approach was followed: core authentication first, then scheduling modules, followed by chat integration and profile screens. Short iterations allowed incremental Firebase schema refinement (e.g., unreadCountMap, conversation participant names).
+
+[172] STYLE=Heading 3
+2.1.4 Associated Risks
+
+[173] STYLE=List Bullet
+Firebase quota and billing as user base grows.
+
+[174] STYLE=List Bullet
+Firestore composite index requirements for complex queries.
+
+[175] STYLE=List Bullet
+Security misconfiguration exposing user data.
+
+[176] STYLE=List Bullet
+Low adoption if teachers do not maintain schedules.
+
+[177] STYLE=List Bullet
+Role misclassification if user exists in both collections.
+
+[178] STYLE=Heading 2
+2.2 Stakeholder Identification and Analysis
+
+[179] STYLE=Heading 3
+2.2.1 Direct Stakeholders
+
+[180] STYLE=List Bullet
+Teachers — create and manage schedules, chat with students.
+
+[181] STYLE=List Bullet
+Students — view timetables, message teachers.
+
+[182] STYLE=List Bullet
+Developer — implementation and maintenance.
+
+[183] STYLE=List Bullet
+Supervisor — academic guidance and evaluation.
+
+[184] STYLE=List Bullet
+Firebase/Google Cloud — infrastructure provider.
+
+[185] STYLE=Heading 3
+2.2.2 Indirect Stakeholders
+
+[186] STYLE=List Bullet
+Department administration — benefits from organized communication.
+
+[187] STYLE=List Bullet
+Parents — indirect beneficiaries of student clarity.
+
+[188] STYLE=List Bullet
+IT support staff — deployment and device management.
+
+[189] STYLE=List Bullet
+App store platforms — distribution channels.
+
+[190] STYLE=Heading 3
+2.2.3 Stakeholder Power-Interest Matrix
+
+[191] STYLE=Normal
+Table 2.2 categorizes stakeholders for engagement prioritization.
+
+[192] STYLE=Normal
+
+
+[193] STYLE=Heading 2
+2.3 Feasibility Study
+
+[194] STYLE=Heading 3
+2.3.1 Technical Feasibility
+
+[195] STYLE=Normal
+Flutter and Firebase are mature, well-documented technologies. The developer possessed coursework knowledge in mobile development and databases. Real-time streams and batch writes are supported natively by Firestore. Technical feasibility is HIGH.
+
+[196] STYLE=Normal
+Development environment included VS Code with Flutter and Dart extensions, Android Studio for emulator management, and Firebase console for Auth and Firestore configuration. google-services.json integrates Android builds; ios configuration present in project for future iOS deployment.
+
+[197] STYLE=Heading 3
+2.3.2 Economic Feasibility
+
+[198] STYLE=Normal
+Development used free-tier Firebase and open-source Flutter. No licensing fees for core stack. Hardware requirements are standard developer machines and test devices. Economic feasibility is HIGH for academic prototype deployment.
+
+[199] STYLE=Normal
+Estimated operational cost at pilot scale remains within Firebase Spark free quotas for authentication and moderate Firestore reads/writes. Scaling beyond free tier would require institutional budget for Blaze plan—still lower than dedicated VPS hosting and database administration salaries.
+
+[200] STYLE=Heading 3
+2.3.3 Operational Feasibility
+
+[201] STYLE=Normal
+Teachers and students are familiar with smartphones. UI follows conventional bottom navigation (Home, Chat, Profile). Operational feasibility depends on institutional adoption policies.
+
+[202] STYLE=Normal
+Training requirements are minimal: teachers need demonstration of FAB schedule form; students need signup with correct section data. IT staff must assist with APK distribution if Play Store publication is deferred. Maintenance burden is low due to serverless backend.
+
+[203] STYLE=Heading 3
+2.3.4 Schedule Feasibility
+
+[204] STYLE=Normal
+The project was executed over a final-year timeline with milestones: requirements (4 weeks), design (3 weeks), implementation (10 weeks), testing (3 weeks), documentation (4 weeks). Schedule feasibility was achieved for MVP delivery.
+
+[205] STYLE=Normal
+Buffer weeks accommodated Firebase configuration delays and chat feature rework. Thesis writing paralleled final implementation sprint. Gantt narrative in Appendix D aligns with actual delivery under supervision of Sir Faisal Saeed.
+
+[206] STYLE=Heading 2
+2.5 Literature and Comparative Analysis
+
+[207] STYLE=Normal
+Several commercial and open-source systems address academic management, including Learning Management Systems (LMS) such as Moodle and Canvas. These platforms focus on course content, assignments, and grades rather than lightweight timetable broadcasting with instant messaging. WhatsApp and Telegram groups are widely used informally but lack structured schedule filtering and role-based views.
+
+[208] STYLE=Normal
+ISLAMIAN APP differentiates itself by combining schedule CRUD for teachers, automatic student filtering, and Firebase real-time chat in a single mobile binary. Compared to paper-based timetables, the app provides immediate update propagation when teachers edit entries. Compared to generic LMS modules, the interface is simplified for daily schedule consultation and quick teacher contact.
+
+[209] STYLE=Normal
+Cross-platform Flutter reduces development effort versus maintaining separate Android (Kotlin) and iOS (Swift) codebases. Firebase eliminates server provisioning costs critical for student projects while providing authentication and real-time sync comparable to custom WebSocket backends.
+
+[210] STYLE=Normal
+Moodle and Google Classroom excel at course materials but impose learning curves for simple timetable broadcasting. Dedicated timetable apps on app stores often lack institutional branding and teacher-student chat tied to schedule rows. ISLAMIAN APP occupies a niche: lightweight, role-aware, Firebase-backed.
+
+[211] STYLE=Normal
+Prior student projects at the department using Flutter-Firebase stacks informed technology selection. The Lost2Found proposal template structure was adopted for thesis formatting consistency while content was entirely rewritten for the Islamian App domain.
+
+[212] STYLE=Heading 2
+2.6 Quality Assurance Planning
+
+[213] STYLE=Normal
+Quality assurance combined peer review of UI flows, supervisor checkpoints, and structured test cases. Code conventions followed Dart style guides with meaningful ViewModel names mirroring screens. Error handling in AuthServices delegates to AuthExceptionsService for user-readable Firebase error codes.
+
+[214] STYLE=Normal
+Performance considerations included client-side sorting of Firestore query results to avoid composite index configuration during development. Image assets were optimized for mobile DPI buckets. Shimmer placeholders (dependency present) support perceived performance during data fetch.
+
+[215] STYLE=Heading 2
+2.4 Summary
+
+[216] STYLE=Normal
+Chapter 2 established the planning foundation—features, stack, Agile process, stakeholders, and feasibility—guiding subsequent requirement and design chapters.
+
+[217] STYLE=Normal
+
+
+[218] STYLE=Heading 1
+CHAPTER NO. 03
+
+[219] STYLE=Heading 1
+REQUIREMENT ENGINEERING
+
+[220] STYLE=Heading 2
+3.1 Business Requirements
+
+[221] STYLE=Normal
+BR1: The system shall allow teachers to publish class schedules digitally.
+
+[222] STYLE=Normal
+BR2: Students shall access schedules aligned with their department, section, and semester.
+
+[223] STYLE=Normal
+BR3: The platform shall support secure teacher-student messaging.
+
+[224] STYLE=Normal
+BR4: The institution shall reduce reliance on informal communication channels.
+
+[225] STYLE=Normal
+BR5: User data shall be stored in a centralized cloud database.
+
+[226] STYLE=Heading 2
+3.2 User Requirements
+
+[227] STYLE=Normal
+UR1: Simple onboarding and role selection (Teacher/Student).
+
+[228] STYLE=Normal
+UR2: Easy schedule creation form with dropdowns for department, section, semester.
+
+[229] STYLE=Normal
+UR3: One-tap chat initiation from a class card (student) or conversation list.
+
+[230] STYLE=Normal
+UR4: Visible online/offline status in chat headers.
+
+[231] STYLE=Normal
+UR5: Profile edit capability for name, academic fields, and contact data.
+
+[232] STYLE=Normal
+UR6: Logout and session restore on app restart.
+
+[233] STYLE=Heading 2
+3.3 System Requirements
+
+[234] STYLE=Normal
+SR1: Firebase project with Auth and Firestore enabled.
+
+[235] STYLE=Normal
+SR2: Android and iOS build configuration with google-services.
+
+[236] STYLE=Normal
+SR3: Portrait orientation lock for consistent UI.
+
+[237] STYLE=Normal
+SR4: Real-time listeners for messages and conversations.
+
+[238] STYLE=Normal
+SR5: Batch writes when sending messages to update conversation metadata.
+
+[239] STYLE=Heading 2
+3.4 Functional Requirements
+
+[240] STYLE=Normal
+Table 3.1 lists primary functional requirements.
+
+[241] STYLE=Normal
+
+
+[242] STYLE=Heading 2
+3.5 Non-Functional Requirements
+
+[243] STYLE=Normal
+NFR1: UI response within 3 seconds on average network.
+
+[244] STYLE=Normal
+NFR2: Support 100+ concurrent users on Firebase spark plan (prototype).
+
+[245] STYLE=Normal
+NFR3: Material Design consistency with custom Cera Pro font.
+
+[246] STYLE=Normal
+NFR4: Code modularity via MVVM and service layer.
+
+[247] STYLE=Normal
+NFR5: Error messages for authentication failures via AuthExceptionsService.
+
+[248] STYLE=Heading 2
+3.6 Domain Requirements
+
+[249] STYLE=Normal
+Academic domain rules:
+
+[250] STYLE=List Bullet
+Schedules must include department, class section, semester, subject, and time.
+
+[251] STYLE=List Bullet
+Students only see schedules matching their registered academic profile.
+
+[252] STYLE=List Bullet
+Teachers only manage schedules they created (filtered by teacherId).
+
+[253] STYLE=List Bullet
+Chat participants are identified by Firebase UID.
+
+[254] STYLE=Heading 2
+3.7 Use-Case Descriptions
+
+[255] STYLE=Normal
+UC1: Teacher LoginActor: Teacher. Precondition: Registered account. Flow: Enter credentials → Auth → Load teacher_user → Navigate to RootScreen (Home). Postcondition: Session active.
+
+[256] STYLE=Normal
+UC2: Add Class ScheduleActor: Teacher. Flow: Tap FAB → Fill form → Submit → Firestore class_time_shedule → Refresh list.
+
+[257] STYLE=Normal
+UC3: Student View TimetableActor: Student. Flow: Login → StudentHome loads filtered getClassTimeShedule.
+
+[258] STYLE=Normal
+UC4: Start Chat from ClassActor: Student. Flow: Tap chat icon on schedule card → ConversationScreen with teacherId.
+
+[259] STYLE=Normal
+UC5: Send MessageActor: Teacher/Student. Flow: Type message → sendMessage batch → Real-time UI update.
+
+[260] STYLE=Heading 2
+3.9 Requirements Traceability Matrix
+
+[261] STYLE=Normal
+Traceability ensures each requirement maps to implementation and test artifacts. FR1 (teacher registration) maps to TeacherSignUpViewModel.signUpwithEmailandPassword() and TC3. FR4 (schedule CRUD) maps to HomeViewModel and DatabaseServices.addClassTimeShedule/deleteClassTimeShedule with TC4–TC6. FR6 (messaging) maps to ConversationScreen._sendMessage and TC8. This matrix supports viva examination questions on coverage.
+
+[262] STYLE=Heading 2
+3.8 Summary
+
+[263] STYLE=Normal
+Requirements were traced through implementation and testing chapters.
+
+[264] STYLE=Normal
+The Software Requirements Specification implied by this chapter supports viva defence: each FR maps to a visible screen or service method. Non-functional requirements inform technology choices documented in Chapter 2.
+
+[265] STYLE=Heading 2
+3.12 Constraints and Assumptions
+
+[266] STYLE=List Bullet
+Users possess smartphones with internet connectivity.
+
+[267] STYLE=List Bullet
+Institution permits Firebase cloud data storage subject to policy review.
+
+[268] STYLE=List Bullet
+One Firebase Auth account maps to exactly one role (teacher OR student).
+
+[269] STYLE=List Bullet
+Teachers truthfully enter schedule data; no automated validation against room bookings.
+
+[270] STYLE=List Bullet
+English UI only in current release.
+
+[271] STYLE=Normal
+
+
+[272] STYLE=Heading 1
+CHAPTER NO. 04
+
+[273] STYLE=Heading 1
+SYSTEM MODELLING AND DESIGN
+
+[274] STYLE=Heading 2
+4.1 Architecture Diagram
+
+[275] STYLE=Normal
+[Figure 1: System Architecture Diagram — insert diagram in final submission]
+
+[276] STYLE=Normal
+The architecture comprises three tiers: (1) Presentation — Flutter widgets and ViewModels; (2) Business Logic — AuthServices, DatabaseServices, BaseViewModel; (3) Data — Firebase Auth and Firestore collections (teacher_user, student_user, class_time_shedule, messages, conversations).
+
+[277] STYLE=Normal
+AppGate performs bootstrap: SharedPreferences for onboarding, AuthServices.init() for session, then routes to OnBoardingScreen, WelcomeScreen, RootScreen, or StudentRootScreen.
+
+[278] STYLE=Heading 2
+4.2 Use-Case Diagram
+
+[279] STYLE=Normal
+[Figure 2: Use-Case Diagram — insert diagram in final submission]
+
+[280] STYLE=Normal
+Primary actors: Teacher, Student. Shared use cases: Login, Logout, Chat, View Profile.
+
+[281] STYLE=Normal
+Teacher-specific: Manage Schedule. Student-specific: View Filtered Timetable.
+
+[282] STYLE=Heading 2
+4.3 Data Flow Diagram
+
+[283] STYLE=Normal
+[Figure 3: Data Flow Diagram — insert diagram in final submission]
+
+[284] STYLE=Normal
+Level 0 DFD: User → Islamian App → Firebase. Processes include Authenticate User, Manage Schedule, Retrieve Timetable, Send/Receive Message. Data stores: Firestore collections.
+
+[285] STYLE=Heading 2
+4.4 Entity Relationship Diagram (ERD)
+
+[286] STYLE=Normal
+[Figure 4: Entity Relationship Diagram — insert diagram in final submission]
+
+[287] STYLE=List Bullet
+TeacherUser (id, fullName, email, department, qualification, subjects, gender, phoneNo, isOnline)
+
+[288] STYLE=List Bullet
+StudentUser (id, fullName, email, department, section, semester, isOnline)
+
+[289] STYLE=List Bullet
+ClassTimeSchedule (id, department, class_section, subject, semester, time, teacherId, teacherName, createdAt)
+
+[290] STYLE=List Bullet
+Message (id, senderId, receiverId, content, time, chatId)
+
+[291] STYLE=List Bullet
+Conversation (id, participants[], lastMessage, lastTime, unreadCountMap, id1Name, id2Name)
+
+[292] STYLE=Normal
+Relationships: Teacher 1—M Schedule; Student M—M Teacher via Conversation; Message M—1 Conversation (chatId).
+
+[293] STYLE=Heading 2
+4.5 Activity Diagram
+
+[294] STYLE=Normal
+[Figure 5: Activity Diagram — insert diagram in final submission]
+
+[295] STYLE=Normal
+Teacher schedule flow: Open App → Login → Home → Add/Edit Schedule → Validate Form → Firestore set/update → Refresh ListView. Student flow: Login → Fetch filtered schedules → Optional chat branch.
+
+[296] STYLE=Heading 2
+4.6 Deployment Diagram
+
+[297] STYLE=Normal
+[Figure 6: Deployment Diagram — insert diagram in final submission]
+
+[298] STYLE=Normal
+Deployment nodes: Mobile Device (Flutter APK/IPA) communicates over HTTPS with Firebase Cloud (Authentication service, Firestore database). No self-hosted server; serverless BaaS model.
+
+[299] STYLE=Heading 2
+4.7 Class Diagram
+
+[300] STYLE=Normal
+[Figure 7: Class Diagram — insert diagram in final submission]
+
+[301] STYLE=List Bullet
+AuthServices : ChangeNotifier — init(), signUpTeacher(), signUpStudent(), login(), logout()
+
+[302] STYLE=List Bullet
+DatabaseServices — add/get/update users, schedule CRUD, sendMessage(), getMessages(), getConversations()
+
+[303] STYLE=List Bullet
+HomeViewModel : BaseViewModel — addClassTimeShedule(), getClassTimeShedule(), deleteSchedule()
+
+[304] STYLE=List Bullet
+StudentHomeViewModel — fetchFilteredClasses()
+
+[305] STYLE=List Bullet
+MessageModel, ConversationModel, TeacherUser, StudentUser, ClassTimeSheduleModel
+
+[306] STYLE=Heading 2
+4.8 Summary
+
+[307] STYLE=Normal
+Design artefacts guide implementation and provide thesis examination evidence.
+
+[308] STYLE=Normal
+Examiners should insert Figures 1–7 prepared using draw.io, Lucidchart, or StarUML following narratives in sections 4.1–4.7. Diagram page numbers in List of Figures match template conventions.
+
+[309] STYLE=Heading 2
+4.11 Interface Design Principles
+
+[310] STYLE=Normal
+Consistency: primaryColor and secondaryColor gradients appear on schedule cards, welcome buttons, and FAB. Feedback: ViewState.busy shows progress indicators; Get.snackbar confirms success and errors. Recognition over recall: dropdowns for department and section reduce typing errors. Error prevention: form validators on schedule bottom sheet require all fields before submit.
+
+[311] STYLE=Normal
+
+
+[312] STYLE=Heading 1
+CHAPTER NO. 05
+
+[313] STYLE=Heading 1
+IMPLEMENTATION AND UNIT TESTING
+
+[314] STYLE=Heading 2
+5.1 Code Overview
+
+[315] STYLE=Heading 3
+5.1.1 Architecture Overview
+
+[316] STYLE=Normal
+Source code is organized under lib/: common/ (AppGate, onboarding, welcome), teacher/ (core services, models, UI), student/ (auth and screens), main.dart, locator.dart, firebase_options.dart.
+
+[317] STYLE=Normal
+MVVM pattern: Screens are Views; classes extending BaseViewModel handle state; models map to Firestore documents; services encapsulate Firebase APIs.
+
+[318] STYLE=Heading 3
+5.1.2 Key Features and Code Components
+
+[319] STYLE=Normal
+main.dart initializes Firebase, setupLocator(), portrait orientation, and MultiProvider.
+
+[320] STYLE=Normal
+AuthServices (lib/teacher/core/services/auth_services.dart) manages Firebase Auth, role detection, and WidgetsBindingObserver for online status.
+
+[321] STYLE=Normal
+DatabaseServices (lib/teacher/core/services/database_services.dart) implements singleton Firestore access including batch sendMessage, Stream queries, and schedule filters.
+
+[322] STYLE=Normal
+HomeViewModel uses TextEditingControllers for schedule forms; StudentHomeViewModel filters by authServices.studentUser attributes.
+
+[323] STYLE=Normal
+ConversationScreen uses StreamBuilder on getMessages(chatId) with reverse ListView and markAsRead.
+
+[324] STYLE=Heading 3
+5.1.3 Conclusion
+
+[325] STYLE=Normal
+Modular structure supports maintainability and future feature additions.
+
+[326] STYLE=Heading 2
+5.2 Graphical User Interface (GUI)
+
+[327] STYLE=Heading 3
+5.2.1 Onboarding and Welcome
+
+[328] STYLE=Normal
+OnBoardingScreen uses PageView with smooth_page_indicator. WelcomeScreen presents Teacher and Student buttons with gradient styling navigating to respective login screens.
+
+[329] STYLE=Heading 3
+5.2.2 Teacher Home Interface
+
+[330] STYLE=Normal
+HomeScreen displays gradient schedule cards with edit/delete actions and FAB opening modal bottom sheet form with department, section, subject, semester, and time fields.
+
+[331] STYLE=Heading 3
+5.2.3 Student Home Interface
+
+[332] STYLE=Normal
+StudentHomeScreen lists filtered classes with teacher name, time, and chat icon launching ConversationScreen with receiverId from schedule.teacherId.
+
+[333] STYLE=Heading 3
+5.2.4 Chat Interfaces
+
+[334] STYLE=Normal
+ChatScreen and StudentChatScreen show conversation list with last message, timestamp, unread badge. ConversationScreen includes MessageBubble widget for sent/received styling.
+
+[335] STYLE=Heading 3
+5.2.5 Profile Interfaces
+
+[336] STYLE=Normal
+ProfileScreen and StudentProfileScreen display academic information cards and actions for edit profile and logout via ProfileViewModel.
+
+[337] STYLE=Normal
+EditProfile and StudentEditProfile components provide TextFormField inputs bound to TeacherUser and StudentUser models. Successful update calls DatabaseServices.updateTeacherUser or updateStudentUser and refreshes AuthServices cached user object for immediate UI consistency.
+
+[338] STYLE=Heading 3
+5.2.6 Authentication Screens
+
+[339] STYLE=Normal
+TeacherSignInScreen and StudentSignInScreen use Consumer on respective ViewModels with obscure password toggle. TeacherSignUpScreen collects credentials plus TeacherInformation screen for department, qualification, subjects, and gender. StudentSignUpScreen requires dropdown selections for department, section, and semester before account creation.
+
+[340] STYLE=Normal
+modal_progress_hud_nsn dependency supports loading overlay during async auth though primary pattern uses ViewState.busy on parent widgets. country_picker is available in pubspec for future phone verification.
+
+[341] STYLE=Heading 2
+5.3 Backend Implementation
+
+[342] STYLE=Heading 3
+5.3.1 Architecture Overview
+
+[343] STYLE=Normal
+Serverless Firebase backend; no custom REST API.
+
+[344] STYLE=Heading 3
+5.3.2 Database Structure
+
+[345] STYLE=List Bullet
+teacher_user — teacher profiles keyed by Firebase UID
+
+[346] STYLE=List Bullet
+student_user — student profiles keyed by Firebase UID
+
+[347] STYLE=List Bullet
+class_time_shedule — timetable documents with composite filter fields
+
+[348] STYLE=List Bullet
+messages — individual chat messages indexed by chatId
+
+[349] STYLE=List Bullet
+conversations — metadata, participant names, unreadCountMap
+
+[350] STYLE=Heading 3
+5.3.3 Key Functionalities
+
+[351] STYLE=Normal
+getChatId() sorts participant IDs for deterministic conversation document IDs. sendMessage() uses WriteBatch to atomically insert message and merge conversation summary.
+
+[352] STYLE=Heading 3
+5.3.4 Security and Data Protection
+
+[353] STYLE=Normal
+Firebase Auth handles credential security. Firestore security rules should restrict read/write to authenticated owners; production deployment must remove plaintext password storage from documents and enable rule hardening.
+
+[354] STYLE=Heading 2
+5.5 Implementation Challenges and Solutions
+
+[355] STYLE=Normal
+Role detection after login: The same Firebase Auth UID must map to either teacher_user or student_user. Solution: sequential lookup in AuthServices.loginWithEmailandPassword with isTeacher flag.
+
+[356] STYLE=Normal
+Chat ID consistency: Participants must share one conversation document. Solution: DatabaseServices.getChatId sorts IDs lexicographically before concatenation.
+
+[357] STYLE=Normal
+Firestore index errors: Compound queries caused missing index errors. Solution: fetch by single field (chatId, participants) and sort timestamps in Dart.
+
+[358] STYLE=Normal
+Provider scope for student root: StudentRootScreen creates local StudentRootViewModel while main.dart also registers one. Documented for refactor to single provider instance.
+
+[359] STYLE=Normal
+Online status collection paths: updateUserStatus targets 'teachers'/'students' while profiles use teacher_user/student_user. Identified as technical debt for production fix.
+
+[360] STYLE=Heading 2
+5.4 Unit Testing
+
+[361] STYLE=Normal
+Flutter test/widget_test.dart contains default scaffold test. Comprehensive unit tests for ViewModels and services are recommended future work. Manual verification was primary during development.
+
+[362] STYLE=Normal
+Widget tests could verify HomeScreen displays empty state when listClassTimeShedule is empty. Integration tests with Firebase Emulator Suite would validate sendMessage batch atomicity without production data risk.
+
+[363] STYLE=Heading 3
+5.4.1 Summary
+
+[364] STYLE=Normal
+Implementation aligns with design; GUI and backend sections integrated successfully.
+
+[365] STYLE=Normal
+Code metrics: approximately 62 Dart files under lib/, organized by role and layer. Key dependencies listed in pubspec.yaml Table 2.1. firebase_options.dart generated by FlutterFire CLI for multi-platform keys.
+
+[366] STYLE=Normal
+
+
+[367] STYLE=Heading 1
+CHAPTER NO. 06
+
+[368] STYLE=Heading 1
+TESTING
+
+[369] STYLE=Heading 2
+6.1 Test Plan
+
+[370] STYLE=Heading 3
+6.1.1 Test Objectives
+
+[371] STYLE=Normal
+Verify functional correctness, usability, and stability of core workflows.
+
+[372] STYLE=Heading 3
+6.1.2 Test Scope
+
+[373] STYLE=Normal
+In scope: Auth, scheduling, chat, profile, navigation. Out of scope: load testing at scale.
+
+[374] STYLE=Heading 3
+6.1.3 Test Type
+
+[375] STYLE=Normal
+Manual functional testing, UI walkthrough, regression after bug fixes.
+
+[376] STYLE=Heading 3
+6.1.4 Entry Criteria
+
+[377] STYLE=List Bullet
+Firebase project configured.
+
+[378] STYLE=List Bullet
+App builds on emulator/device.
+
+[379] STYLE=Heading 3
+6.1.5 Exit Criteria
+
+[380] STYLE=List Bullet
+All high-priority test cases pass.
+
+[381] STYLE=List Bullet
+No critical defects open.
+
+[382] STYLE=Heading 2
+6.2 Test Cases
+
+[383] STYLE=Normal
+Table 6.1 documents executed test cases.
+
+[384] STYLE=Normal
+
+
+[385] STYLE=Heading 2
+6.3 Test Results
+
+[386] STYLE=Normal
+Initial test results: 10/10 executed cases passed on Android emulator. Minor UI spacing issues were corrected. Chat ordering uses client-side sort to avoid Firestore composite index requirements.
+
+[387] STYLE=Heading 2
+6.4 Summary
+
+[388] STYLE=Normal
+Testing validated MVP readiness for academic demonstration.
+
+[389] STYLE=Normal
+
+
+[390] STYLE=Heading 1
+CHAPTER NO. 07
+
+[391] STYLE=Heading 1
+CONCLUSION AND FUTURE RECOMMENDATION
+
+[392] STYLE=Heading 2
+7.1 Conclusion
+
+[393] STYLE=Normal
+This thesis presented the design, implementation, and evaluation of ISLAMIAN APP, a Flutter-Firebase application for class scheduling and teacher-student communication at Islamia College Peshawar. The project successfully demonstrates dual-role mobile architecture, real-time messaging, and filtered timetable delivery addressing identified academic coordination problems.
+
+[394] STYLE=Normal
+Throughout the development lifecycle, requirement engineering established clear business, user, and system needs. System modelling produced architecture, use-case, data flow, entity-relationship, activity, deployment, and class diagrams that guided implementation. The resulting mobile client integrates authentication, schedule management, profile editing, and conversational features within a single installable package deployable to Android and iOS devices.
+
+[395] STYLE=Normal
+MVVM with Provider and GetIt produced maintainable code. Firebase reduced backend operational overhead by eliminating custom server maintenance. Manual testing confirmed core workflows including login, signup, schedule CRUD, filtered student views, messaging, unread indicators, and logout. Acknowledged limitations include notification gaps, absence of administrative dashboards, and security improvements for stored credentials.
+
+[396] STYLE=Normal
+The academic contribution of this work lies in demonstrating how a student-led software engineering project can deliver institutional value using contemporary cross-platform tooling. ISLAMIAN APP serves as a reference implementation for future batches extending features such as attendance, assignment submission, or integration with existing college information systems.
+
+[397] STYLE=Normal
+I express gratitude to Sir Faisal Saeed for supervisory guidance that shaped both technical decisions and documentation quality. The completed artefact aligns with BS Software Engineering programme outcomes: analysis, design, implementation, testing, and technical communication.
+
+[398] STYLE=Heading 2
+7.2 Future Recommendation
+
+[399] STYLE=List Bullet
+Integrate Firebase Cloud Messaging for push notifications.
+
+[400] STYLE=List Bullet
+Implement admin web dashboard for institutional schedule oversight.
+
+[401] STYLE=List Bullet
+Add Firestore security rules and remove password fields from documents.
+
+[402] STYLE=List Bullet
+Introduce room numbers, GPS, or campus map for class locations.
+
+[403] STYLE=List Bullet
+Expand automated unit and integration test suites.
+
+[404] STYLE=List Bullet
+Support timetable export (PDF/ICS) and calendar sync.
+
+[405] STYLE=List Bullet
+Add multi-language support (Urdu/English).
+
+[406] STYLE=List Bullet
+Implement attendance and assignment modules as phase two.
+
+[407] STYLE=Normal
+
+
+[408] STYLE=Heading 1
+REFERENCES
+
+[409] STYLE=Normal
+[1] Google LLC. (2024). Flutter documentation. https://docs.flutter.dev/
+
+[410] STYLE=Normal
+[2] Google LLC. (2024). Firebase documentation. https://firebase.google.com/docs
+
+[411] STYLE=Normal
+[3] Sommerville, I. (2016). Software Engineering (10th ed.). Pearson.
+
+[412] STYLE=Normal
+[4] Pressman, R. S., & Maxim, B. R. (2019). Software Engineering: A Practitioner's Approach. McGraw-Hill.
+
+[413] STYLE=Normal
+[5] Fowler, M. (2004). UML Distilled: A Brief Guide to the Standard Object Modeling Language. Addison-Wesley.
+
+[414] STYLE=Normal
+[6] Provider package documentation. https://pub.dev/packages/provider
+
+[415] STYLE=Normal
+[7] GetIt package documentation. https://pub.dev/packages/get_it
+
+[416] STYLE=Normal
+[8] Cloud Firestore data modeling best practices. Google Firebase Blog.
+
+[417] STYLE=Heading 2
+1.11 Background of Academic Scheduling Systems
+
+[418] STYLE=Normal
+Educational institutions worldwide rely on timetables to coordinate lectures, laboratories, and tutorials. Traditional scheduling methods include printed sheets distributed at the start of semester, notice boards outside departments, and informal WhatsApp groups managed by class representatives. While these methods are familiar, they suffer from version control problems: when a teacher reschedules a class, students may attend at the wrong time or location unless the update propagates quickly.
+
+[419] STYLE=Normal
+ISLAMIAN APP was conceived specifically for the Islamia College Peshawar context where Computer Science and allied departments run multiple sections per semester. Teachers require a lightweight tool to publish schedules without learning complex LMS modules. Students require read-only access filtered to their registered department, section, and semester so that information overload is avoided.
+
+[420] STYLE=Normal
+The integration of messaging within the same application reduces context switching. Rather than searching for a teacher's phone number after discovering a schedule conflict, the student taps the chat icon on the relevant class card and enters a conversation thread keyed to that academic relationship.
+
+[421] STYLE=Heading 2
+1.12 Expected Benefits
+
+[422] STYLE=List Bullet
+Reduced confusion during semester transitions when timetables change.
+
+[423] STYLE=List Bullet
+Centralized record of who published each schedule entry (teacherId, teacherName).
+
+[424] STYLE=List Bullet
+Improved accountability through timestamped schedule creation (createdAt).
+
+[425] STYLE=List Bullet
+Real-time awareness of teacher availability via online status in chat headers.
+
+[426] STYLE=List Bullet
+Lower institutional cost compared to bespoke server hosting.
+
+[427] STYLE=Normal
+
+
+[428] STYLE=Heading 2
+2.7 Work Breakdown Structure
+
+[429] STYLE=Normal
+Work was decomposed into work packages: (WP1) Environment setup — Flutter SDK, Firebase console, Android emulator; (WP2) Authentication module — signup, login, AppGate routing; (WP3) Teacher scheduling — HomeViewModel, Firestore class_time_shedule collection; (WP4) Student module — filtered queries, signup with academic fields; (WP5) Chat subsystem — messages, conversations, unreadCountMap; (WP6) Profile and logout; (WP7) Testing and thesis documentation.
+
+[430] STYLE=Normal
+Each work package concluded with a supervisor review checkpoint. Dependencies were enforced: chat required stable user IDs from authentication; student filtering required completed student profiles at registration.
+
+[431] STYLE=Heading 2
+2.8 Communication Plan
+
+[432] STYLE=Normal
+Weekly meetings with Sir Faisal Saeed covered progress slides, risk registers, and demonstration builds. Informal communication used email and in-person consultation during college hours. Firebase console access remained developer-controlled with documentation of collection schemas for examiner review.
+
+[433] STYLE=Normal
+
+
+[434] STYLE=Heading 2
+3.10 Detailed Use-Case: Teacher Adds Schedule
+
+[435] STYLE=Normal
+Primary Actor: Authenticated Teacher. Preconditions: Teacher logged in, Home tab visible. Main Flow: (1) Teacher taps FloatingActionButton; (2) System displays modal bottom sheet with form; (3) Teacher selects department from AppConstants.departments dropdown; (4) Teacher selects section A–D; (5) Teacher enters subject name and semester; (6) Teacher enters time string e.g. '10:00 AM - 11:30 AM'; (7) Teacher taps SUBMIT SCHEDULE; (8) HomeViewModel validates form; (9) DatabaseServices.addClassTimeShedule writes document with teacherId and teacherName; (10) List refreshes. Alternate Flow: Edit mode pre-fills form via setupEditMode when edit icon pressed. Exception: Network failure shows debug log; user may retry.
+
+[436] STYLE=Heading 2
+3.11 Detailed Use-Case: Student Initiates Chat
+
+[437] STYLE=Normal
+Primary Actor: Authenticated Student. Preconditions: At least one schedule visible on StudentHomeScreen. Main Flow: (1) Student taps chat icon on class card; (2) Navigator pushes ConversationScreen with receiverId = schedule.teacherId; (3) System computes chatId via DatabaseServices.getChatId; (4) Student types message and taps send; (5) Batch write inserts message and updates conversation; (6) Teacher sees conversation in Chat tab with unread badge. Postcondition: Persistent thread for ongoing academic queries.
+
+[438] STYLE=Normal
+
+
+[439] STYLE=Heading 2
+4.9 Design Rationale for Firebase Collections
+
+[440] STYLE=Normal
+Separate collections teacher_user and student_user avoid schema polymorphism complexity in a single users table while enabling role-specific fields (qualification, subjects for teachers; section, semester for students). The class_time_shedule collection name reflects legacy spelling in codebase; fields use snake_case class_section for Firestore query compatibility.
+
+[441] STYLE=Normal
+Messages are stored in a flat collection filtered by chatId rather than subcollections under each user to simplify StreamBuilder queries. Conversations duplicate summary metadata to avoid scanning all messages when rendering the inbox list—a standard denormalization pattern in NoSQL chat systems.
+
+[442] STYLE=Heading 2
+4.10 Navigation and State Design
+
+[443] STYLE=Normal
+RootViewModel and StudentRootViewModel maintain selectedScreen index and allScreen widget list for bottom navigation. Provider at main.dart registers ViewModels globally; StudentRootScreen additionally creates local StudentRootViewModel—documented as refactor candidate. GetX handles imperative navigation to login and signup screens where Provider context may not span routes.
+
+[444] STYLE=Normal
+AppGate uses FutureBuilder once per cold start, preventing flash of welcome screen for logged-in users after AuthServices.init completes—a critical UX requirement identified during early testing.
+
+[445] STYLE=Normal
+
+
+[446] STYLE=Heading 2
+5.6 Unit Testing (Detailed)
+
+[447] STYLE=Heading 3
+5.6.1 Testing Framework
+
+[448] STYLE=Normal
+Flutter provides the flutter_test package for widget and unit tests. The project includes the default widget_test.dart scaffold. Mockito or fake_cloud_firestore could mock DatabaseServices for isolated ViewModel tests in future iterations. During this thesis cycle, manual device testing on Android emulator was primary.
+
+[449] STYLE=Heading 3
+5.6.2 Testing Strategies
+
+[450] STYLE=Normal
+Black-box testing validated inputs and outputs without inspecting Firestore internals. White-box review examined AuthServices role-detection branches and getChatId ordering. Regression testing re-ran TC1–TC10 after chat unreadCountMap implementation changed.
+
+[451] STYLE=Heading 3
+5.6.3 Key Unit-Level Observations
+
+[452] STYLE=List Bullet
+HomeViewModel.clearEditMode resets all TextEditingControllers after successful submit.
+
+[453] STYLE=List Bullet
+StudentSignInViewModel rejects teacher accounts with explicit snackbar message.
+
+[454] STYLE=List Bullet
+ConversationScreen calls markAsRead when snapshot.hasData to reset unreadCountMap.
+
+[455] STYLE=List Bullet
+AuthServices.didChangeAppLifecycleState updates isOnline on resume and pause.
+
+[456] STYLE=Heading 3
+5.6.4 Results and Observations
+
+[457] STYLE=Normal
+No automated unit test failures were recorded because automated suite was not expanded beyond template. Manual observation confirmed ViewModels transition ViewState.busy to idle after async operations, displaying CircularProgressIndicator on Home and Student Home during fetch.
+
+[458] STYLE=Heading 3
+5.6.5 Conclusion
+
+[459] STYLE=Normal
+Unit testing infrastructure exists at framework level; project priority was feature delivery and integration testing. Recommendation: add tests for DatabaseServices.getChatId edge cases and MessageModel serialization.
+
+[460] STYLE=Normal
+
+
+[461] STYLE=Heading 2
+6.5 Detailed Test Case Narratives
+
+[462] STYLE=Heading 3
+6.5.1 Test Case 1: Teacher Login
+
+[463] STYLE=Normal
+Steps: Launch app → Welcome → Teacher → Enter valid teacher credentials → Login. Expected: RootScreen Home tab with schedule list or empty state. Actual: Pass.
+
+[464] STYLE=Heading 3
+6.5.2 Test Case 2: Invalid Login
+
+[465] STYLE=Normal
+Steps: Enter wrong password. Expected: Get.snackbar with AuthExceptionsService message. Actual: Pass.
+
+[466] STYLE=Heading 3
+6.5.3 Test Case 3: Student Signup
+
+[467] STYLE=Normal
+Steps: Student signup with department CS, section A, semester 6. Expected: student_user document created, StudentRootScreen shown. Actual: Pass.
+
+[468] STYLE=Heading 3
+6.5.4 Test Case 4: Add Schedule
+
+[469] STYLE=Normal
+Steps: Teacher FAB → complete form → submit. Expected: New card in ListView. Actual: Pass.
+
+[470] STYLE=Heading 3
+6.5.5 Test Case 5: Edit Schedule
+
+[471] STYLE=Normal
+Steps: Edit icon → change time → UPDATE SCHEDULE. Expected: Card reflects new time. Actual: Pass.
+
+[472] STYLE=Heading 3
+6.5.6 Test Case 6: Delete Schedule
+
+[473] STYLE=Normal
+Steps: Delete → confirm dialog. Expected: Document removed from Firestore and UI. Actual: Pass.
+
+[474] STYLE=Heading 3
+6.5.7 Test Case 7: Student Filter
+
+[475] STYLE=Normal
+Steps: Login student with profile matching teacher schedule. Expected: Only matching rows. Actual: Pass.
+
+[476] STYLE=Heading 3
+6.5.8 Test Case 8: Send Message
+
+[477] STYLE=Normal
+Steps: Open conversation → send text. Expected: MessageBubble appears both sides on two devices. Actual: Pass.
+
+[478] STYLE=Heading 2
+6.6 Usability Evaluation
+
+[479] STYLE=Normal
+Informal usability feedback from peers noted intuitive bottom navigation and readable gradient schedule cards. Suggestions included dark mode, larger font accessibility option, and search within schedules. Onboarding screens were understood without external help. Welcome screen role buttons used gradient animation feedback on press improving affordance.
+
+[480] STYLE=Heading 2
+6.7 Performance and Reliability Notes
+
+[481] STYLE=Normal
+Schedule list fetch for teachers filters by teacherId reducing document reads compared to full collection scan. Student filtered query uses compound where clauses on department, section, and semester—acceptable for prototype data volumes. Chat StreamBuilders re-render on each Firestore snapshot; ListView.builder virtualizes long message histories efficiently.
+
+[482] STYLE=Normal
+Cold start latency includes Firebase.initializeApp and AuthServices.init network round-trip. Subsequent tab switches reuse cached ViewModels without re-fetch unless refresh IconButton pressed. No memory leaks observed during 30-minute manual session testing on Android API 33 emulator.
+
+[483] STYLE=Heading 2
+6.8 Defect Log Summary
+
+[484] STYLE=List Bullet
+D1: Messages occasionally required client-side sort fix — resolved by sorting in DatabaseServices.getMessages.
+
+[485] STYLE=List Bullet
+D2: Student could not see schedules when semester stored as string mismatch — resolved by consistent dropdown values.
+
+[486] STYLE=List Bullet
+D3: Unread badge did not clear — resolved by markAsRead on conversation open.
+
+[487] STYLE=List Bullet
+D4: Teacher login navigated before isTeacher set — resolved by awaiting Firestore lookup in login flow.
+
+[488] STYLE=Normal
+
+
+[489] STYLE=Heading 2
+5.7 Dependency and Package Analysis
+
+[490] STYLE=Normal
+pubspec.yaml declares flutter SDK, cupertino_icons, flutter_screenutil for responsive sizing, provider for ChangeNotifier propagation, get for navigation, intl for DateFormat in chat timestamps, expandable_text for future long descriptions, image_picker and file_picker for profile media extensions, firebase_auth, firebase_core, cloud_firestore, firebase_storage, get_it, shared_preferences, get_storage, carousel_slider, table_calendar, shimmer, smooth_page_indicator, modal_progress_hud_nsn, and country_picker.
+
+[491] STYLE=Normal
+Not every dependency is exercised in MVP code paths; table_calendar and carousel_slider represent planned enhancements for calendar view of schedules. firebase_storage enables profile image upload in future sprints.
+
+[492] STYLE=Heading 2
+5.8 Data Flow: Send Message Sequence
+
+[493] STYLE=Normal
+Step 1: User taps send in ConversationScreen._sendMessage. Step 2: MessageModel constructed with senderId, receiverId, content, time epoch, chatId from getChatId. Step 3: DatabaseServices.sendMessage creates batch. Step 4: Batch set on messages/{docId}. Step 5: Batch merge on conversations/{chatId} with lastMessage, lastTime, participants sorted array, id1Name/id2Name if provided, unreadCountMap increment for receiver. Step 6: batch.commit. Step 7: StreamBuilder on getMessages receives snapshot and rebuilds ListView. Step 8: Recipient's conversation list StreamBuilder updates unread badge simultaneously.
+
+[494] STYLE=Normal
+
+
+[495] STYLE=Heading 1
+APPENDIX A — SOURCE CODE STRUCTURE
+
+[496] STYLE=Normal
+lib/main.dart — Application entry, Firebase initialization, MultiProvider registration, GetMaterialApp.
+
+[497] STYLE=Normal
+lib/locator.dart — GetIt service locator for AuthServices and DatabaseServices.
+
+[498] STYLE=Normal
+lib/common/app_gate.dart — Bootstrap routing (onboarding, welcome, authenticated roots).
+
+[499] STYLE=Normal
+lib/common/onbaording/ — Onboarding screens and view model.
+
+[500] STYLE=Normal
+lib/common/welcome_screen.dart — Teacher/Student role selection.
+
+[501] STYLE=Normal
+lib/teacher/core/services/auth_services.dart — Authentication, role detection, lifecycle online status.
+
+[502] STYLE=Normal
+lib/teacher/core/services/database_services.dart — Firestore CRUD, chat streams, schedule queries.
+
+[503] STYLE=Normal
+lib/teacher/core/model/ — TeacherUser, StudentUser, ClassTimeSheduleModel, MessageModel, ConversationModel.
+
+[504] STYLE=Normal
+lib/teacher/ui/screens/home/ — Teacher schedule management UI and HomeViewModel.
+
+[505] STYLE=Normal
+lib/teacher/ui/screens/chat_screen/ — Teacher conversation list.
+
+[506] STYLE=Normal
+lib/teacher/ui/screens/profile/ — Teacher profile and ProfileViewModel.
+
+[507] STYLE=Normal
+lib/teacher/ui/screens/auth/ — Teacher sign-in and sign-up flows.
+
+[508] STYLE=Normal
+lib/student/ — Parallel student auth, home, chat, profile modules.
+
+[509] STYLE=Normal
+pubspec.yaml — Dependencies: firebase_auth, cloud_firestore, provider, get, get_it, flutter_screenutil.
+
+[510] STYLE=Heading 1
+APPENDIX B — FIRESTORE DOCUMENT SAMPLES
+
+[511] STYLE=Normal
+Example class_time_shedule document: { department: 'Computer Science', class_section: 'A', semester: '6', subject: 'Software Engineering', time: '10:00 AM - 11:30 AM', teacherId: '<uid>', teacherName: 'Dr. Example', createdAt: <epoch_ms> }.
+
+[512] STYLE=Normal
+Example message document: { senderId, receiverId, content, time, chatId } where chatId = sorted(uid1)_sorted(uid2) produced by DatabaseServices.getChatId().
+
+[513] STYLE=Normal
+Example conversation document merges lastMessage, lastTime, participants array, id1Name, id2Name, and unreadCountMap.{receiverId} incremented via FieldValue.increment in batch write.
+
+[514] STYLE=Heading 1
+APPENDIX C — GLOSSARY
+
+[515] STYLE=Normal
+Islamian App: Branded end-user name displayed in MaterialApp title.
+
+[516] STYLE=Normal
+sheduling_app: Internal Dart package name used in imports.
+
+[517] STYLE=Normal
+AppGate: Stateful widget resolving initial route after async bootstrap.
+
+[518] STYLE=Normal
+MVVM: Model-View-ViewModel pattern separating UI and business logic.
+
+[519] STYLE=Normal
+BaaS: Backend-as-a-Service — Firebase model without custom servers.
+
+[520] STYLE=Heading 1
+APPENDIX D — PROJECT TIMELINE (GANTT NARRATIVE)
+
+[521] STYLE=Normal
+Phase 1 (Weeks 1–3): Requirement gathering, supervisor meetings, literature review, proposal approval.
+
+[522] STYLE=Normal
+Phase 2 (Weeks 4–6): UI mockups, Firestore schema design, Firebase project setup.
+
+[523] STYLE=Normal
+Phase 3 (Weeks 7–12): Teacher module — auth, schedule CRUD, root navigation.
+
+[524] STYLE=Normal
+Phase 4 (Weeks 13–16): Student module — signup filters, home screen, profile.
+
+[525] STYLE=Normal
+Phase 5 (Weeks 17–20): Chat module — messages, conversations, unread counts, online status.
+
+[526] STYLE=Normal
+Phase 6 (Weeks 21–23): Integration testing, bug fixes, performance tuning.
+
+[527] STYLE=Normal
+Phase 7 (Weeks 24–26): Thesis writing, diagram preparation, final viva preparation.
+
+[528] STYLE=Heading 1
+APPENDIX E — SAMPLE SCREEN DESCRIPTIONS
+
+[529] STYLE=Normal
+Splash / AppGate: Initial load displays CircularProgressIndicator while SharedPreferences and Firebase Auth resolve.
+
+[530] STYLE=Normal
+OnBoardingScreen: PageView with two slides describing welcome and schedule management; smooth_page_indicator dots.
+
+[531] STYLE=Normal
+WelcomeScreen: Teacher and Student gradient buttons routing to respective sign-in screens via Get.to.
+
+[532] STYLE=Normal
+Teacher HomeScreen: ListView of gradient cards, FAB for modal schedule form, refresh IconButton in AppBar.
+
+[533] STYLE=Normal
+StudentHomeScreen: Filtered class list with chat IconButton per row linking to ConversationScreen.
+
+[534] STYLE=Normal
+ConversationScreen: Reverse ListView of MessageBubble widgets, online status StreamBuilder, send FAB.
+
+[535] STYLE=Heading 1
+APPENDIX F — FIREBASE SECURITY RECOMMENDATIONS
+
+[536] STYLE=Normal
+Production deployment should apply Firestore rules allowing users to read/write only their profile document and messages where senderId or receiverId matches auth.uid. class_time_shedule writes should be restricted to authenticated teachers. Remove password field from toJson() serialization entirely.
+
+[537] STYLE=Normal
+Enable Firebase App Check to reduce API abuse. Configure email verification optional step for institutional accounts. Monitor usage in Firebase console for anomalous read spikes on messages collection.
+
+[538] STYLE=Heading 1
+APPENDIX G — VIVA PREPARATION NOTES
+
+[539] STYLE=Normal
+Anticipated examiner questions and prepared responses:
+
+[540] STYLE=Normal
+Q: Why Flutter over native Android? A: Single codebase, hot reload, strong Firebase plugins, department familiarity.
+
+[541] STYLE=Normal
+Q: How is teacher distinguished from student? A: Sequential Firestore lookup in AuthServices after Firebase Auth UID obtained.
+
+[542] STYLE=Normal
+Q: Why store conversations separately from messages? A: Inbox performance via denormalized lastMessage without scanning all messages.
+
+[543] STYLE=Normal
+Q: What are main limitations? A: No FCM push, no admin panel, password in Firestore documents, manual testing only.
+
+[544] STYLE=Normal
+Q: How would you scale to 5000 users? A: Firestore indexes, pagination, Cloud Functions for notifications, security rules hardening.
+
+[545] STYLE=Normal
+Q: Supervisor role? A: Sir Faisal Saeed provided iterative feedback on scope, diagrams, and demonstration milestones.
+
+[546] STYLE=Heading 1
+APPENDIX H — ETHICAL AND LEGAL CONSIDERATIONS
+
+[547] STYLE=Normal
+User emails and academic records constitute personal data. Institutional ethics approval may be required before pilot deployment with real students. Privacy policy should disclose Firebase data processing by Google. Users must consent to terms at registration in production builds.
+
+[548] STYLE=Normal
+Intellectual property of source code rests with the student author unless college policy states otherwise. Third-party packages are used under their respective open-source licenses as declared on pub.dev.
+
+
+################################################################################
+TABLES
+################################################################################
+
+--------------------------------------------------------------------------------
+TABLE 1  (9 rows x 2 cols)
+--------------------------------------------------------------------------------
+  R1: Layer | Technology
+  R2: Frontend | Flutter 3.x, Dart 3.3+, Material 3
+  R3: State Management | Provider (ChangeNotifier ViewModels)
+  R4: Navigation | GetX (GetMaterialApp, Get.to, Get.offAll)
+  R5: DI | GetIt (AuthServices, DatabaseServices singletons)
+  R6: Backend | Firebase Auth, Cloud Firestore
+  R7: Local Storage | SharedPreferences, get_storage
+  R8: UI Scaling | flutter_screenutil
+  R9: IDE | VS Code / Android Studio
+
+--------------------------------------------------------------------------------
+TABLE 2  (5 rows x 3 cols)
+--------------------------------------------------------------------------------
+  R1: Category | Stakeholders | Strategy
+  R2: High Power, High Interest | Supervisor, Teachers, Developer | Close collaboration
+  R3: High Power, Low Interest | Firebase, Administration | Monitor service levels
+  R4: Low Power, High Interest | Students | UX testing and feedback
+  R5: Low Power, Low Interest | Parents, App stores | Inform as needed
+
+--------------------------------------------------------------------------------
+TABLE 3  (11 rows x 3 cols)
+--------------------------------------------------------------------------------
+  R1: ID | Requirement | Priority
+  R2: FR1 | Teacher registration with profile fields | High
+  R3: FR2 | Student registration with dept/section/semester | High
+  R4: FR3 | Login with role-based routing | High
+  R5: FR4 | Create/Read/Update/Delete schedules (teacher) | High
+  R6: FR5 | Filter schedules for student home | High
+  R7: FR6 | Send and receive chat messages | High
+  R8: FR7 | Display conversation list with unread badge | Medium
+  R9: FR8 | Mark conversation as read on open | Medium
+  R10: FR9 | Update online status on app lifecycle | Medium
+  R11: FR10 | Edit teacher/student profile | Medium
+
+--------------------------------------------------------------------------------
+TABLE 4  (11 rows x 5 cols)
+--------------------------------------------------------------------------------
+  R1: ID | Test Case | Steps | Expected | Result
+  R2: TC1 | Teacher Login | Valid credentials | Navigate to teacher home | Pass
+  R3: TC2 | Invalid Login | Wrong password | Error snackbar | Pass
+  R4: TC3 | Student Signup | Fill dept/section/semester | Student root screen | Pass
+  R5: TC4 | Add Schedule | Teacher FAB form submit | Schedule in list | Pass
+  R6: TC5 | Edit Schedule | Edit icon → update | Updated fields shown | Pass
+  R7: TC6 | Delete Schedule | Delete confirm | Removed from list | Pass
+  R8: TC7 | Student Filter | Login as student | Only matching schedules | Pass
+  R9: TC8 | Send Message | Type and send in chat | Message appears realtime | Pass
+  R10: TC9 | Unread Badge | Receive message | Badge on conversation | Pass
+  R11: TC10 | Logout | Profile logout | Welcome screen | Pass
+
+
+################################################################################
+CHAPTER / HEADING OUTLINE (from styles)
+################################################################################
+
+  para[98] [Heading 1] CHAPTER NO. 01
+  para[99] [Heading 1] INTRODUCTION
+  para[100] [Heading 2] 1.1 Overview
+  para[103] [Heading 2] 1.2 Motivation of the Project
+  para[106] [Heading 2] 1.3 Problem Statement and Description
+  para[109] [Heading 2] 1.4 Proposed Solution
+  para[117] [Heading 2] 1.5 Objectives
+  para[126] [Heading 2] 1.6 Scope of Project
+  para[134] [Heading 2] 1.7 Limitations of Project
+  para[142] [Heading 2] 1.8 Project Team and Responsibilities
+  para[144] [Heading 2] 1.9 Report Structure
+  para[146] [Heading 2] 1.10 Summary
+  para[150] [Heading 1] CHAPTER NO. 02
+  para[151] [Heading 1] PROJECT PLANNING
+  para[152] [Heading 2] 2.1 System Information
+  para[158] [Heading 3] 2.1.1 Application Features
+  para[167] [Heading 3] 2.1.2 Application Technologies
+  para[170] [Heading 3] 2.1.3 Development Model
+  para[172] [Heading 3] 2.1.4 Associated Risks
+  para[178] [Heading 2] 2.2 Stakeholder Identification and Analysis
+  para[179] [Heading 3] 2.2.1 Direct Stakeholders
+  para[185] [Heading 3] 2.2.2 Indirect Stakeholders
+  para[190] [Heading 3] 2.2.3 Stakeholder Power-Interest Matrix
+  para[193] [Heading 2] 2.3 Feasibility Study
+  para[194] [Heading 3] 2.3.1 Technical Feasibility
+  para[197] [Heading 3] 2.3.2 Economic Feasibility
+  para[200] [Heading 3] 2.3.3 Operational Feasibility
+  para[203] [Heading 3] 2.3.4 Schedule Feasibility
+  para[206] [Heading 2] 2.5 Literature and Comparative Analysis
+  para[212] [Heading 2] 2.6 Quality Assurance Planning
+  para[215] [Heading 2] 2.4 Summary
+  para[218] [Heading 1] CHAPTER NO. 03
+  para[219] [Heading 1] REQUIREMENT ENGINEERING
+  para[220] [Heading 2] 3.1 Business Requirements
+  para[226] [Heading 2] 3.2 User Requirements
+  para[233] [Heading 2] 3.3 System Requirements
+  para[239] [Heading 2] 3.4 Functional Requirements
+  para[242] [Heading 2] 3.5 Non-Functional Requirements
+  para[248] [Heading 2] 3.6 Domain Requirements
+  para[254] [Heading 2] 3.7 Use-Case Descriptions
+  para[260] [Heading 2] 3.9 Requirements Traceability Matrix
+  para[262] [Heading 2] 3.8 Summary
+  para[265] [Heading 2] 3.12 Constraints and Assumptions
+  para[272] [Heading 1] CHAPTER NO. 04
+  para[273] [Heading 1] SYSTEM MODELLING AND DESIGN
+  para[274] [Heading 2] 4.1 Architecture Diagram
+  para[278] [Heading 2] 4.2 Use-Case Diagram
+  para[282] [Heading 2] 4.3 Data Flow Diagram
+  para[285] [Heading 2] 4.4 Entity Relationship Diagram (ERD)
+  para[293] [Heading 2] 4.5 Activity Diagram
+  para[296] [Heading 2] 4.6 Deployment Diagram
+  para[299] [Heading 2] 4.7 Class Diagram
+  para[306] [Heading 2] 4.8 Summary
+  para[309] [Heading 2] 4.11 Interface Design Principles
+  para[312] [Heading 1] CHAPTER NO. 05
+  para[313] [Heading 1] IMPLEMENTATION AND UNIT TESTING
+  para[314] [Heading 2] 5.1 Code Overview
+  para[315] [Heading 3] 5.1.1 Architecture Overview
+  para[318] [Heading 3] 5.1.2 Key Features and Code Components
+  para[324] [Heading 3] 5.1.3 Conclusion
+  para[326] [Heading 2] 5.2 Graphical User Interface (GUI)
+  para[327] [Heading 3] 5.2.1 Onboarding and Welcome
+  para[329] [Heading 3] 5.2.2 Teacher Home Interface
+  para[331] [Heading 3] 5.2.3 Student Home Interface
+  para[333] [Heading 3] 5.2.4 Chat Interfaces
+  para[335] [Heading 3] 5.2.5 Profile Interfaces
+  para[338] [Heading 3] 5.2.6 Authentication Screens
+  para[341] [Heading 2] 5.3 Backend Implementation
+  para[342] [Heading 3] 5.3.1 Architecture Overview
+  para[344] [Heading 3] 5.3.2 Database Structure
+  para[350] [Heading 3] 5.3.3 Key Functionalities
+  para[352] [Heading 3] 5.3.4 Security and Data Protection
+  para[354] [Heading 2] 5.5 Implementation Challenges and Solutions
+  para[360] [Heading 2] 5.4 Unit Testing
+  para[363] [Heading 3] 5.4.1 Summary
+  para[367] [Heading 1] CHAPTER NO. 06
+  para[368] [Heading 1] TESTING
+  para[369] [Heading 2] 6.1 Test Plan
+  para[370] [Heading 3] 6.1.1 Test Objectives
+  para[372] [Heading 3] 6.1.2 Test Scope
+  para[374] [Heading 3] 6.1.3 Test Type
+  para[376] [Heading 3] 6.1.4 Entry Criteria
+  para[379] [Heading 3] 6.1.5 Exit Criteria
+  para[382] [Heading 2] 6.2 Test Cases
+  para[385] [Heading 2] 6.3 Test Results
+  para[387] [Heading 2] 6.4 Summary
+  para[390] [Heading 1] CHAPTER NO. 07
+  para[391] [Heading 1] CONCLUSION AND FUTURE RECOMMENDATION
+  para[392] [Heading 2] 7.1 Conclusion
+  para[398] [Heading 2] 7.2 Future Recommendation
+  para[408] [Heading 1] REFERENCES
+  para[417] [Heading 2] 1.11 Background of Academic Scheduling Systems
+  para[421] [Heading 2] 1.12 Expected Benefits
+  para[428] [Heading 2] 2.7 Work Breakdown Structure
+  para[431] [Heading 2] 2.8 Communication Plan
+  para[434] [Heading 2] 3.10 Detailed Use-Case: Teacher Adds Schedule
+  para[436] [Heading 2] 3.11 Detailed Use-Case: Student Initiates Chat
+  para[439] [Heading 2] 4.9 Design Rationale for Firebase Collections
+  para[442] [Heading 2] 4.10 Navigation and State Design
+  para[446] [Heading 2] 5.6 Unit Testing (Detailed)
+  para[447] [Heading 3] 5.6.1 Testing Framework
+  para[449] [Heading 3] 5.6.2 Testing Strategies
+  para[451] [Heading 3] 5.6.3 Key Unit-Level Observations
+  para[456] [Heading 3] 5.6.4 Results and Observations
+  para[458] [Heading 3] 5.6.5 Conclusion
+  para[461] [Heading 2] 6.5 Detailed Test Case Narratives
+  para[462] [Heading 3] 6.5.1 Test Case 1: Teacher Login
+  para[464] [Heading 3] 6.5.2 Test Case 2: Invalid Login
+  para[466] [Heading 3] 6.5.3 Test Case 3: Student Signup
+  para[468] [Heading 3] 6.5.4 Test Case 4: Add Schedule
+  para[470] [Heading 3] 6.5.5 Test Case 5: Edit Schedule
+  para[472] [Heading 3] 6.5.6 Test Case 6: Delete Schedule
+  para[474] [Heading 3] 6.5.7 Test Case 7: Student Filter
+  para[476] [Heading 3] 6.5.8 Test Case 8: Send Message
+  para[478] [Heading 2] 6.6 Usability Evaluation
+  para[480] [Heading 2] 6.7 Performance and Reliability Notes
+  para[483] [Heading 2] 6.8 Defect Log Summary
+  para[489] [Heading 2] 5.7 Dependency and Package Analysis
+  para[492] [Heading 2] 5.8 Data Flow: Send Message Sequence
+  para[495] [Heading 1] APPENDIX A — SOURCE CODE STRUCTURE
+  para[510] [Heading 1] APPENDIX B — FIRESTORE DOCUMENT SAMPLES
+  para[514] [Heading 1] APPENDIX C — GLOSSARY
+  para[520] [Heading 1] APPENDIX D — PROJECT TIMELINE (GANTT NARRATIVE)
+  para[528] [Heading 1] APPENDIX E — SAMPLE SCREEN DESCRIPTIONS
+  para[535] [Heading 1] APPENDIX F — FIREBASE SECURITY RECOMMENDATIONS
+  para[538] [Heading 1] APPENDIX G — VIVA PREPARATION NOTES
+  para[546] [Heading 1] APPENDIX H — ETHICAL AND LEGAL CONSIDERATIONS
+
+################################################################################
+SUMMARY: 548 paragraphs, 4 tables, 127 heading-style paragraphs
+################################################################################

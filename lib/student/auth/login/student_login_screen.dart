@@ -86,7 +86,7 @@ class StudentSignInScreen extends StatelessWidget {
                       SizedBox(height: 30.h),
                       _orDivider(),
                       SizedBox(height: 30.h),
-                      _googleSignInButton(),
+                      _googleSignInButton(model),
                       
                       SizedBox(height: 20.h),
                       _signupLink(),
@@ -127,8 +127,10 @@ class StudentSignInScreen extends StatelessWidget {
     );
   }
 
-  Widget _googleSignInButton() {
-    return Container(
+  Widget _googleSignInButton(StudentSignInViewModel model) {
+    return GestureDetector(
+      onTap: model.state == ViewState.busy ? null : () => model.signInWithGoogle(),
+      child: Container(
       padding: const EdgeInsets.all(15),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -144,6 +146,7 @@ class StudentSignInScreen extends StatelessWidget {
           Text("Sign In Using Google", style: styleB16.copyWith(color: blackColor)),
         ],
       ),
+    ),
     );
   }
 

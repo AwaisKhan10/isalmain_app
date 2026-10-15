@@ -28,8 +28,12 @@ class StudentProfileScreen extends StatelessWidget {
               backgroundColor: whiteColor,
               centerTitle: true,
             ),
-            body: SingleChildScrollView(
-              child: Column(
+            body: RefreshIndicator(
+              color: secondaryColor,
+              onRefresh: model.refreshProfile,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
                 children: [
                   const SizedBox(height: 20),
                   _profileHeader(student),
@@ -39,6 +43,7 @@ class StudentProfileScreen extends StatelessWidget {
                   _actionSection(model),
                   const SizedBox(height: 40),
                 ],
+              ),
               ),
             ),
           );
@@ -82,6 +87,8 @@ class StudentProfileScreen extends StatelessWidget {
         children: [
           _infoRow(
               Icons.school_outlined, "Department", student.department ?? "N/A"),
+          const Divider(),
+          _infoRow(Icons.category_outlined, "Field", student.field ?? "N/A"),
           const Divider(),
           _infoRow(Icons.class_outlined, "Section", student.section ?? "N/A"),
           const Divider(),

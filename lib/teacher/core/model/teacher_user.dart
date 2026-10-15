@@ -47,18 +47,20 @@ class TeacherUser {
     return data;
   }
 
-  TeacherUser.fromJson(json, docId) {
+  TeacherUser.fromJson(Map<String, dynamic>? json, String? docId) {
+    if (json == null) return;
     id = docId;
-    fullName = json['fullName'];
-    profileImageUrl = json['profileImageUrl'] ?? json['imgUrl'];
-    email = json['email'];
-    password = json['password'];
-    fcmToken = json['fcmToken'];
-    phoneNo = json['phoneNo'];
-    department = json['department'];
-    qualification = json['qualification'];
-    gender = json['gender'];
-    isOnline = json['isOnline'];
-    subjects = json['subjects'];
+    fullName = json['fullName'] as String?;
+    profileImageUrl =
+        (json['profileImageUrl'] ?? json['imgUrl']) as String?;
+    email = json['email'] as String?;
+    password = json['password'] as String?;
+    fcmToken = json['fcmToken'] as String?;
+    phoneNo = json['phoneNo'] as String?;
+    department = json['department'] as String?;
+    qualification = json['qualification'] as String?;
+    gender = json['gender'] as String?;
+    isOnline = json['isOnline'] as bool?;
+    subjects = json['subjects'] as String?;
   }
 }

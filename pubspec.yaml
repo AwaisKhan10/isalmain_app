@@ -43,6 +43,7 @@ dependencies:
   image_picker: ^1.0.4
   rename: ^3.0.1
   firebase_auth: ^5.1.4
+  google_sign_in: ^6.2.2
   firebase_core: ^3.3.0
   get_it: ^7.6.4
   cloud_firestore: ^5.2.1

@@ -28,8 +28,12 @@ class ProfileScreen extends StatelessWidget {
               backgroundColor: whiteColor,
               centerTitle: true,
             ),
-            body: SingleChildScrollView(
-              child: Column(
+            body: RefreshIndicator(
+              color: secondaryColor,
+              onRefresh: model.refreshProfile,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
                 children: [
                   const SizedBox(height: 20),
                   _profileHeader(teacher),
@@ -39,6 +43,7 @@ class ProfileScreen extends StatelessWidget {
                   _actionSection(model),
                   const SizedBox(height: 40),
                 ],
+              ),
               ),
             ),
           );

@@ -39,41 +39,53 @@ class StudentChatScreen extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               }
-              if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.chat_outlined,
-                          size: 60.sp, color: Colors.grey),
-                      SizedBox(height: 10.h),
-                      const Text("No conversations yet."),
-                    ],
-                  ),
-                );
-              }
 
-              final conversations = snapshot.data!;
+              final conversations = snapshot.data ?? [];
 
-              return ListView.builder(
-                padding: const EdgeInsets.only(
-                  left: 20.0,
-                  right: 20.0,
-                ),
-                itemCount: conversations.length,
-                itemBuilder: (context, index) {
-                  final conversation = conversations[index];
-                  final otherName = conversation.getOtherName(currentUserId);
-                  final otherId = conversation.getOtherId(currentUserId);
-                  final lastMessage = conversation.lastMessage ?? "";
-                  final time = conversation.lastTime != null
-                      ? DateFormat('hh:mm a').format(
-                          DateTime.fromMillisecondsSinceEpoch(
-                              conversation.lastTime!))
-                      : "";
-                  final userImage = "$iconAssets/teacher_icon.png";
+              return RefreshIndicator(
+                color: secondaryColor,
+                onRefresh: () async {
+                  await Future<void>.delayed(const Duration(milliseconds: 400));
+                },
+                child: conversations.isEmpty
+                    ? ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.6,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.chat_outlined,
+                                    size: 60.sp, color: Colors.grey),
+                                SizedBox(height: 10.h),
+                                const Text("No conversations yet."),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    : ListView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: const EdgeInsets.only(
+                          left: 20.0,
+                          right: 20.0,
+                        ),
+                        itemCount: conversations.length,
+                        itemBuilder: (context, index) {
+                          final conversation = conversations[index];
+                          final otherName =
+                              conversation.getOtherName(currentUserId);
+                          final otherId = conversation.getOtherId(currentUserId);
+                          final lastMessage = conversation.lastMessage ?? "";
+                          final time = conversation.lastTime != null
+                              ? DateFormat('hh:mm a').format(
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      conversation.lastTime!))
+                              : "";
+                          final userImage = "$iconAssets/teacher_icon.png";
 
-                  return InkWell(
+                          return InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -160,7 +172,8 @@ class StudentChatScreen extends StatelessWidget {
                       ),
                     ),
                   );
-                },
+                        },
+                      ),
               );
             },
           );

@@ -2,5 +2,11 @@ class CustomAuthResult {
   bool? status;
   String? errorMessage;
   var user;
-  CustomAuthResult({this.status, this.errorMessage, this.user});
+  bool needsProfileCompletion;
+  CustomAuthResult({
+    this.status,
+    this.errorMessage,
+    this.user,
+    this.needsProfileCompletion = false,
+  });
 }

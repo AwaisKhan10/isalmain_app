@@ -19,7 +19,23 @@ class StudentSignUpViewModel extends BaseViewModel {
   final TextEditingController passwordController = TextEditingController();
 
   StudentUser studentUser = StudentUser();
+  String? selectedDepartment;
+  String? selectedField;
   bool isShowpassword = true;
+
+  void setDepartment(String? department) {
+    selectedDepartment = department;
+    selectedField = null;
+    studentUser.department = department;
+    studentUser.field = null;
+    notifyListeners();
+  }
+
+  void setField(String? field) {
+    selectedField = field;
+    studentUser.field = field;
+    notifyListeners();
+  }
 
   toggleShowPassword() {
     isShowpassword = !isShowpassword;
@@ -28,9 +44,11 @@ class StudentSignUpViewModel extends BaseViewModel {
 
   void signUpStudent() async {
     if (studentUser.department == null ||
+        studentUser.field == null ||
         studentUser.section == null ||
         studentUser.semester == null) {
-      AppSnackbar.error('Please select department, section and semester');
+      AppSnackbar.error(
+          'Please select department, field, section and semester');
       return;
     }
 

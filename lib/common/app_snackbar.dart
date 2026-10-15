@@ -9,6 +9,7 @@ class AppSnackbar {
     String title,
     String message, {
     SnackBarType type = SnackBarType.info,
+    BuildContext? context,
   }) {
     final Color backgroundColor;
     final IconData icon;
@@ -28,58 +29,68 @@ class AppSnackbar {
         break;
     }
 
+    final snackBar = SnackBar(
+      backgroundColor: backgroundColor,
+      behavior: SnackBarBehavior.floating,
+      margin: const EdgeInsets.all(16),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      duration: const Duration(seconds: 4),
+      content: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: whiteColor, size: 22),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: whiteColor,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  message,
+                  style: const TextStyle(color: whiteColor, fontSize: 13),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (context != null) {
+      final messenger = ScaffoldMessenger.maybeOf(context);
+      if (messenger != null) {
+        messenger.clearSnackBars();
+        messenger.showSnackBar(snackBar);
+        return;
+      }
+    }
+
     final messenger = AppMessenger.scaffoldMessengerKey.currentState;
-    if (messenger == null) {
-      debugPrint('AppSnackbar [$title]: $message');
+    if (messenger != null) {
+      messenger.clearSnackBars();
+      messenger.showSnackBar(snackBar);
       return;
     }
 
-    messenger.clearSnackBars();
-    messenger.showSnackBar(
-      SnackBar(
-        backgroundColor: backgroundColor,
-        behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        duration: const Duration(seconds: 3),
-        content: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: whiteColor, size: 22),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: whiteColor,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    message,
-                    style: const TextStyle(color: whiteColor, fontSize: 13),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    debugPrint('AppSnackbar [$title]: $message');
   }
 
-  static void success(String message, {String title = 'Success'}) =>
-      show(title, message, type: SnackBarType.success);
+  static void success(String message,
+          {String title = 'Success', BuildContext? context}) =>
+      show(title, message, type: SnackBarType.success, context: context);
 
-  static void error(String message, {String title = 'Error'}) =>
-      show(title, message, type: SnackBarType.error);
+  static void error(String message, {String title = 'Error', BuildContext? context}) =>
+      show(title, message, type: SnackBarType.error, context: context);
 
-  static void info(String message, {String title = 'Info'}) =>
-      show(title, message, type: SnackBarType.info);
+  static void info(String message, {String title = 'Info', BuildContext? context}) =>
+      show(title, message, type: SnackBarType.info, context: context);
 }

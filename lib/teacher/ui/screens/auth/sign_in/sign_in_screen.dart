@@ -161,7 +161,11 @@ class TeacherSignInScreen extends StatelessWidget {
                               ///
                               /// Sign In Google User
                               ///
-                              Container(
+                              GestureDetector(
+                                onTap: model.state == ViewState.busy
+                                    ? null
+                                    : () => model.signInWithGoogle(),
+                                child: Container(
                                 padding: const EdgeInsets.all(15),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
@@ -187,6 +191,7 @@ class TeacherSignInScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                              ),
                               ),
                               SizedBox(
                                 height: 20.h,

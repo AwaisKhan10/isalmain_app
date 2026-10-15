@@ -5,6 +5,7 @@ class StudentUser {
   String? email;
   String? fcmToken;
   String? department;
+  String? field;
   String? section;
   String? semester;
   String? password;
@@ -17,6 +18,7 @@ class StudentUser {
     this.profileImageUrl,
     this.fcmToken,
     this.department,
+    this.field,
     this.section,
     this.semester,
     this.password,
@@ -31,6 +33,7 @@ class StudentUser {
     if (profileImageUrl != null) data['profileImageUrl'] = profileImageUrl;
     if (fcmToken != null) data['fcmToken'] = fcmToken;
     if (department != null) data['department'] = department;
+    if (field != null) data['field'] = field;
     if (section != null) data['section'] = section;
     if (semester != null) data['semester'] = semester;
     if (password != null) data['password'] = password;
@@ -46,6 +49,7 @@ class StudentUser {
     profileImageUrl = json['profileImageUrl'];
     fcmToken = json['fcmToken'];
     department = json['department'];
+    field = json['field'];
     section = json['section'];
     semester = json['semester'];
     password = json['password'];

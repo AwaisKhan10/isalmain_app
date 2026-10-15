@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:sheduling_app/teacher/core/model/custom_auth_result.dart';
 import 'package:sheduling_app/teacher/core/model/student_user.dart';
@@ -8,6 +9,7 @@ import 'package:sheduling_app/teacher/core/services/database_services.dart';
 
 class AuthServices extends ChangeNotifier with WidgetsBindingObserver {
   final _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 
   final DatabaseServices databaseServices = DatabaseServices();
   CustomAuthResult customAuthResult = CustomAuthResult();
@@ -53,16 +55,19 @@ class AuthServices extends ChangeNotifier with WidgetsBindingObserver {
     user = _auth.currentUser;
     if (user != null) {
       isLogin = true;
-      // Try fetching as teacher first
       teacherUser = await databaseServices.getTeacherUser(user!.uid);
-      if (teacherUser.id != null) {
+      studentUser = await databaseServices.getStudentUser(user!.uid);
+
+      final hasTeacherProfile = teacherUser.id != null && teacherUser.email != null;
+      final hasStudentProfile = studentUser.id != null && studentUser.email != null;
+
+      if (hasTeacherProfile) {
         isTeacher = true;
+      } else if (hasStudentProfile) {
+        isTeacher = false;
       } else {
-        // Try fetching as student
-        studentUser = await databaseServices.getStudentUser(user!.uid);
-        if (studentUser.id != null) {
-          isTeacher = false;
-        }
+        isLogin = false;
+        isTeacher = true;
       }
       // Update online status in init
       if (currentUserId.isNotEmpty) {
@@ -72,6 +77,18 @@ class AuthServices extends ChangeNotifier with WidgetsBindingObserver {
       isLogin = false;
     }
     isInitialized = true;
+    notifyListeners();
+  }
+
+  Future<void> reloadCurrentUser() async {
+    user = _auth.currentUser;
+    if (user == null) return;
+
+    if (isTeacher) {
+      teacherUser = await databaseServices.getTeacherUser(user!.uid);
+    } else {
+      studentUser = await databaseServices.getStudentUser(user!.uid);
+    }
     notifyListeners();
   }
 
@@ -184,12 +201,197 @@ class AuthServices extends ChangeNotifier with WidgetsBindingObserver {
     return customAuthResult;
   }
 
+
+  bool _hasTeacherProfile(TeacherUser teacher) =>
+      teacher.id != null && teacher.email != null && teacher.email!.isNotEmpty;
+
+  bool _hasStudentProfile(StudentUser student) =>
+      student.id != null && student.email != null && student.email!.isNotEmpty;
+
+  Future<CustomAuthResult> signInWithGoogle({required bool asTeacher}) async {
+    customAuthResult = CustomAuthResult();
+    try {
+      await _googleSignIn.signOut();
+      final googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        customAuthResult.status = false;
+        customAuthResult.errorMessage = 'Google sign in cancelled';
+        return customAuthResult;
+      }
+
+      final googleAuth = await googleUser.authentication;
+      if (googleAuth.idToken == null) {
+        customAuthResult.status = false;
+        customAuthResult.errorMessage =
+            'Google sign in failed. Please try again.';
+        return customAuthResult;
+      }
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      final userCredential = await _auth.signInWithCredential(credential);
+      user = userCredential.user;
+      if (user == null) {
+        customAuthResult.status = false;
+        customAuthResult.errorMessage = 'Google sign in failed';
+        return customAuthResult;
+      }
+
+      teacherUser = await databaseServices.getTeacherUser(user!.uid);
+      studentUser = await databaseServices.getStudentUser(user!.uid);
+      final hasTeacher = _hasTeacherProfile(teacherUser);
+      final hasStudent = _hasStudentProfile(studentUser);
+
+      if (asTeacher) {
+        if (hasTeacher) {
+          isTeacher = true;
+          isLogin = true;
+          isInitialized = true;
+          if (currentUserId.isNotEmpty) {
+            await databaseServices.updateUserStatus(currentUserId, true, true);
+          }
+          customAuthResult.status = true;
+          customAuthResult.user = user;
+          notifyListeners();
+          return customAuthResult;
+        }
+        if (hasStudent) {
+          await logout();
+          customAuthResult.status = false;
+          customAuthResult.errorMessage =
+              'This Google account is registered as a student. Please sign in from the student screen.';
+          return customAuthResult;
+        }
+        isTeacher = true;
+        isLogin = false;
+        teacherUser = TeacherUser(
+          id: user!.uid,
+          email: user!.email ?? googleUser.email,
+          fullName: user!.displayName ?? googleUser.displayName,
+          profileImageUrl: user!.photoURL ?? googleUser.photoUrl,
+        );
+        customAuthResult.status = true;
+        customAuthResult.user = user;
+        customAuthResult.needsProfileCompletion = true;
+        notifyListeners();
+        return customAuthResult;
+      }
+
+      if (hasStudent) {
+        isTeacher = false;
+        isLogin = true;
+        isInitialized = true;
+        if (currentUserId.isNotEmpty) {
+          await databaseServices.updateUserStatus(currentUserId, false, true);
+        }
+        customAuthResult.status = true;
+        customAuthResult.user = user;
+        notifyListeners();
+        return customAuthResult;
+      }
+      if (hasTeacher) {
+        await logout();
+        customAuthResult.status = false;
+        customAuthResult.errorMessage =
+            'This Google account is registered as a teacher. Please sign in from the teacher screen.';
+        return customAuthResult;
+      }
+      isTeacher = false;
+      isLogin = false;
+      studentUser = StudentUser(
+        id: user!.uid,
+        email: user!.email ?? googleUser.email,
+        fullName: user!.displayName ?? googleUser.displayName,
+        profileImageUrl: user!.photoURL ?? googleUser.photoUrl,
+      );
+      customAuthResult.status = true;
+      customAuthResult.user = user;
+      customAuthResult.needsProfileCompletion = true;
+      notifyListeners();
+      return customAuthResult;
+    } catch (e) {
+      debugPrint('Google sign in error: $e');
+      customAuthResult.status = false;
+      if (e is FirebaseAuthException) {
+        customAuthResult.errorMessage =
+            AuthExceptionsService.generateExceptionMessage(e);
+      } else {
+        customAuthResult.errorMessage =
+            'Google sign in failed. Please try again.';
+      }
+      return customAuthResult;
+    }
+  }
+
+  Future<CustomAuthResult> completeGoogleTeacherProfile(
+      TeacherUser profile) async {
+    customAuthResult = CustomAuthResult();
+    if (user == null) {
+      customAuthResult.status = false;
+      customAuthResult.errorMessage = 'Please sign in with Google first';
+      return customAuthResult;
+    }
+    try {
+      profile.id = user!.uid;
+      profile.email = user!.email ?? profile.email;
+      profile.profileImageUrl ??= user!.photoURL;
+      await databaseServices.addTeacherUser(profile);
+      teacherUser = profile;
+      isTeacher = true;
+      isLogin = true;
+      isInitialized = true;
+      customAuthResult.status = true;
+      customAuthResult.user = user;
+      notifyListeners();
+    } catch (e) {
+      customAuthResult.status = false;
+      customAuthResult.errorMessage =
+          'Could not save teacher profile. Please try again.';
+    }
+    return customAuthResult;
+  }
+
+  Future<CustomAuthResult> completeGoogleStudentProfile(
+      StudentUser profile) async {
+    customAuthResult = CustomAuthResult();
+    if (user == null) {
+      customAuthResult.status = false;
+      customAuthResult.errorMessage = 'Please sign in with Google first';
+      return customAuthResult;
+    }
+    try {
+      profile.id = user!.uid;
+      profile.email = user!.email ?? profile.email;
+      profile.profileImageUrl ??= user!.photoURL;
+      await databaseServices.addStudentUser(profile);
+      studentUser = profile;
+      isTeacher = false;
+      isLogin = true;
+      isInitialized = true;
+      customAuthResult.status = true;
+      customAuthResult.user = user;
+      notifyListeners();
+    } catch (e) {
+      customAuthResult.status = false;
+      customAuthResult.errorMessage =
+          'Could not save student profile. Please try again.';
+    }
+    return customAuthResult;
+  }
+
   logout({id}) async {
     if (currentUserId.isNotEmpty) {
       await databaseServices.updateUserStatus(currentUserId, isTeacher, false);
     }
+    try {
+      await _googleSignIn.signOut();
+    } catch (_) {}
     await _auth.signOut();
     isLogin = false;
     user = null;
+    teacherUser = TeacherUser();
+    studentUser = StudentUser();
   }
 }

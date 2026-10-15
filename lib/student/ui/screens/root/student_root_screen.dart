@@ -25,8 +25,10 @@ class StudentRootScreen extends StatelessWidget {
 
   Widget _bottomBar(StudentRootViewModel model) {
     return BottomAppBar(
-      color: secondaryColor.withOpacity(0.4),
-      elevation: 6.0,
+      color: whiteColor,
+      shadowColor: blackColor,
+      surfaceTintColor: whiteColor,
+      elevation: 8.0,
       height: 80.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

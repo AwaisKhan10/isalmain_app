@@ -62,13 +62,30 @@ class StudentSignUpScreen extends StatelessWidget {
                       
                       DropdownButtonFormField<String>(
                         icon: dropdownFieldIcon,
+                        value: model.selectedDepartment,
                         decoration: authFieldDecoration.copyWith(hintText: 'Select Department'),
                         items: AppConstants.departments.map((dept) {
                           return DropdownMenuItem(value: dept, child: Text(dept));
                         }).toList(),
-                        onChanged: (val) => model.studentUser.department = val,
+                        onChanged: model.setDepartment,
                         validator: (value) => value == null ? "Required" : null,
                       ),
+                      if (model.selectedDepartment != null) ...[
+                        SizedBox(height: 20.h),
+                        DropdownButtonFormField<String>(
+                          icon: dropdownFieldIcon,
+                          value: model.selectedField,
+                          decoration: authFieldDecoration.copyWith(
+                            hintText: 'Select Field (e.g. Software, AI)',
+                          ),
+                          items: AppConstants.fieldsForDepartment(model.selectedDepartment)
+                              .map((field) {
+                            return DropdownMenuItem(value: field, child: Text(field));
+                          }).toList(),
+                          onChanged: model.setField,
+                          validator: (value) => value == null ? "Required" : null,
+                        ),
+                      ],
                       SizedBox(height: 20.h),
                       
                       DropdownButtonFormField<String>(
